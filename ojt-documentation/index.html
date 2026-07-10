@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My OJT Documentation</title>
+    <style>
+        :root {
+            --primary: #0070f3;
+            --dark: #111;
+            --light: #f4f4f9;
+            --text: #333;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text);
+            background-color: var(--light);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--dark);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        header p {
+            margin: 0.5rem 0 0;
+            opacity: 0.8;
+        }
+
+        nav {
+            background: white;
+            display: flex;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav a {
+            color: var(--text);
+            padding: 1rem 1.5rem;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        section {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        h2 {
+            color: var(--primary);
+            border-bottom: 2px solid var(--light);
+            padding-bottom: 0.5rem;
+            margin-top: 0;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .card {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 6px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .card h3 {
+            margin-top: 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>OJT Documentation Portfolio</h1>
+        <p>Prepared by: Your Name | Company Name</p>
+    </header>
+
+    <nav>
+        <a href="#about">Profile</a>
+        <a href="#company">Company</a>
+        <a href="#weekly">Weekly Logs</a>
+        <a href="#learnings">Learnings</a>
+    </nav>
+
+    <div class="container">
+        
+        <section id="about">
+            <h2>Intern Profile</h2>
+            <p><strong>Name:</strong> John/Jane Doe</p>
+            <p><strong>Course:</strong> Bachelor of Science in Information Technology</p>
+            <p><strong>Duration:</strong> 480 Hours (or your required hours)</p>
+        </section>
+
+        <section id="company">
+            <h2>About the Company</h2>
+            <p><strong>Company Name:</strong> Tech Solutions Inc.</p>
+            <p><strong>Department:</strong> Web Development & IT Support</p>
+            <p>Briefly describe what the company does and your overall role during your internship here.</p>
+        </section>
+
+        <section id="weekly">
+            <h2>Weekly Documentation</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Weeks 1–2</h3>
+                    <p>Company onboarding, software setup, and git workflow training. Assisted in minor frontend UI bug fixes.</p>
+                </div>
+                <div class="card">
+                    <h3>Weeks 3–4</h3>
+                    <p>Worked on developing an internal dashboard using HTML, CSS, and basic JavaScript APIs.</p>
+                </div>
+                <div class="card">
+                    <h3>Weeks 5–6</h3>
+                    <p>Conducted system testing, created user documentation guides, and attended weekly sprint meetings.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="learnings">
+            <h2>Key Learnings & Reflection</h2>
+            <p>Summarize your experience. What technical skills did you improve? What soft skills did you learn (teamwork, communication, time management)? How did this prepare you for the industry?</p>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Your Name. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>

@@ -28,182 +28,202 @@
             background-size: 32px 32px;
         }
 
-        /* Sophisticated hardware-accelerated entry animation */
-        @keyframes subtleReveal {
-            from { opacity: 0; transform: translateY(12px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-reveal {
-            animation: subtleReveal 0.6s cubic-bezier(0.215, 0.610, 0.355, 1) both;
-        }
-        .delay-1 { animation-delay: 100ms; }
-        .delay-2 { animation-delay: 200ms; }
+        /* Custom scrollbar matching dark pink theme for horizontal tracking */
+        ::-webkit-scrollbar { height: 6px; }
+        ::-webkit-scrollbar-track { background: #09070f; }
+        ::-webkit-scrollbar-thumb { background: #1f182e; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #f472b6; }
     </style>
 </head>
-<body class="grid-bg text-slate-300 font-sans antialiased min-h-screen pb-16">
+<body class="grid-bg text-slate-300 font-sans antialiased h-screen overflow-hidden flex flex-col">
 
     <!-- Minimal Header Navigation -->
-    <nav class="bg-darkBg/90 backdrop-blur-md sticky top-0 z-50 border-b border-zinc-900">
-        <div class="max-w-5xl mx-auto flex justify-between items-center px-6 py-4">
+    <nav class="bg-darkBg/90 backdrop-blur-md z-50 border-b border-zinc-900 flex-shrink-0">
+        <div class="max-w-7xl mx-auto flex justify-between items-center px-8 py-4">
             <div class="flex items-center gap-3">
                 <div class="w-6 h-6 rounded-md bg-accentRose/10 flex items-center justify-center border border-accentRose/20">
                     <div class="w-2 h-2 rounded-sm bg-accentRose"></div>
                 </div>
-                <span class="text-slate-100 font-semibold tracking-wide text-sm">ESCANILLA <span class="text-accentRose">/</span> PORTFOLIO</span>
+                <span class="text-slate-100 font-semibold tracking-wide text-sm uppercase">Escanilla <span class="text-accentRose">/</span> Compliance Workspace</span>
             </div>
-            <div class="flex gap-6 text-xs tracking-wide uppercase font-medium">
-                <a href="#about" class="text-accentRose border-b border-accentRose pb-1 transition-all">About</a>
-                <a href="#documents" class="text-slate-400 hover:text-slate-200 transition-colors pb-1">Documents</a>
-                <a href="#weekly" class="text-slate-400 hover:text-slate-200 transition-colors pb-1">Weekly Logs</a>
+            <div class="flex gap-8 text-xs tracking-wide uppercase font-medium">
+                <a href="#about" class="text-slate-400 hover:text-accentRose transition-colors">01. Profile</a>
+                <a href="#documents" class="text-slate-400 hover:text-accentRose transition-colors">02. Clearance Registry</a>
+                <a href="#weekly" class="text-slate-400 hover:text-accentRose transition-colors">03. Time Logs</a>
             </div>
         </div>
     </nav>
 
-    <!-- Content Engine -->
-    <main class="max-w-5xl mx-auto px-6 mt-16 space-y-20">
+    <!-- Horizontal Section Container -->
+    <main class="flex-1 overflow-x-auto overflow-y-hidden flex snap-x snap-mandatory">
 
-        <!-- Executive Profile Header -->
-        <section id="about" class="animate-reveal grid grid-cols-1 md:grid-cols-4 gap-12 items-center">
-            <!-- Professional Initials Medallion -->
-            <div class="flex justify-center md:justify-start">
-                <div class="w-40 h-40 rounded-full border border-zinc-800 bg-darkCard flex items-center justify-center text-slate-100 text-4xl font-light tracking-widest relative group transition-all duration-300 hover:border-accentRose/40">
-                    JA
+        <!-- PANEL 1: EXECUTIVE PROFILE -->
+        <section id="about" class="w-screen min-w-[100vw] snap-start flex-shrink-0 flex items-center px-12 md:px-24">
+            <div class="max-w-4xl grid grid-cols-1 md:grid-cols-4 gap-12 items-center">
+                <div class="flex justify-center md:justify-start">
+                    <div class="w-44 h-44 rounded-full border border-zinc-800 bg-darkCard flex items-center justify-center text-slate-100 text-4xl font-light tracking-widest transition-all duration-300 hover:border-accentRose/40">
+                        JA
+                    </div>
                 </div>
-            </div>
-            <!-- Profile Info Blocks -->
-            <div class="md:col-span-3 text-center md:text-left space-y-4">
-                <span class="inline-flex items-center gap-2 bg-zinc-900 text-slate-400 text-[11px] font-medium tracking-wider uppercase px-3 py-1 rounded border border-zinc-800">
-                    Engineering Deployment Logs
-                </span>
-                <h1 class="text-3xl md:text-4xl font-bold text-white tracking-tight">Joanna Ashley A. Escanilla</h1>
-                <div class="space-y-1 text-xs md:text-sm text-slate-400 font-light tracking-wide">
-                    <p class="flex items-center justify-center md:justify-start gap-2">🎓 Bachelor of Science in Computer Engineering</p>
-                    <p class="flex items-center justify-center md:justify-start gap-2">🏫 Polytechnic University of the Philippines — Sta. Mesa</p>
-                    <p class="flex items-center justify-center md:justify-start gap-2 text-slate-300">🏢 Department of Education — SDO San Jose Del Monte</p>
-                </div>
-                <p class="text-slate-400 text-xs md:text-sm font-light leading-relaxed max-w-xl">
-                    Official technical archive mapping academic validation workflows, systems deployment structures, and standard operational reviews completed under the Information Technology department at DepEd.
-                </p>
-                <div class="pt-2">
-                    <a href="#documents" class="inline-flex items-center gap-2 border border-zinc-700 hover:border-accentRose bg-zinc-900 text-slate-200 hover:text-white font-medium text-xs tracking-wide px-4 py-2.5 rounded transition-all">
-                        Review Requirements Document Registry ➔
-                    </a>
+                <div class="md:col-span-3 space-y-5">
+                    <span class="inline-flex items-center gap-2 bg-zinc-900 text-slate-400 text-[10px] font-medium tracking-wider uppercase px-3 py-1 rounded border border-zinc-800">
+                        Engineering Deployment Logs
+                    </span>
+                    <h1 class="text-4xl font-bold text-white tracking-tight">Joanna Ashley A. Escanilla</h1>
+                    <div class="space-y-1 text-xs md:text-sm text-slate-400 font-light tracking-wide">
+                        <p>🎓 Bachelor of Science in Computer Engineering</p>
+                        <p>🏫 Polytechnic University of the Philippines — Sta. Mesa</p>
+                        <p class="text-slate-300">🏢 Department of Education — SDO San Jose Del Monte</p>
+                    </div>
+                    <p class="text-slate-400 text-xs md:text-sm font-light leading-relaxed max-w-xl">
+                        Official technical archive mapping academic validation workflows, systems deployment structures, and standard operational reviews completed under the Information Technology department at DepEd.
+                    </p>
+                    <div class="pt-2">
+                        <a href="#documents" class="inline-flex items-center gap-2 border border-zinc-700 hover:border-accentRose bg-zinc-900 text-slate-200 hover:text-white font-medium text-xs tracking-wide px-4 py-2.5 rounded transition-all">
+                            Advance to Clearance Registry ➔
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Dynamic Registry Metric Panels -->
-        <section class="animate-reveal delay-1 grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div class="bg-darkCard border border-zinc-900 p-5 rounded-lg transition-all hover:border-zinc-800">
-                <span class="text-xs uppercase font-medium tracking-wider text-slate-500 block mb-1">Target Track</span>
-                <span class="text-2xl font-semibold text-slate-200">240 Hours</span>
-            </div>
-            <div class="bg-darkCard border border-zinc-900 p-5 rounded-lg transition-all hover:border-zinc-800">
-                <span class="text-xs uppercase font-medium tracking-wider text-slate-500 block mb-1">Hours Authenticated</span>
-                <span class="text-2xl font-semibold text-accentRose">0 <span class="text-xs text-slate-600">/ 240</span></span>
-            </div>
-            <div class="bg-darkCard border border-zinc-900 p-5 rounded-lg transition-all hover:border-zinc-800">
-                <span class="text-xs uppercase font-medium tracking-wider text-slate-500 block mb-1">Document Status</span>
-                <span class="text-2xl font-semibold text-slate-200">6 <span class="text-xs text-slate-500">Filed</span></span>
-            </div>
-        </section>
-
-        <!-- Document Grid -->
-        <section id="documents" class="animate-reveal delay-2 space-y-6">
-            <div>
-                <span class="text-xs font-semibold tracking-wider text-accentRose uppercase">Compliance</span>
-                <h2 class="text-xl font-semibold text-white tracking-tight mt-0.5">Required Clearances</h2>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <!-- 1. Memorandum of Agreement -->
-                <div class="bg-darkCard border border-zinc-900 p-5 rounded-lg hover:border-zinc-800 transition-all duration-200 flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-slate-100 font-medium text-sm mb-1">Memorandum of Agreement</h3>
-                        <p class="text-xs text-slate-500 leading-relaxed font-light">Official legal framework establishing mutual partnership terms between PUP and DepEd.</p>
-                    </div>
-                    <a href="#" class="text-accentRose hover:text-pink-400 font-medium text-xs mt-6 inline-flex items-center gap-1">Download Archive ↗</a>
-                </div>
-
-                <!-- 2. Letter of Intent -->
-                <div class="bg-darkCard border border-zinc-900 p-5 rounded-lg hover:border-zinc-800 transition-all duration-200 flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-slate-100 font-medium text-sm mb-1">Letter of Intent</h3>
-                        <p class="text-xs text-slate-500 leading-relaxed font-light">Formal notification indicating candidacy statement sent directly to the host supervisor.</p>
-                    </div>
-                    <a href="#" class="text-accentRose hover:text-pink-400 font-medium text-xs mt-6 inline-flex items-center gap-1">Download Archive ↗</a>
-                </div>
-
-                <!-- 3. Letter of Endorsement -->
-                <div class="bg-darkCard border border-zinc-900 p-5 rounded-lg hover:border-zinc-800 transition-all duration-200 flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-slate-100 font-medium text-sm mb-1">Letter of Endorsement</h3>
-                        <p class="text-xs text-slate-500 leading-relaxed font-light">Verification declaration issued by the university Computer Engineering department head.</p>
-                    </div>
-                    <a href="#" class="text-accentRose hover:text-pink-400 font-medium text-xs mt-6 inline-flex items-center gap-1">Download Archive ↗</a>
-                </div>
-
-                <!-- 4. PUP Consent Form -->
-                <div class="bg-darkCard border border-zinc-900 p-5 rounded-lg hover:border-zinc-800 transition-all duration-200 flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-slate-100 font-medium text-sm mb-1">PUP Consent Form</h3>
-                        <p class="text-xs text-slate-500 leading-relaxed font-light">Legal parental/guardian acknowledgment documents executed prior to deployment setup.</p>
-                    </div>
-                    <a href="#" class="text-accentRose hover:text-pink-400 font-medium text-xs mt-6 inline-flex items-center gap-1">Download Archive ↗</a>
-                </div>
-
-                <!-- 5. Student Waiver -->
-                <div class="bg-darkCard border border-zinc-900 p-5 rounded-lg hover:border-zinc-800 transition-all duration-200 flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-slate-100 font-medium text-sm mb-1">Student Waiver</h3>
-                        <p class="text-xs text-slate-500 leading-relaxed font-light">Standardized institutional safety clearance files validating external working arrangements.</p>
-                    </div>
-                    <a href="#" class="text-accentRose hover:text-pink-400 font-medium text-xs mt-6 inline-flex items-center gap-1">Download Archive ↗</a>
-                </div>
-
-                <!-- 6. Internship Agreement -->
-                <div class="bg-darkCard border border-zinc-900 p-5 rounded-lg hover:border-zinc-800 transition-all duration-200 flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-slate-100 font-medium text-sm mb-1">Internship Agreement</h3>
-                        <p class="text-xs text-slate-500 leading-relaxed font-light">Granular breakdown itemizing explicit scope of responsibilities and technical expectations.</p>
-                    </div>
-                    <a href="#" class="text-accentRose hover:text-pink-400 font-medium text-xs mt-6 inline-flex items-center gap-1">Download Archive ↗</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Weekly Progress Tracking Block -->
-        <section id="weekly" class="space-y-6">
-            <div class="flex justify-between items-end">
+        <!-- PANEL 2: REQUIRED CLEARANCES -->
+        <section id="documents" class="w-screen min-w-[100vw] snap-start flex-shrink-0 flex items-center px-12 md:px-24 border-l border-zinc-900/50">
+            <div class="max-w-5xl w-full space-y-8">
                 <div>
-                    <span class="text-xs font-semibold tracking-wider text-accentRose uppercase">Chronology</span>
-                    <h2 class="text-xl font-semibold text-white tracking-tight mt-0.5">Weekly Operational Logs</h2>
+                    <span class="text-xs font-semibold tracking-wider text-accentRose uppercase">Compliance Matrix</span>
+                    <h2 class="text-2xl font-semibold text-white tracking-tight mt-0.5">Required Clearances</h2>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- MOA -->
+                    <div class="bg-darkCard border border-zinc-900 p-5 rounded-lg hover:border-zinc-800 transition-all flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-slate-100 font-medium text-sm mb-1">Memorandum of Agreement</h3>
+                            <p class="text-[11px] text-slate-500 leading-relaxed font-light">Official legal framework establishing mutual partnership terms between PUP and DepEd.</p>
+                        </div>
+                        <a href="#" class="text-accentRose hover:text-pink-400 font-medium text-[11px] mt-4 inline-flex items-center gap-1">Download Archive ↗</a>
+                    </div>
+                    <!-- LOI -->
+                    <div class="bg-darkCard border border-zinc-900 p-5 rounded-lg hover:border-zinc-800 transition-all flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-slate-100 font-medium text-sm mb-1">Letter of Intent</h3>
+                            <p class="text-[11px] text-slate-500 leading-relaxed font-light">Formal notification indicating candidacy statement sent directly to the host supervisor.</p>
+                        </div>
+                        <a href="#" class="text-accentRose hover:text-pink-400 font-medium text-[11px] mt-4 inline-flex items-center gap-1">Download Archive ↗</a>
+                    </div>
+                    <!-- Endorsement -->
+                    <div class="bg-darkCard border border-zinc-900 p-5 rounded-lg hover:border-zinc-800 transition-all flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-slate-100 font-medium text-sm mb-1">Letter of Endorsement</h3>
+                            <p class="text-[11px] text-slate-500 leading-relaxed font-light">Verification declaration issued by the university Computer Engineering department head.</p>
+                        </div>
+                        <a href="#" class="text-accentRose hover:text-pink-400 font-medium text-[11px] mt-4 inline-flex items-center gap-1">Download Archive ↗</a>
+                    </div>
+                    <!-- Consent -->
+                    <div class="bg-darkCard border border-zinc-900 p-5 rounded-lg hover:border-zinc-800 transition-all flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-slate-100 font-medium text-sm mb-1">PUP Consent Form</h3>
+                            <p class="text-[11px] text-slate-500 leading-relaxed font-light">Legal parental/guardian acknowledgment documents executed prior to deployment setup.</p>
+                        </div>
+                        <a href="#" class="text-accentRose hover:text-pink-400 font-medium text-[11px] mt-4 inline-flex items-center gap-1">Download Archive ↗</a>
+                    </div>
+                    <!-- Waiver -->
+                    <div class="bg-darkCard border border-zinc-900 p-5 rounded-lg hover:border-zinc-800 transition-all flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-slate-100 font-medium text-sm mb-1">Student Waiver</h3>
+                            <p class="text-[11px] text-slate-500 leading-relaxed font-light">Standardized safety clearance files validating external practical hours rendered off-campus.</p>
+                        </div>
+                        <a href="#" class="text-accentRose hover:text-pink-400 font-medium text-[11px] mt-4 inline-flex items-center gap-1">Download Archive ↗</a>
+                    </div>
+                    <!-- Agreement -->
+                    <div class="bg-darkCard border border-zinc-900 p-5 rounded-lg hover:border-zinc-800 transition-all flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-slate-100 font-medium text-sm mb-1">Internship Agreement</h3>
+                            <p class="text-[11px] text-slate-500 leading-relaxed font-light">Granular breakdown itemizing explicit scope of responsibilities and technical expectations.</p>
+                        </div>
+                        <a href="#" class="text-accentRose hover:text-pink-400 font-medium text-[11px] mt-4 inline-flex items-center gap-1">Download Archive ↗</a>
+                    </div>
                 </div>
             </div>
-            
-            <div class="space-y-2">
-                <!-- Log Entry Row -->
-                <div class="bg-darkCard border border-zinc-900 p-4 rounded-lg flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 transition-all hover:border-zinc-800">
-                    <div class="flex items-center gap-4">
-                        <div class="w-8 h-8 bg-zinc-900 rounded flex flex-col items-center justify-center border border-zinc-800 text-slate-400 text-[10px] uppercase tracking-tighter">
-                            <span>W1</span>
+        </section>
+
+        <!-- PANEL 3: TIME LOGS (REFERENCE INSPIRED) -->
+        <section id="weekly" class="w-screen min-w-[100vw] snap-start flex-shrink-0 flex items-center px-12 md:px-24 border-l border-zinc-900/50">
+            <div class="max-w-5xl w-full space-y-6">
+                
+                <!-- Time Tracking Summary Metrics Row -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-0.5 bg-zinc-900 rounded-xl overflow-hidden border border-zinc-800">
+                    <div class="bg-darkCard p-6 text-center">
+                        <span class="text-xs uppercase font-medium tracking-wider text-slate-500 block mb-1">Required</span>
+                        <span class="text-3xl font-semibold text-slate-200">300<span class="text-sm font-light text-slate-400">h</span></span>
+                        <span class="text-[10px] block text-slate-500 mt-1">total hours</span>
+                    </div>
+                    <div class="bg-darkCard p-6 text-center">
+                        <span class="text-xs uppercase font-medium tracking-wider text-slate-500 block mb-1">Logged</span>
+                        <span class="text-3xl font-semibold text-slate-400">0<span class="text-sm font-light text-slate-500">h</span></span>
+                        <span class="text-[10px] block text-slate-500 mt-1">0% complete</span>
+                    </div>
+                    <div class="bg-darkCard p-6 text-center">
+                        <span class="text-xs uppercase font-medium tracking-wider text-slate-500 block mb-1">Remaining</span>
+                        <span class="text-3xl font-semibold text-accentRose">300<span class="text-sm font-light text-accentRose/70">h</span></span>
+                        <span class="text-[10px] block text-slate-500 mt-1">hours to go</span>
+                    </div>
+                </div>
+
+                <!-- Estimated Completion Info Banner -->
+                <div class="bg-darkCard border border-zinc-900 rounded-xl p-5 flex flex-col gap-1">
+                    <span class="text-[10px] font-semibold tracking-wider text-slate-500 uppercase">Estimated Completion</span>
+                    <span class="text-xl font-medium text-slate-400">—</span>
+                    <p class="text-[11px] text-slate-500">Need at least 3 logged days to estimate trajectory velocity.</p>
+                </div>
+
+                <!-- Interface Control Unit -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
+                    <div class="space-y-1">
+                        <h3 class="text-lg font-medium text-white tracking-tight">Time Logs</h3>
+                        <p class="text-xs text-slate-500">Jul 1, 2026 — Jul 31, 2026</p>
+                    </div>
+                    
+                    <!-- Reference Tracking Range Selectors -->
+                    <div class="flex items-center gap-2 text-xs">
+                        <div class="flex flex-col">
+                            <span class="text-[9px] text-slate-500 uppercase tracking-wider font-medium mb-0.5">From</span>
+                            <input type="text" value="07/01/2026" readonly class="bg-darkCard border border-zinc-800 px-3 py-1.5 rounded text-slate-300 w-28 text-center outline-none">
                         </div>
-                        <div>
-                            <h4 class="text-slate-200 font-medium text-sm">Deployment & System Orientation</h4>
-                            <span class="text-xs text-slate-500 font-light">Log Date Period Pending</span>
+                        <div class="flex flex-col">
+                            <span class="text-[9px] text-slate-500 uppercase tracking-wider font-medium mb-0.5">To</span>
+                            <input type="text" value="07/31/2026" readonly class="bg-darkCard border border-zinc-800 px-3 py-1.5 rounded text-slate-300 w-28 text-center outline-none">
+                        </div>
+                        <div class="flex flex-col justify-end h-full pt-4">
+                            <button class="bg-zinc-900 border border-zinc-800 text-slate-300 px-3 py-1.5 rounded hover:bg-zinc-800 font-medium text-[11px]">Export ▾</button>
                         </div>
                     </div>
-                    <button class="text-[11px] font-medium tracking-wide bg-zinc-900 hover:bg-zinc-800 text-slate-300 px-3 py-1.5 rounded border border-zinc-800 transition-colors">
-                        Review Transcript
-                    </button>
                 </div>
+
+                <!-- Legend Indicator System -->
+                <div class="flex flex-wrap items-center gap-4 text-[11px] text-slate-500 border-t border-zinc-900 pt-3">
+                    <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded bg-zinc-800 inline-block"></span> No log</span>
+                    <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded bg-amber-500 inline-block"></span> Clocked in (no out)</span>
+                    <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded bg-yellow-200 inline-block"></span> Absent / 0h</span>
+                    <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded bg-emerald-500/40 inline-block"></span> Partial (&lt;6h)</span>
+                    <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded bg-emerald-400 inline-block"></span> Full day (&ge;6h)</span>
+                </div>
+
+                <!-- Empty State Message -->
+                <div class="text-center py-10 border border-dashed border-zinc-900 rounded-xl space-y-2">
+                    <p class="text-xs text-slate-500 font-light">No logs found in the selected date range.</p>
+                    <button class="text-xs text-accentRose font-medium tracking-wide hover:underline">+ Add your first log</button>
+                </div>
+
             </div>
         </section>
 
     </main>
 
-    <footer class="text-center py-16 text-xs font-light text-slate-600 border-t border-zinc-950 mt-28">
-        <p>&copy; 2026 Joanna Ashley A. Escanilla. Automated Compliance Record.</p>
+    <!-- Global Layout System Footer Info -->
+    <footer class="text-center py-4 text-[10px] font-light text-slate-600 border-t border-zinc-950 flex-shrink-0">
+        <p>&copy; 2026 Joanna Ashley A. Escanilla. Shift layout tabs via side-scroll or navbar options.</p>
     </footer>
 
 </body>

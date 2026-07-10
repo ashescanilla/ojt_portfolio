@@ -11,9 +11,9 @@
             theme: {
                 extend: {
                     colors: {
-                        darkBg: '#09070f',      /* Clean slate obsidian background */
-                        darkCard: '#120e1a',    /* Low-profile solid surface cards */
-                        accentRose: '#f472b6',  /* Refined Rose accent */
+                        darkBg: '#06040a',      /* Deep obsidian black */
+                        darkCard: '#0f0c16',    /* Elevated velvet component cards */
+                        accentRose: '#f472b6',  /* Vivid rose gold element */
                     }
                 }
             }
@@ -22,73 +22,139 @@
     <style>
         /* Professional micro-grid system */
         .grid-bg {
-            background-color: #09070f;
-            background-image: linear-gradient(rgba(244, 114, 182, 0.015) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(244, 114, 182, 0.015) 1px, transparent 1px);
+            background-color: #06040a;
+            background-image: linear-gradient(rgba(244, 114, 182, 0.012) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(244, 114, 182, 0.012) 1px, transparent 1px);
             background-size: 32px 32px;
         }
 
+        /* Ambient background glow system */
+        .glow-sphere {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(244, 114, 182, 0.04) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
         /* Custom scrollbar matching dark pink theme for horizontal tracking */
-        ::-webkit-scrollbar { height: 6px; }
-        ::-webkit-scrollbar-track { background: #09070f; }
-        ::-webkit-scrollbar-thumb { background: #1f182e; border-radius: 4px; }
+        ::-webkit-scrollbar { height: 5px; }
+        ::-webkit-scrollbar-track { background: #06040a; }
+        ::-webkit-scrollbar-thumb { background: #161024; border-radius: 99px; transition: background 0.3s; }
         ::-webkit-scrollbar-thumb:hover { background: #f472b6; }
+
+        /* Interactive Card Shimmer Glow effects */
+        .interactive-card {
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .interactive-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.05), rgba(244, 114, 182, 0));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-content-box: content-box, padding-box;
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            transition: background 0.4s;
+        }
+        .interactive-card:hover {
+            transform: translateY(-4px) scale(1.01);
+            background-color: #140f20;
+            border-color: rgba(244, 114, 182, 0.3);
+            box-shadow: 0 12px 30px -10px rgba(244, 114, 182, 0.12), 0 0 1px 1px rgba(244, 114, 182, 0.2);
+        }
+        .interactive-card:hover::before {
+            background: linear-gradient(to bottom, rgba(244, 114, 182, 0.4), rgba(244, 114, 182, 0.05));
+        }
+
+        /* Custom Horizontal Panel Transitions */
+        .panel-view {
+            transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
     </style>
 </head>
-<body class="grid-bg text-slate-300 font-sans antialiased h-screen overflow-hidden flex flex-col">
+<body class="grid-bg text-slate-300 font-sans antialiased h-screen overflow-hidden flex flex-col relative select-none">
+    
+    <div class="glow-sphere"></div>
 
-    <!-- Minimal Header Navigation -->
-    <nav class="bg-darkBg/90 backdrop-blur-md z-50 border-b border-zinc-900 flex-shrink-0">
+    <!-- Minimal Interactive Navigation -->
+    <nav class="bg-darkBg/80 backdrop-blur-xl z-50 border-b border-zinc-900/80 flex-shrink-0 transition-all duration-300">
         <div class="max-w-7xl mx-auto flex justify-between items-center px-8 py-4">
-            <div class="flex items-center gap-3">
-                <div class="w-6 h-6 rounded-md bg-accentRose/10 flex items-center justify-center border border-accentRose/20">
-                    <div class="w-2 h-2 rounded-sm bg-accentRose"></div>
+            <div class="flex items-center gap-3 group cursor-pointer">
+                <div class="w-6 h-6 rounded-md bg-accentRose/10 flex items-center justify-center border border-accentRose/20 group-hover:border-accentRose group-hover:bg-accentRose/20 transition-all duration-500 shadow-sm group-hover:shadow-[0_0_12px_rgba(244,114,182,0.4)]">
+                    <div class="w-1.5 h-1.5 rounded-sm bg-accentRose group-hover:scale-110 transition-transform"></div>
                 </div>
-                <span class="text-slate-100 font-semibold tracking-wide text-sm uppercase">Escanilla <span class="text-accentRose">/</span> Compliance Workspace</span>
+                <span class="text-slate-400 group-hover:text-slate-100 font-semibold tracking-wide text-xs uppercase transition-colors">Escanilla <span class="text-accentRose">/</span> Workspace</span>
             </div>
-            <div class="flex gap-8 text-xs tracking-wide uppercase font-medium">
-                <a href="#about" class="text-slate-400 hover:text-accentRose transition-colors">01. Profile</a>
-                <a href="#documents" class="text-slate-400 hover:text-accentRose transition-colors">02. Clearance Registry</a>
-                <a href="#weekly" class="text-slate-400 hover:text-accentRose transition-colors">03. Time Logs</a>
+            <!-- Interactive Segment Control Navigation -->
+            <div class="flex gap-2 p-1 bg-zinc-950/60 rounded-full border border-zinc-900/60 text-[11px] tracking-wide uppercase font-medium">
+                <button onclick="scrollToPanel(0)" id="nav-0" class="nav-btn px-4 py-1.5 rounded-full text-slate-200 bg-darkCard border border-zinc-800 transition-all duration-300">01. Profile</button>
+                <button onclick="scrollToPanel(1)" id="nav-1" class="nav-btn px-4 py-1.5 rounded-full text-slate-500 hover:text-slate-200 transition-all duration-300">02. Registry</button>
+                <button onclick="scrollToPanel(2)" id="nav-2" class="nav-btn px-4 py-1.5 rounded-full text-slate-500 hover:text-slate-200 transition-all duration-300">03. Time Logs</button>
             </div>
         </div>
     </nav>
 
-    <!-- Horizontal Section Container -->
-    <main class="flex-1 overflow-x-auto overflow-y-hidden flex snap-x snap-mandatory">
+    <!-- NEW INTERACTIVE SIDE NAVIGATION CONTROLS -->
+    <!-- Left Arrow Button (<) -->
+    <button onclick="navigateDeck(-1)" id="left-arrow" class="fixed left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full border border-zinc-800 bg-zinc-950/80 backdrop-blur-md flex items-center justify-center text-slate-400 hover:text-white hover:border-accentRose hover:bg-darkCard z-50 opacity-0 pointer-events-none transition-all duration-300 hover:shadow-[0_0_15px_rgba(244,114,182,0.25)]">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+        </svg>
+    </button>
+    
+    <!-- Right Arrow Button (>) -->
+    <button onclick="navigateDeck(1)" id="right-arrow" class="fixed right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full border border-zinc-800 bg-zinc-950/80 backdrop-blur-md flex items-center justify-center text-slate-400 hover:text-white hover:border-accentRose hover:bg-darkCard z-50 transition-all duration-300 hover:shadow-[0_0_15px_rgba(244,114,182,0.25)]">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+        </svg>
+    </button>
+
+    <!-- Horizontal Presentation Deck Engine -->
+    <main id="deck-container" class="flex-1 overflow-x-auto overflow-y-hidden flex snap-x snap-mandatory scroll-smooth relative z-10">
 
         <!-- PANEL 1: EXECUTIVE PROFILE -->
-        <section id="about" class="w-screen min-w-[100vw] snap-start flex-shrink-0 flex items-center px-12 md:px-24">
+        <section class="panel-view w-screen min-w-[100vw] snap-start flex-shrink-0 flex items-center px-12 md:px-24">
             <div class="max-w-4xl grid grid-cols-1 md:grid-cols-4 gap-12 items-center">
                 <div class="flex justify-center md:justify-start">
-                    <div class="w-44 h-44 rounded-full border border-zinc-800 bg-darkCard flex items-center justify-center text-slate-100 text-4xl font-light tracking-widest transition-all duration-300 hover:border-accentRose/40">
+                    <div class="w-40 h-40 rounded-full border border-zinc-800 bg-darkCard flex items-center justify-center text-slate-100 text-3xl font-light tracking-widest relative group transition-all duration-500 hover:border-accentRose/60 hover:shadow-[0_0_40px_rgba(244,114,182,0.08)]">
                         JA
+                        <div class="absolute inset-0 rounded-full border border-accentRose/0 group-hover:border-accentRose/20 group-hover:scale-110 transition-all duration-700"></div>
                     </div>
                 </div>
                 <div class="md:col-span-3 space-y-5">
-                    <span class="inline-flex items-center gap-2 bg-zinc-900 text-slate-400 text-[10px] font-medium tracking-wider uppercase px-3 py-1 rounded border border-zinc-800">
+                    <span class="inline-flex items-center gap-2 bg-zinc-900/60 text-slate-400 text-[10px] font-medium tracking-wider uppercase px-3 py-1 rounded border border-zinc-800 transition-all hover:border-zinc-700">
                         Engineering Deployment Logs
                     </span>
                     <h1 class="text-4xl font-bold text-white tracking-tight">Joanna Ashley A. Escanilla</h1>
-                    <div class="space-y-1 text-xs md:text-sm text-slate-400 font-light tracking-wide">
-                        <p>🎓 Bachelor of Science in Computer Engineering</p>
-                        <p>🏫 Polytechnic University of the Philippines — Sta. Mesa</p>
-                        <p class="text-slate-300">🏢 Department of Education — SDO San Jose Del Monte</p>
+                    <div class="space-y-1.5 text-xs md:text-sm text-slate-400 font-light tracking-wide">
+                        <p class="hover:text-slate-200 transition-colors cursor-default">🎓 Bachelor of Science in Computer Engineering</p>
+                        <p class="hover:text-slate-200 transition-colors cursor-default">🏫 Polytechnic University of the Philippines — Sta. Mesa</p>
+                        <p class="text-slate-300 transition-colors cursor-default">🏢 Department of Education — SDO San Jose Del Monte</p>
                     </div>
                     <p class="text-slate-400 text-xs md:text-sm font-light leading-relaxed max-w-xl">
                         Official technical archive mapping academic validation workflows, systems deployment structures, and standard operational reviews completed under the Information Technology department at DepEd.
                     </p>
                     <div class="pt-2">
-                        <a href="#documents" class="inline-flex items-center gap-2 border border-zinc-700 hover:border-accentRose bg-zinc-900 text-slate-200 hover:text-white font-medium text-xs tracking-wide px-4 py-2.5 rounded transition-all">
-                            Advance to Clearance Registry ➔
-                        </a>
+                        <button onclick="scrollToPanel(1)" class="group inline-flex items-center gap-2 border border-zinc-800 hover:border-accentRose/60 bg-zinc-950 hover:bg-darkCard text-slate-300 hover:text-white font-medium text-xs tracking-wide px-5 py-2.5 rounded transition-all duration-300 hover:shadow-[0_0_20px_rgba(244,114,182,0.1)]">
+                            Advance to Clearance Registry <span class="group-hover:translate-x-1 transition-transform">➔</span>
+                        </button>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- PANEL 2: REQUIRED CLEARANCES -->
-        <section id="documents" class="w-screen min-w-[100vw] snap-start flex-shrink-0 flex items-center px-12 md:px-24 border-l border-zinc-900/50">
+        <section class="panel-view w-screen min-w-[100vw] snap-start flex-shrink-0 flex items-center px-12 md:px-24">
             <div class="max-w-5xl w-full space-y-8">
                 <div>
                     <span class="text-xs font-semibold tracking-wider text-accentRose uppercase">Compliance Matrix</span>
@@ -96,124 +162,116 @@
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <!-- MOA -->
-                    <div class="bg-darkCard border border-zinc-900 p-5 rounded-lg hover:border-zinc-800 transition-all flex flex-col justify-between">
+                    <div class="interactive-card bg-darkCard border border-zinc-900/80 p-5 rounded-xl flex flex-col justify-between">
                         <div>
                             <h3 class="text-slate-100 font-medium text-sm mb-1">Memorandum of Agreement</h3>
                             <p class="text-[11px] text-slate-500 leading-relaxed font-light">Official legal framework establishing mutual partnership terms between PUP and DepEd.</p>
                         </div>
-                        <a href="#" class="text-accentRose hover:text-pink-400 font-medium text-[11px] mt-4 inline-flex items-center gap-1">Download Archive ↗</a>
+                        <a href="#" class="text-accentRose hover:text-pink-400 font-medium text-[11px] mt-4 inline-flex items-center gap-1 hover:underline">Download Archive ↗</a>
                     </div>
-                    <!-- LOI -->
-                    <div class="bg-darkCard border border-zinc-900 p-5 rounded-lg hover:border-zinc-800 transition-all flex flex-col justify-between">
+                    
+                    <div class="interactive-card bg-darkCard border border-zinc-900/80 p-5 rounded-xl flex flex-col justify-between">
                         <div>
                             <h3 class="text-slate-100 font-medium text-sm mb-1">Letter of Intent</h3>
                             <p class="text-[11px] text-slate-500 leading-relaxed font-light">Formal notification indicating candidacy statement sent directly to the host supervisor.</p>
                         </div>
-                        <a href="#" class="text-accentRose hover:text-pink-400 font-medium text-[11px] mt-4 inline-flex items-center gap-1">Download Archive ↗</a>
+                        <a href="#" class="text-accentRose hover:text-pink-400 font-medium text-[11px] mt-4 inline-flex items-center gap-1 hover:underline">Download Archive ↗</a>
                     </div>
-                    <!-- Endorsement -->
-                    <div class="bg-darkCard border border-zinc-900 p-5 rounded-lg hover:border-zinc-800 transition-all flex flex-col justify-between">
+
+                    <div class="interactive-card bg-darkCard border border-zinc-900/80 p-5 rounded-xl flex flex-col justify-between">
                         <div>
                             <h3 class="text-slate-100 font-medium text-sm mb-1">Letter of Endorsement</h3>
                             <p class="text-[11px] text-slate-500 leading-relaxed font-light">Verification declaration issued by the university Computer Engineering department head.</p>
                         </div>
-                        <a href="#" class="text-accentRose hover:text-pink-400 font-medium text-[11px] mt-4 inline-flex items-center gap-1">Download Archive ↗</a>
+                        <a href="#" class="text-accentRose hover:text-pink-400 font-medium text-[11px] mt-4 inline-flex items-center gap-1 hover:underline">Download Archive ↗</a>
                     </div>
-                    <!-- Consent -->
-                    <div class="bg-darkCard border border-zinc-900 p-5 rounded-lg hover:border-zinc-800 transition-all flex flex-col justify-between">
+
+                    <div class="interactive-card bg-darkCard border border-zinc-900/80 p-5 rounded-xl flex flex-col justify-between">
                         <div>
                             <h3 class="text-slate-100 font-medium text-sm mb-1">PUP Consent Form</h3>
                             <p class="text-[11px] text-slate-500 leading-relaxed font-light">Legal parental/guardian acknowledgment documents executed prior to deployment setup.</p>
                         </div>
-                        <a href="#" class="text-accentRose hover:text-pink-400 font-medium text-[11px] mt-4 inline-flex items-center gap-1">Download Archive ↗</a>
+                        <a href="#" class="text-accentRose hover:text-pink-400 font-medium text-[11px] mt-4 inline-flex items-center gap-1 hover:underline">Download Archive ↗</a>
                     </div>
-                    <!-- Waiver -->
-                    <div class="bg-darkCard border border-zinc-900 p-5 rounded-lg hover:border-zinc-800 transition-all flex flex-col justify-between">
+
+                    <div class="interactive-card bg-darkCard border border-zinc-900/80 p-5 rounded-xl flex flex-col justify-between">
                         <div>
                             <h3 class="text-slate-100 font-medium text-sm mb-1">Student Waiver</h3>
                             <p class="text-[11px] text-slate-500 leading-relaxed font-light">Standardized safety clearance files validating external practical hours rendered off-campus.</p>
                         </div>
-                        <a href="#" class="text-accentRose hover:text-pink-400 font-medium text-[11px] mt-4 inline-flex items-center gap-1">Download Archive ↗</a>
+                        <a href="#" class="text-accentRose hover:text-pink-400 font-medium text-[11px] mt-4 inline-flex items-center gap-1 hover:underline">Download Archive ↗</a>
                     </div>
-                    <!-- Agreement -->
-                    <div class="bg-darkCard border border-zinc-900 p-5 rounded-lg hover:border-zinc-800 transition-all flex flex-col justify-between">
+
+                    <div class="interactive-card bg-darkCard border border-zinc-900/80 p-5 rounded-xl flex flex-col justify-between">
                         <div>
                             <h3 class="text-slate-100 font-medium text-sm mb-1">Internship Agreement</h3>
                             <p class="text-[11px] text-slate-500 leading-relaxed font-light">Granular breakdown itemizing explicit scope of responsibilities and technical expectations.</p>
                         </div>
-                        <a href="#" class="text-accentRose hover:text-pink-400 font-medium text-[11px] mt-4 inline-flex items-center gap-1">Download Archive ↗</a>
+                        <a href="#" class="text-accentRose hover:text-pink-400 font-medium text-[11px] mt-4 inline-flex items-center gap-1 hover:underline">Download Archive ↗</a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- PANEL 3: TIME LOGS (REFERENCE INSPIRED) -->
-        <section id="weekly" class="w-screen min-w-[100vw] snap-start flex-shrink-0 flex items-center px-12 md:px-24 border-l border-zinc-900/50">
+        <!-- PANEL 3: TIME LOGS -->
+        <section class="panel-view w-screen min-w-[100vw] snap-start flex-shrink-0 flex items-center px-12 md:px-24">
             <div class="max-w-5xl w-full space-y-6">
                 
-                <!-- Time Tracking Summary Metrics Row -->
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-0.5 bg-zinc-900 rounded-xl overflow-hidden border border-zinc-800">
-                    <div class="bg-darkCard p-6 text-center">
-                        <span class="text-xs uppercase font-medium tracking-wider text-slate-500 block mb-1">Required</span>
-                        <span class="text-3xl font-semibold text-slate-200">300<span class="text-sm font-light text-slate-400">h</span></span>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-0.5 bg-zinc-900/80 rounded-xl overflow-hidden border border-zinc-800/80">
+                    <div class="bg-darkCard p-6 text-center group transition-colors hover:bg-zinc-900/40">
+                        <span class="text-[10px] uppercase font-medium tracking-wider text-slate-500 block mb-1">Required</span>
+                        <span class="text-3xl font-semibold text-slate-200 group-hover:text-white transition-colors">300<span class="text-sm font-light text-slate-400">h</span></span>
                         <span class="text-[10px] block text-slate-500 mt-1">total hours</span>
                     </div>
-                    <div class="bg-darkCard p-6 text-center">
-                        <span class="text-xs uppercase font-medium tracking-wider text-slate-500 block mb-1">Logged</span>
-                        <span class="text-3xl font-semibold text-slate-400">0<span class="text-sm font-light text-slate-500">h</span></span>
+                    <div class="bg-darkCard p-6 text-center group transition-colors hover:bg-zinc-900/40">
+                        <span class="text-[10px] uppercase font-medium tracking-wider text-slate-500 block mb-1">Logged</span>
+                        <span class="text-3xl font-semibold text-slate-400 group-hover:text-slate-200 transition-colors">0<span class="text-sm font-light text-slate-500">h</span></span>
                         <span class="text-[10px] block text-slate-500 mt-1">0% complete</span>
                     </div>
-                    <div class="bg-darkCard p-6 text-center">
-                        <span class="text-xs uppercase font-medium tracking-wider text-slate-500 block mb-1">Remaining</span>
-                        <span class="text-3xl font-semibold text-accentRose">300<span class="text-sm font-light text-accentRose/70">h</span></span>
+                    <div class="bg-darkCard p-6 text-center group transition-all duration-300 hover:bg-accentRose/5">
+                        <span class="text-3xl font-semibold text-accentRose block">300<span class="text-sm font-light text-accentRose/70">h</span></span>
                         <span class="text-[10px] block text-slate-500 mt-1">hours to go</span>
                     </div>
                 </div>
 
-                <!-- Estimated Completion Info Banner -->
-                <div class="bg-darkCard border border-zinc-900 rounded-xl p-5 flex flex-col gap-1">
+                <div class="bg-darkCard border border-zinc-900/80 rounded-xl p-5 flex flex-col gap-1 relative overflow-hidden group">
                     <span class="text-[10px] font-semibold tracking-wider text-slate-500 uppercase">Estimated Completion</span>
-                    <span class="text-xl font-medium text-slate-400">—</span>
+                    <span class="text-xl font-medium text-slate-400 group-hover:text-accentRose transition-colors duration-300">—</span>
                     <p class="text-[11px] text-slate-500">Need at least 3 logged days to estimate trajectory velocity.</p>
                 </div>
 
-                <!-- Interface Control Unit -->
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
-                    <div class="space-y-1">
+                    <div class="space-y-0.5">
                         <h3 class="text-lg font-medium text-white tracking-tight">Time Logs</h3>
                         <p class="text-xs text-slate-500">Jul 1, 2026 — Jul 31, 2026</p>
                     </div>
                     
-                    <!-- Reference Tracking Range Selectors -->
                     <div class="flex items-center gap-2 text-xs">
                         <div class="flex flex-col">
                             <span class="text-[9px] text-slate-500 uppercase tracking-wider font-medium mb-0.5">From</span>
-                            <input type="text" value="07/01/2026" readonly class="bg-darkCard border border-zinc-800 px-3 py-1.5 rounded text-slate-300 w-28 text-center outline-none">
+                            <input type="text" value="07/01/2026" readonly class="bg-darkCard border border-zinc-800/80 px-3 py-1.5 rounded text-slate-300 w-28 text-center outline-none hover:border-zinc-700 transition-colors">
                         </div>
                         <div class="flex flex-col">
                             <span class="text-[9px] text-slate-500 uppercase tracking-wider font-medium mb-0.5">To</span>
-                            <input type="text" value="07/31/2026" readonly class="bg-darkCard border border-zinc-800 px-3 py-1.5 rounded text-slate-300 w-28 text-center outline-none">
+                            <input type="text" value="07/31/2026" readonly class="bg-darkCard border border-zinc-800/80 px-3 py-1.5 rounded text-slate-300 w-28 text-center outline-none hover:border-zinc-700 transition-colors">
                         </div>
                         <div class="flex flex-col justify-end h-full pt-4">
-                            <button class="bg-zinc-900 border border-zinc-800 text-slate-300 px-3 py-1.5 rounded hover:bg-zinc-800 font-medium text-[11px]">Export ▾</button>
+                            <button class="bg-zinc-950 hover:bg-darkCard text-slate-300 hover:text-white px-3 py-1.5 rounded border border-zinc-800 hover:border-accentRose/50 font-medium text-[11px] transition-all duration-300 hover:shadow-[0_0_15px_rgba(244,114,182,0.15)]">Export ▾</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Legend Indicator System -->
-                <div class="flex flex-wrap items-center gap-4 text-[11px] text-slate-500 border-t border-zinc-900 pt-3">
-                    <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded bg-zinc-800 inline-block"></span> No log</span>
-                    <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded bg-amber-500 inline-block"></span> Clocked in (no out)</span>
-                    <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded bg-yellow-200 inline-block"></span> Absent / 0h</span>
-                    <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded bg-emerald-500/40 inline-block"></span> Partial (&lt;6h)</span>
-                    <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded bg-emerald-400 inline-block"></span> Full day (&ge;6h)</span>
+                <div class="flex flex-wrap items-center gap-4 text-[11px] text-slate-500 border-t border-zinc-900/60 pt-3">
+                    <span class="flex items-center gap-1.5 hover:text-slate-300 transition-colors"><span class="w-2 h-2 rounded bg-zinc-800 inline-block"></span> No log</span>
+                    <span class="flex items-center gap-1.5 hover:text-amber-400 transition-colors"><span class="w-2 h-2 rounded bg-amber-500 inline-block"></span> Clocked in</span>
+                    <span class="flex items-center gap-1.5 hover:text-yellow-100 transition-colors"><span class="w-2 h-2 rounded bg-yellow-200 inline-block"></span> Absent / 0h</span>
+                    <span class="flex items-center gap-1.5 hover:text-emerald-300 transition-colors"><span class="w-2 h-2 rounded bg-emerald-500/40 inline-block"></span> Partial (&lt;6h)</span>
+                    <span class="flex items-center gap-1.5 hover:text-emerald-300 transition-colors"><span class="w-2 h-2 rounded bg-emerald-400 inline-block"></span> Full day (&ge;6h)</span>
                 </div>
 
-                <!-- Empty State Message -->
-                <div class="text-center py-10 border border-dashed border-zinc-900 rounded-xl space-y-2">
+                <div class="text-center py-10 border border-dashed border-zinc-900/80 rounded-xl space-y-2 bg-darkCard/20 hover:bg-darkCard/40 transition-colors duration-300">
                     <p class="text-xs text-slate-500 font-light">No logs found in the selected date range.</p>
-                    <button class="text-xs text-accentRose font-medium tracking-wide hover:underline">+ Add your first log</button>
+                    <button class="text-xs text-accentRose font-medium tracking-wide hover:text-pink-400 transition-colors">+ Add your first log</button>
                 </div>
 
             </div>
@@ -221,10 +279,91 @@
 
     </main>
 
-    <!-- Global Layout System Footer Info -->
-    <footer class="text-center py-4 text-[10px] font-light text-slate-600 border-t border-zinc-950 flex-shrink-0">
-        <p>&copy; 2026 Joanna Ashley A. Escanilla. Shift layout tabs via side-scroll or navbar options.</p>
+    <!-- Global Footer -->
+    <footer class="text-center py-4 text-[10px] font-light text-slate-600 border-t border-zinc-950 flex-shrink-0 bg-darkBg/30 z-50">
+        <p>&copy; 2026 Joanna Ashley A. Escanilla. Use controls or side-arrows to slide decks.</p>
     </footer>
+
+    <!-- Interactive Navigation System Controller Script -->
+    <script>
+        const container = document.getElementById('deck-container');
+        const panels = document.querySelectorAll('.panel-view');
+        const leftArrow = document.getElementById('left-arrow');
+        const rightArrow = document.getElementById('right-arrow');
+        
+        let currentPanelIndex = 0;
+        const totalPanels = 3;
+
+        function scrollToPanel(index) {
+            currentPanelIndex = index;
+            const width = window.innerWidth;
+            container.scrollTo({
+                left: index * width,
+                behavior: 'smooth'
+            });
+            updateNavState(index);
+            updateArrowVisibility(index);
+        }
+
+        // Side edge navigation step engine (< / > buttons functionality)
+        function navigateDeck(direction) {
+            let targetIndex = currentPanelIndex + direction;
+            if (targetIndex >= 0 && targetIndex < totalPanels) {
+                scrollToPanel(targetIndex);
+            }
+        }
+
+        // Arrow context awareness controller
+        function updateArrowVisibility(index) {
+            // Left arrow visibility rules
+            if (index === 0) {
+                leftArrow.classList.add('opacity-0', 'pointer-events-none');
+            } else {
+                leftArrow.classList.remove('opacity-0', 'pointer-events-none');
+            }
+
+            // Right arrow visibility rules
+            if (index === totalPanels - 1) {
+                rightArrow.classList.add('opacity-0', 'pointer-events-none');
+            } else {
+                rightArrow.classList.remove('opacity-0', 'pointer-events-none');
+            }
+        }
+
+        function updateNavState(activeIndex) {
+            document.querySelectorAll('.nav-btn').forEach((btn, idx) => {
+                if(idx === activeIndex) {
+                    btn.classList.remove('text-slate-500');
+                    btn.classList.add('text-slate-200', 'bg-darkCard', 'border-zinc-800');
+                } else {
+                    btn.classList.remove('text-slate-200', 'bg-darkCard', 'border-zinc-800');
+                    btn.classList.add('text-slate-500');
+                }
+            });
+        }
+
+        // Real-time micro-interaction intersection controller 
+        container.addEventListener('scroll', () => {
+            const index = Math.round(container.scrollLeft / window.innerWidth);
+            currentPanelIndex = index;
+            updateNavState(index);
+            updateArrowVisibility(index);
+            
+            // Dynamic scale parallax shift effect on active panel
+            panels.forEach((panel, idx) => {
+                if(idx === index) {
+                    panel.style.opacity = '1';
+                    panel.style.transform = 'scale(1)';
+                } else {
+                    panel.style.opacity = '0.2';
+                    panel.style.transform = 'scale(0.97)';
+                }
+            });
+        });
+
+        // Initialize setup presentation state
+        window.addEventListener('load', () => scrollToPanel(0));
+    </script>
 
 </body>
 </html>

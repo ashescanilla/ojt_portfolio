@@ -11,128 +11,141 @@
             theme: {
                 extend: {
                     colors: {
-                        darkBg: '#040206',      /* Ultra-deep obsidian black */
-                        darkCard: '#0b0811',    /* Low-luminance premium component cards */
-                        accentRose: '#f472b6',  /* Vivid rose gold element */
+                        sakuraDark: '#1a1216',    /* Deep twilight violet-tinted wood bark */
+                        sakuraCard: '#241920',    /* Soft dark plum card base */
+                        sakuraPetal: '#ffb7c5',   /* Authentic soft sakura pink */
+                        sakuraGlow: '#fbcfe8',    /* Bright cherry blossom glow highlight */
                     }
                 }
             }
         }
     </script>
     <style>
-        /* --- SUBTLE AMBIENT IDLE ENGINES --- */
-        @keyframes gridPulse {
-            0%, 100% { background-size: 36px 36px; opacity: 0.7; }
-            50% { background-size: 37px 37px; opacity: 0.9; }
+        /* --- SAKURA AMBIENT THEME ENGINE --- */
+        
+        /* Subtle wind-rustled grid breathing cycle */
+        @keyframes ambientBreeze {
+            0%, 100% { background-size: 40px 40px; opacity: 0.8; }
+            50% { background-size: 41px 41px; opacity: 1; }
         }
-        .grid-bg {
-            background-color: #040206;
-            background-image: linear-gradient(rgba(244, 114, 182, 0.008) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(244, 114, 182, 0.008) 1px, transparent 1px);
-            animation: gridPulse 20s ease-in-out infinite;
+        .sakura-bg {
+            background-color: #160e12;
+            background-image: linear-gradient(rgba(255, 183, 197, 0.015) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255, 183, 197, 0.015) 1px, transparent 1px);
+            animation: ambientBreeze 18s ease-in-out infinite;
         }
 
-        @keyframes driftGlow {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.4; }
-            50% { transform: translate(-48%, -52%) scale(1.05); opacity: 0.6; }
+        /* Dreamy soft-focus orchard illumination */
+        @keyframes sakuraGlowDrift {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.35; filter: blur(80px); }
+            50% { transform: translate(-47%, -53%) scale(1.1); opacity: 0.5; filter: blur(100px); }
         }
-        .glow-sphere {
+        .sakura-glow-sphere {
             position: absolute;
-            width: 700px;
-            height: 700px;
-            background: radial-gradient(circle, rgba(244, 114, 182, 0.03) 0%, transparent 70%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(255, 183, 197, 0.08) 0%, rgba(244, 114, 182, 0.02) 50%, transparent 70%);
             top: 50%;
             left: 50%;
-            pointer-events: none; /* CRITICAL: Prevents blocking clicks */
+            pointer-events: none;
             z-index: 0;
-            animation: driftGlow 15s ease-in-out infinite;
+            animation: sakuraGlowDrift 12s ease-in-out infinite;
         }
 
-        @keyframes subtleFloatA {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-2px); }
+        /* Slow organic floating for cards */
+        @keyframes petalFloatA {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-3px) rotate(0.5deg); }
         }
-        @keyframes subtleFloatB {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(2px); }
+        @keyframes petalFloatB {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(3px) rotate(-0.5deg); }
         }
-        .card-idle-a { animation: subtleFloatA 8s ease-in-out infinite; }
-        .card-idle-b { animation: subtleFloatB 10s ease-in-out infinite; }
+        .card-float-a { animation: petalFloatA 7s ease-in-out infinite; }
+        .card-float-b { animation: petalFloatB 9s ease-in-out infinite; }
 
-        @keyframes textGlowShimmer {
-            0%, 100% { opacity: 0.85; text-shadow: 0 0 0px rgba(244,114,182,0); }
-            50% { opacity: 1; text-shadow: 0 0 12px rgba(244,114,182,0.25); }
+        /* Gentle floral luminescence text shimmer */
+        @keyframes floralTextShimmer {
+            0%, 100% { opacity: 0.9; text-shadow: 0 0 4px rgba(255, 183, 197, 0); }
+            50% { opacity: 1; text-shadow: 0 0 15px rgba(255, 183, 197, 0.4); color: #fff; }
         }
-        .shimmer-text { animation: textGlowShimmer 6s ease-in-out infinite; }
+        .shimmer-floral { animation: floralTextShimmer 5s ease-in-out infinite; }
 
-        @keyframes orbitAura {
+        @keyframes ringSpin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        .profile-ring { animation: orbitAura 24s linear infinite; }
+        .avatar-ring { animation: ringSpin 30s linear infinite; }
 
+        /* Custom premium micro scrollbar */
         ::-webkit-scrollbar { height: 4px; }
-        ::-webkit-scrollbar-track { background: #040206; }
-        ::-webkit-scrollbar-thumb { background: #120d1c; border-radius: 99px; }
-        ::-webkit-scrollbar-thumb:hover { background: #f472b6; }
+        ::-webkit-scrollbar-track { background: #160e12; }
+        ::-webkit-scrollbar-thumb { background: #2d1d25; border-radius: 99px; }
+        ::-webkit-scrollbar-thumb:hover { background: #ffb7c5; }
 
-        .interactive-card {
+        /* Sakura Interactive Lantern Glow Cards */
+        .lantern-card {
             position: relative;
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .interactive-card::before {
+        .lantern-card::before {
             content: '';
             position: absolute;
             inset: 0;
             border-radius: inherit;
             padding: 1px;
-            background: linear-gradient(to bottom, rgba(255,255,255,0.03), rgba(244, 114, 182, 0));
+            background: linear-gradient(to bottom, rgba(255, 183, 197, 0.1), rgba(255, 183, 197, 0));
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             mask-content-box: content-box, padding-box;
             -webkit-mask-composite: xor;
             mask-composite: exclude;
             pointer-events: none;
         }
-        .interactive-card:hover {
-            transform: translateY(-4px) !important;
+        .lantern-card:hover {
+            transform: translateY(-5px) scale(1.01) !important;
             animation-play-state: paused !important;
-            background-color: #110c1a;
-            border-color: rgba(244, 114, 182, 0.2);
-            box-shadow: 0 20px 40px -15px rgba(0,0,0,0.7), 0 0 15px 1px rgba(244, 114, 182, 0.05);
+            background-color: #2d1f28;
+            border-color: rgba(255, 183, 197, 0.3);
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.6), 0 0 20px 2px rgba(255, 183, 197, 0.08);
         }
 
         .panel-view {
-            transition: opacity 0.7s cubic-bezier(0.25, 1, 0.5, 1), transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
         }
     </style>
 </head>
-<body class="grid-bg text-slate-400 font-sans antialiased h-screen overflow-hidden flex flex-col relative select-none">
+<body class="sakura-bg text-stone-300 font-sans antialiased h-screen overflow-hidden flex flex-col relative select-none">
     
-    <!-- Ambient backdrops strictly locked below UI input layers -->
-    <div class="glow-sphere z-0"></div>
+    <!-- Ambient Blur backdrops located entirely underneath navigation and card deck layers -->
+    <div class="sakura-glow-sphere z-0"></div>
 
-    <!-- Minimal Interactive Navigation -->
-    <nav class="bg-darkBg/60 backdrop-blur-xl z-50 border-b border-zinc-900/40 flex-shrink-0 transition-all duration-300 relative">
+    <!-- Decorative Corner Sakura Elements (Sleek silhouettes to add life without clutter) -->
+    <div class="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-pink-500/5 to-transparent pointer-events-none rounded-bl-full z-0"></div>
+    <div class="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-pink-500/[0.03] to-transparent pointer-events-none rounded-tr-full z-0"></div>
+
+    <!-- Minimal Sakura Navigation Bar -->
+    <nav class="bg-sakuraDark/60 backdrop-blur-xl z-50 border-b border-pink-950/20 flex-shrink-0 transition-all duration-300 relative">
         <div class="max-w-7xl mx-auto flex justify-between items-center px-8 py-4">
             <div class="flex items-center gap-3 group cursor-pointer">
-                <div class="w-6 h-6 rounded-md bg-accentRose/5 flex items-center justify-center border border-accentRose/10 group-hover:border-accentRose/40 group-hover:bg-accentRose/10 transition-all duration-500 shadow-sm">
-                    <div class="w-1.5 h-1.5 rounded-sm bg-accentRose/80 group-hover:scale-110 transition-transform"></div>
+                <!-- Blossom Icon Unit -->
+                <div class="w-6 h-6 rounded-full bg-sakuraPetal/5 flex items-center justify-center border border-sakuraPetal/20 group-hover:border-sakuraPetal/60 group-hover:bg-sakuraPetal/10 transition-all duration-500 shadow-sm">
+                    <div class="w-1.5 h-1.5 rounded-full bg-sakuraPetal group-hover:scale-125 transition-transform shadow-[0_0_8px_rgba(255,183,197,0.8)]"></div>
                 </div>
-                <span class="text-slate-400 group-hover:text-slate-200 font-semibold tracking-wide text-xs uppercase transition-colors">Escanilla <span class="text-accentRose/60">/</span> Workspace</span>
+                <span class="text-stone-400 group-hover:text-stone-100 font-medium tracking-widest text-xs uppercase transition-colors">Escanilla <span class="text-sakuraPetal/40">🌸</span> Workspace</span>
             </div>
-            <div class="flex gap-2 p-1 bg-zinc-950/40 rounded-full border border-zinc-900/50 text-[11px] tracking-wide uppercase font-medium">
-                <button onclick="scrollToPanel(0)" id="nav-0" class="nav-btn px-4 py-1.5 rounded-full text-slate-200 bg-darkCard border border-zinc-800/60 transition-all duration-300">01. Profile</button>
-                <button onclick="scrollToPanel(1)" id="nav-1" class="nav-btn px-4 py-1.5 rounded-full text-slate-500 hover:text-slate-200 transition-all duration-300">02. Registry</button>
-                <button onclick="scrollToPanel(2)" id="nav-2" class="nav-btn px-4 py-1.5 rounded-full text-slate-500 hover:text-slate-200 transition-all duration-300">03. Time Logs</button>
+            <div class="flex gap-2 p-1 bg-stone-950/40 rounded-full border border-pink-950/30 text-[11px] tracking-wide uppercase font-medium">
+                <button onclick="scrollToPanel(0)" id="nav-0" class="nav-btn px-4 py-1.5 rounded-full text-sakuraPetal bg-sakuraCard border border-pink-900/30 transition-all duration-300">01. Profile</button>
+                <button onclick="scrollToPanel(1)" id="nav-1" class="nav-btn px-4 py-1.5 rounded-full text-stone-500 hover:text-stone-200 transition-all duration-300">02. Registry</button>
+                <button onclick="scrollToPanel(2)" id="nav-2" class="nav-btn px-4 py-1.5 rounded-full text-stone-500 hover:text-stone-200 transition-all duration-300">03. Time Logs</button>
             </div>
         </div>
     </nav>
 
-    <!-- Navigation Control Arrows -->
-    <button onclick="navigateDeck(-1)" id="left-arrow" class="fixed left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full border border-zinc-900 bg-zinc-950/60 backdrop-blur-md flex items-center justify-center text-slate-500 hover:text-white hover:border-accentRose/30 hover:bg-darkCard z-50 opacity-0 pointer-events-none transition-all duration-300">
+    <!-- Navigation Deck Control Arrows -->
+    <button onclick="navigateDeck(-1)" id="left-arrow" class="fixed left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full border border-pink-950/40 bg-sakuraDark/80 backdrop-blur-md flex items-center justify-center text-stone-400 hover:text-white hover:border-sakuraPetal/40 hover:bg-sakuraCard z-50 opacity-0 pointer-events-none transition-all duration-300 shadow-lg">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
     </button>
-    <button onclick="navigateDeck(1)" id="right-arrow" class="fixed right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full border border-zinc-900 bg-zinc-950/60 backdrop-blur-md flex items-center justify-center text-slate-500 hover:text-white hover:border-accentRose/30 hover:bg-darkCard z-50 transition-all duration-300">
+    <button onclick="navigateDeck(1)" id="right-arrow" class="fixed right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full border border-pink-950/40 bg-sakuraDark/80 backdrop-blur-md flex items-center justify-center text-stone-400 hover:text-white hover:border-sakuraPetal/40 hover:bg-sakuraCard z-50 transition-all duration-300 shadow-lg">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
     </button>
 
@@ -145,45 +158,47 @@
                 
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-12 items-center justify-items-center md:justify-items-start">
                     <div class="flex justify-center w-full relative">
-                        <div class="w-40 h-40 rounded-full border border-zinc-900 bg-darkCard/80 flex items-center justify-center text-slate-200 text-3xl font-light tracking-widest relative group transition-all duration-700 hover:border-accentRose/40 shadow-inner">
-                            <span class="z-10 transition-transform duration-500 group-hover:scale-105 group-hover:text-white font-normal">JA</span>
-                            <div class="absolute inset-2 rounded-full bg-gradient-to-tr from-accentRose/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                            <div class="profile-ring absolute inset-0 rounded-full border border-dashed border-zinc-800 scale-[1.04]"></div>
-                            <div class="absolute inset-0 rounded-full border border-accentRose/10 scale-100 opacity-0 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700"></div>
+                        <!-- Elegant Soft Rose Monogram Core Node -->
+                        <div class="w-40 h-40 rounded-full border border-pink-950/40 bg-sakuraCard/90 flex items-center justify-center text-sakuraPetal text-3xl font-light tracking-widest relative group transition-all duration-700 hover:border-sakuraPetal/40 shadow-[0_0_30px_rgba(255,183,197,0.03)]">
+                            <span class="z-10 transition-transform duration-500 group-hover:scale-105 group-hover:text-white font-normal drop-shadow-[0_2px_10px_rgba(255,183,197,0.3)]">JA</span>
+                            <div class="absolute inset-2 rounded-full bg-gradient-to-tr from-sakuraPetal/[0.05] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                            <!-- Ring System -->
+                            <div class="avatar-ring absolute inset-0 rounded-full border border-dashed border-pink-900/40 scale-[1.05]"></div>
+                            <div class="absolute inset-0 rounded-full border border-sakuraPetal/20 scale-100 opacity-0 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700"></div>
                         </div>
                     </div>
                     
                     <div class="md:col-span-3 space-y-4 text-center md:text-left">
                         <div>
-                            <span class="inline-flex items-center gap-2 bg-zinc-950/80 text-slate-500 text-[10px] font-semibold tracking-wider uppercase px-3 py-1 rounded border border-zinc-900 transition-all">
-                                Engineering Deployment Logs
+                            <span class="inline-flex items-center gap-2 bg-pink-950/30 text-sakuraPetal/70 text-[10px] font-semibold tracking-widest uppercase px-3 py-1 rounded-full border border-pink-900/30 transition-all">
+                                🌸 Spring Deployment Cycle
                             </span>
                         </div>
-                        <h1 class="text-4xl font-bold text-white tracking-tight shimmer-text">Joanna Ashley A. Escanilla</h1>
-                        <div class="space-y-1 text-xs md:text-sm text-slate-400 font-light tracking-wide mx-auto md:mx-0 max-w-max text-left">
-                            <p class="hover:text-slate-300 transition-colors">🎓 Bachelor of Science in Computer Engineering</p>
-                            <p class="hover:text-slate-300 transition-colors">🏫 Polytechnic University of the Philippines — Sta. Mesa</p>
-                            <p class="text-slate-400">🏢 Department of Education — SDO San Jose Del Monte</p>
+                        <h1 class="text-4xl font-bold text-stone-100 tracking-tight shimmer-floral">Joanna Ashley A. Escanilla</h1>
+                        <div class="space-y-1 text-xs md:text-sm text-stone-400 font-light tracking-wide mx-auto md:mx-0 max-w-max text-left">
+                            <p class="hover:text-sakuraPetal transition-colors">🎓 Bachelor of Science in Computer Engineering</p>
+                            <p class="hover:text-sakuraPetal transition-colors">🏫 Polytechnic University of the Philippines — Sta. Mesa</p>
+                            <p class="text-stone-400">🏢 Department of Education — SDO San Jose Del Monte</p>
                         </div>
-                        <p class="text-slate-500 text-xs md:text-sm font-light leading-relaxed max-w-xl mx-auto md:mx-0">
+                        <p class="text-stone-500 text-xs md:text-sm font-light leading-relaxed max-w-xl mx-auto md:mx-0">
                             Official technical archive mapping academic validation workflows, systems deployment structures, and standard operational reviews completed under the Information Technology department at DepEd.
                         </p>
                     </div>
                 </div>
 
-                <!-- Core Dashboard Metrics Row -->
+                <!-- Core Dashboard Lantern Metrics Grid -->
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 pt-4">
-                    <div class="interactive-card card-idle-a bg-darkCard border border-zinc-900/60 p-6 rounded-2xl text-center sm:text-left">
-                        <span class="text-2xl md:text-3xl font-semibold text-slate-200 tracking-tight block">300 Hours</span>
-                        <span class="text-[11px] uppercase font-medium tracking-wider text-slate-500 mt-1 block">Required Work Hours</span>
+                    <div class="lantern-card card-float-a bg-sakuraCard border border-pink-950/20 p-6 rounded-2xl text-center sm:text-left">
+                        <span class="text-2xl md:text-3xl font-semibold text-stone-200 tracking-tight block">300 Hours</span>
+                        <span class="text-[11px] uppercase font-medium tracking-wider text-stone-500 mt-1 block">Required Work Hours</span>
                     </div>
-                    <div class="interactive-card card-idle-b bg-darkCard border border-zinc-900/60 p-6 rounded-2xl text-center sm:text-left">
-                        <span class="text-2xl md:text-3xl font-semibold text-accentRose/90 tracking-tight block">68 / 300</span>
-                        <span class="text-[11px] uppercase font-medium tracking-wider text-slate-500 mt-1 block">Hours Rendered Logs</span>
+                    <div class="lantern-card card-float-b bg-sakuraCard border border-pink-950/20 p-6 rounded-2xl text-center sm:text-left">
+                        <span class="text-2xl md:text-3xl font-semibold text-sakuraPetal tracking-tight block drop-shadow-[0_0_8px_rgba(255,183,197,0.3)]">68 / 300</span>
+                        <span class="text-[11px] uppercase font-medium tracking-wider text-stone-500 mt-1 block">Hours Rendered Logs</span>
                     </div>
-                    <div class="interactive-card card-idle-a bg-darkCard border border-zinc-900/60 p-6 rounded-2xl text-center sm:text-left">
-                        <span class="text-2xl md:text-3xl font-semibold text-slate-200 tracking-tight block">7 Units</span>
-                        <span class="text-[11px] uppercase font-medium tracking-wider text-slate-500 mt-1 block">Documents Submitted</span>
+                    <div class="lantern-card card-float-a bg-sakuraCard border border-pink-950/20 p-6 rounded-2xl text-center sm:text-left">
+                        <span class="text-2xl md:text-3xl font-semibold text-stone-200 tracking-tight block">7 Units</span>
+                        <span class="text-[11px] uppercase font-medium tracking-wider text-stone-500 mt-1 block">Documents Submitted</span>
                     </div>
                 </div>
 
@@ -194,57 +209,57 @@
         <section class="panel-view w-screen min-w-[100vw] snap-start flex-shrink-0 flex items-center justify-center px-6 md:px-12 z-20">
             <div class="max-w-5xl w-full space-y-8">
                 <div class="text-center md:text-left">
-                    <span class="text-xs font-semibold tracking-wider text-accentRose/80 uppercase shimmer-text">Compliance Matrix</span>
-                    <h2 class="text-2xl font-semibold text-white tracking-tight mt-0.5">Required Clearances</h2>
+                    <span class="text-xs font-semibold tracking-wider text-sakuraPetal/80 uppercase shimmer-floral">Compliance Matrix</span>
+                    <h2 class="text-2xl font-semibold text-stone-100 tracking-tight mt-0.5">Required Clearances</h2>
                 </div>
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
-                    <div class="interactive-card card-idle-a bg-darkCard border border-zinc-900/60 p-5 rounded-xl flex flex-col justify-between">
+                    <div class="lantern-card card-float-a bg-sakuraCard border border-pink-950/20 p-5 rounded-xl flex flex-col justify-between">
                         <div>
-                            <h3 class="text-slate-200 font-medium text-sm mb-1">Memorandum of Agreement</h3>
-                            <p class="text-[11px] text-slate-500 leading-relaxed font-light">Official legal framework establishing mutual partnership terms between PUP and DepEd.</p>
+                            <h3 class="text-stone-200 font-medium text-sm mb-1 group-hover:text-white">Memorandum of Agreement</h3>
+                            <p class="text-[11px] text-stone-500 leading-relaxed font-light">Official legal framework establishing mutual partnership terms between PUP and DepEd.</p>
                         </div>
-                        <a href="#" class="text-accentRose/80 hover:text-accentRose font-medium text-[11px] mt-4 inline-flex items-center gap-1">Download Archive ↗</a>
+                        <a href="#" class="text-sakuraPetal/80 hover:text-sakuraPetal font-medium text-[11px] mt-4 inline-flex items-center gap-1">Download Archive ↗</a>
                     </div>
                     
-                    <div class="interactive-card card-idle-b bg-darkCard border border-zinc-900/60 p-5 rounded-xl flex flex-col justify-between">
+                    <div class="lantern-card card-float-b bg-sakuraCard border border-pink-950/20 p-5 rounded-xl flex flex-col justify-between">
                         <div>
-                            <h3 class="text-slate-200 font-medium text-sm mb-1">Letter of Intent</h3>
-                            <p class="text-[11px] text-slate-500 leading-relaxed font-light">Formal notification indicating candidacy statement sent directly to the host supervisor.</p>
+                            <h3 class="text-stone-200 font-medium text-sm mb-1">Letter of Intent</h3>
+                            <p class="text-[11px] text-stone-500 leading-relaxed font-light">Formal notification indicating candidacy statement sent directly to the host supervisor.</p>
                         </div>
-                        <a href="#" class="text-accentRose/80 hover:text-accentRose font-medium text-[11px] mt-4 inline-flex items-center gap-1">Download Archive ↗</a>
+                        <a href="#" class="text-sakuraPetal/80 hover:text-sakuraPetal font-medium text-[11px] mt-4 inline-flex items-center gap-1">Download Archive ↗</a>
                     </div>
 
-                    <div class="interactive-card card-idle-a bg-darkCard border border-zinc-900/60 p-5 rounded-xl flex flex-col justify-between">
+                    <div class="lantern-card card-float-a bg-sakuraCard border border-pink-950/20 p-5 rounded-xl flex flex-col justify-between">
                         <div>
-                            <h3 class="text-slate-200 font-medium text-sm mb-1">Letter of Endorsement</h3>
-                            <p class="text-[11px] text-slate-500 leading-relaxed font-light">Verification declaration issued by the university Computer Engineering department head.</p>
+                            <h3 class="text-stone-200 font-medium text-sm mb-1">Letter of Endorsement</h3>
+                            <p class="text-[11px] text-stone-500 leading-relaxed font-light">Verification declaration issued by the university Computer Engineering department head.</p>
                         </div>
-                        <a href="#" class="text-accentRose/80 hover:text-accentRose font-medium text-[11px] mt-4 inline-flex items-center gap-1">Download Archive ↗</a>
+                        <a href="#" class="text-sakuraPetal/80 hover:text-sakuraPetal font-medium text-[11px] mt-4 inline-flex items-center gap-1">Download Archive ↗</a>
                     </div>
 
-                    <div class="interactive-card card-idle-b bg-darkCard border border-zinc-900/60 p-5 rounded-xl flex flex-col justify-between">
+                    <div class="lantern-card card-float-b bg-sakuraCard border border-pink-950/20 p-5 rounded-xl flex flex-col justify-between">
                         <div>
-                            <h3 class="text-slate-200 font-medium text-sm mb-1">PUP Consent Form</h3>
-                            <p class="text-[11px] text-slate-500 leading-relaxed font-light">Legal parental/guardian acknowledgment documents executed prior to deployment setup.</p>
+                            <h3 class="text-stone-200 font-medium text-sm mb-1">PUP Consent Form</h3>
+                            <p class="text-[11px] text-stone-500 leading-relaxed font-light">Legal parental/guardian acknowledgment documents executed prior to deployment setup.</p>
                         </div>
-                        <a href="#" class="text-accentRose/80 hover:text-accentRose font-medium text-[11px] mt-4 inline-flex items-center gap-1">Download Archive ↗</a>
+                        <a href="#" class="text-sakuraPetal/80 hover:text-sakuraPetal font-medium text-[11px] mt-4 inline-flex items-center gap-1">Download Archive ↗</a>
                     </div>
 
-                    <div class="interactive-card card-idle-a bg-darkCard border border-zinc-900/60 p-5 rounded-xl flex flex-col justify-between">
+                    <div class="lantern-card card-float-a bg-sakuraCard border border-pink-950/20 p-5 rounded-xl flex flex-col justify-between">
                         <div>
-                            <h3 class="text-slate-200 font-medium text-sm mb-1">Student Waiver</h3>
-                            <p class="text-[11px] text-slate-500 leading-relaxed font-light">Standardized safety clearance files validating external practical hours rendered off-campus.</p>
+                            <h3 class="text-stone-200 font-medium text-sm mb-1">Student Waiver</h3>
+                            <p class="text-[11px] text-stone-500 leading-relaxed font-light">Standardized safety clearance files validating external practical hours rendered off-campus.</p>
                         </div>
-                        <a href="#" class="text-accentRose/80 hover:text-accentRose font-medium text-[11px] mt-4 inline-flex items-center gap-1">Download Archive ↗</a>
+                        <a href="#" class="text-sakuraPetal/80 hover:text-sakuraPetal font-medium text-[11px] mt-4 inline-flex items-center gap-1">Download Archive ↗</a>
                     </div>
 
-                    <div class="interactive-card card-idle-b bg-darkCard border border-zinc-900/60 p-5 rounded-xl flex flex-col justify-between">
+                    <div class="lantern-card card-float-b bg-sakuraCard border border-pink-950/20 p-5 rounded-xl flex flex-col justify-between">
                         <div>
-                            <h3 class="text-slate-200 font-medium text-sm mb-1">Internship Agreement</h3>
-                            <p class="text-[11px] text-slate-500 leading-relaxed font-light">Granular breakdown itemizing explicit scope of responsibilities and technical expectations.</p>
+                            <h3 class="text-stone-200 font-medium text-sm mb-1">Internship Agreement</h3>
+                            <p class="text-[11px] text-stone-500 leading-relaxed font-light">Granular breakdown itemizing explicit scope of responsibilities and technical expectations.</p>
                         </div>
-                        <a href="#" class="text-accentRose/80 hover:text-accentRose font-medium text-[11px] mt-4 inline-flex items-center gap-1">Download Archive ↗</a>
+                        <a href="#" class="text-sakuraPetal/80 hover:text-sakuraPetal font-medium text-[11px] mt-4 inline-flex items-center gap-1">Download Archive ↗</a>
                     </div>
                 </div>
             </div>
@@ -254,50 +269,50 @@
         <section class="panel-view w-screen min-w-[100vw] snap-start flex-shrink-0 flex items-center justify-center px-6 md:px-12 z-20">
             <div class="max-w-5xl w-full space-y-6">
                 
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-0.5 bg-zinc-900/40 rounded-xl overflow-hidden border border-zinc-900">
-                    <div class="bg-darkCard p-6 text-center group transition-colors">
-                        <span class="text-[10px] uppercase font-medium tracking-wider text-slate-500 block mb-1">Required</span>
-                        <span class="text-3xl font-semibold text-slate-300">300<span class="text-sm font-light text-slate-500">h</span></span>
-                        <span class="text-[10px] block text-slate-600 mt-1">total schedule footprint</span>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-0.5 bg-pink-950/20 rounded-xl overflow-hidden border border-pink-950/30">
+                    <div class="bg-sakuraCard p-6 text-center group transition-colors">
+                        <span class="text-[10px] uppercase font-medium tracking-wider text-stone-500 block mb-1">Required</span>
+                        <span class="text-3xl font-semibold text-stone-300">300<span class="text-sm font-light text-stone-500">h</span></span>
+                        <span class="text-[10px] block text-stone-600 mt-1">total schedule footprint</span>
                     </div>
-                    <div class="bg-darkCard p-6 text-center group transition-colors">
-                        <span class="text-[10px] uppercase font-medium tracking-wider text-slate-500 block mb-1">Logged</span>
-                        <span class="text-3xl font-semibold text-slate-300">68<span class="text-sm font-light text-slate-500">h</span></span>
-                        <span class="text-[10px] block text-slate-600 mt-1">22.6% completed metrics</span>
+                    <div class="bg-sakuraCard p-6 text-center group transition-colors">
+                        <span class="text-[10px] uppercase font-medium tracking-wider text-stone-500 block mb-1">Logged</span>
+                        <span class="text-3xl font-semibold text-stone-300">68<span class="text-sm font-light text-stone-500">h</span></span>
+                        <span class="text-[10px] block text-stone-600 mt-1">22.6% completed metrics</span>
                     </div>
-                    <div class="bg-darkCard p-6 text-center group transition-all duration-300">
-                        <span class="text-3xl font-semibold text-accentRose/80 block">232<span class="text-sm font-light text-accentRose/60">h</span></span>
-                        <span class="text-[10px] block text-slate-500 mt-1">remaining tracking workload</span>
+                    <div class="bg-sakuraCard p-6 text-center group transition-all duration-300">
+                        <span class="text-3xl font-semibold text-sakuraPetal block drop-shadow-[0_0_6px_rgba(255,183,197,0.2)]">232<span class="text-sm font-light text-sakuraPetal/60">h</span></span>
+                        <span class="text-[10px] block text-stone-500 mt-1">remaining tracking workload</span>
                     </div>
                 </div>
 
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
                     <div class="space-y-0.5 text-center sm:text-left">
-                        <h3 class="text-lg font-medium text-white tracking-tight shimmer-text">Time Logs</h3>
-                        <p class="text-xs text-slate-500">Jul 1, 2026 — Jul 31, 2026</p>
+                        <h3 class="text-lg font-medium text-stone-100 tracking-tight shimmer-floral">Time Logs</h3>
+                        <p class="text-xs text-stone-500">Jul 1, 2026 — Jul 31, 2026</p>
                     </div>
                     
                     <div class="flex flex-wrap items-center justify-center sm:justify-end gap-2 text-xs">
                         <div class="flex flex-col">
-                            <span class="text-[9px] text-slate-500 uppercase tracking-wider font-medium mb-0.5">From</span>
-                            <input type="text" value="07/01/2026" readonly class="bg-darkCard border border-zinc-900 px-3 py-1.5 rounded text-slate-400 w-28 text-center outline-none text-xs">
+                            <span class="text-[9px] text-stone-500 uppercase tracking-wider font-medium mb-0.5">From</span>
+                            <input type="text" value="07/01/2026" readonly class="bg-sakuraCard border border-pink-950/40 px-3 py-1.5 rounded text-stone-400 w-28 text-center outline-none text-xs">
                         </div>
                         <div class="flex flex-col">
-                            <span class="text-[9px] text-slate-500 uppercase tracking-wider font-medium mb-0.5">To</span>
-                            <input type="text" value="07/31/2026" readonly class="bg-darkCard border border-zinc-900 px-3 py-1.5 rounded text-slate-400 w-28 text-center outline-none text-xs">
+                            <span class="text-[9px] text-stone-500 uppercase tracking-wider font-medium mb-0.5">To</span>
+                            <input type="text" value="07/31/2026" readonly class="bg-sakuraCard border border-pink-950/40 px-3 py-1.5 rounded text-stone-400 w-28 text-center outline-none text-xs">
                         </div>
                     </div>
                 </div>
 
-                <div class="flex flex-wrap items-center justify-center sm:justify-start gap-4 text-[11px] text-slate-600 border-t border-zinc-900/40 pt-3">
-                    <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded bg-zinc-800 inline-block"></span> No log</span>
-                    <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded bg-amber-500 inline-block"></span> Clocked in</span>
-                    <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded bg-emerald-500 inline-block"></span> Full day completed</span>
+                <div class="flex flex-wrap items-center justify-center sm:justify-start gap-4 text-[11px] text-stone-500 border-t border-pink-950/20 pt-3">
+                    <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded bg-stone-800 inline-block"></span> No log</span>
+                    <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded bg-amber-400 inline-block shadow-[0_0_6px_rgba(245,158,11,0.5)]"></span> Clocked in</span>
+                    <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded bg-emerald-400 inline-block shadow-[0_0_6px_rgba(52,211,153,0.5)]"></span> Full day completed</span>
                 </div>
 
-                <div class="text-center py-10 border border-dashed border-zinc-900 rounded-xl bg-darkCard/10 card-idle-b">
-                    <p class="text-xs text-slate-500 font-light">No logs found in the selected date range.</p>
-                    <button class="text-xs text-accentRose/80 font-medium tracking-wide hover:text-accentRose mt-1">+ Create log sequence entry</button>
+                <div class="text-center py-10 border border-dashed border-pink-950/30 rounded-xl bg-sakuraCard/20 card-float-b">
+                    <p class="text-xs text-stone-500 font-light">No logs found in the selected date range.</p>
+                    <button class="text-xs text-sakuraPetal/80 font-medium tracking-wide hover:text-sakuraPetal mt-1">+ Create log sequence entry</button>
                 </div>
 
             </div>
@@ -306,8 +321,8 @@
     </main>
 
     <!-- Global Footer -->
-    <footer class="text-center py-4 text-[10px] font-light text-slate-600 border-t border-zinc-950/40 flex-shrink-0 bg-darkBg/30 z-50 relative">
-        <p>&copy; 2026 Joanna Ashley A. Escanilla. Interactive UI layer operating live.</p>
+    <footer class="text-center py-4 text-[10px] font-light text-stone-600 border-t border-pink-950/10 flex-shrink-0 bg-sakuraDark/30 z-50 relative">
+        <p>&copy; 2026 Joanna Ashley A. Escanilla. Interactive Sakura Engine operating live.</p>
     </footer>
 
     <!-- Navigation Deck Controller Script -->
@@ -349,11 +364,11 @@
         function updateNavState(activeIndex) {
             document.querySelectorAll('.nav-btn').forEach((btn, idx) => {
                 if(idx === activeIndex) {
-                    btn.classList.remove('text-slate-500');
-                    btn.classList.add('text-slate-200', 'bg-darkCard', 'border-zinc-800/60');
+                    btn.classList.remove('text-stone-500');
+                    btn.classList.add('text-sakuraPetal', 'bg-sakuraCard', 'border-pink-900/30');
                 } else {
-                    btn.classList.remove('text-slate-200', 'bg-darkCard', 'border-zinc-800/60');
-                    btn.classList.add('text-slate-500');
+                    btn.classList.remove('text-sakuraPetal', 'bg-sakuraCard', 'border-pink-900/30');
+                    btn.classList.add('text-stone-500');
                 }
             });
         }

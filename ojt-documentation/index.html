@@ -106,6 +106,8 @@
         .panel-view {
             transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
         }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
 <body class="sakura-bg text-stone-300 font-sans antialiased h-screen overflow-hidden flex flex-col relative select-none">
@@ -181,13 +183,13 @@
                     
                     <!-- DYNAMIC TIME TRACKER CARD -->
                     <div class="lantern-card card-float-b bg-sakuraCard border border-pink-950/20 p-6 rounded-2xl text-center sm:text-left">
-                        <span id="global-hours-display" class="text-2xl md:text-3xl font-semibold text-sakuraPetal tracking-tight block drop-shadow-[0_0_8px_rgba(255,183,197,0.3)]">68 / 300</span>
+                        <span id="global-hours-display" class="text-2xl md:text-3xl font-semibold text-sakuraPetal tracking-tight block drop-shadow-[0_0_8px_rgba(255,183,197,0.3)]">0 / 300</span>
                         <span class="text-[11px] uppercase font-medium tracking-wider text-stone-500 mt-1 block">Hours Rendered Logs</span>
                     </div>
                     
                     <!-- Clickable 7 Units Button -->
                     <button onclick="openRegistryModal()" class="lantern-card card-float-a bg-sakuraCard border border-pink-950/20 p-6 rounded-2xl text-center sm:text-left focus:outline-none hover:border-registryTeal/50 transition-all text-left w-full group">
-                        <span class="text-2xl md:text-3xl font-semibold text-stone-200 tracking-tight block group-hover:text-registryTeal transition-colors">7 Units ↗</span>
+                        <span id="global-docs-count-display" class="text-2xl md:text-3xl font-semibold text-stone-200 tracking-tight block group-hover:text-registryTeal transition-colors">0 Units ↗</span>
                         <span class="text-[11px] uppercase font-medium tracking-wider text-stone-500 mt-1 block">Documents Submitted</span>
                     </button>
                 </div>
@@ -245,11 +247,11 @@
                     </div>
                     <div class="bg-sakuraCard p-4 text-center">
                         <span class="text-[10px] uppercase font-medium tracking-wider text-stone-500 block mb-0.5">Logged</span>
-                        <span id="summary-logged-hours" class="text-2xl font-semibold text-stone-300">68<span class="text-xs font-light text-stone-500">h</span></span>
+                        <span id="summary-logged-hours" class="text-2xl font-semibold text-stone-300">0<span class="text-xs font-light text-stone-500">h</span></span>
                     </div>
                     <div class="bg-sakuraCard p-4 text-center">
                         <span class="text-[10px] uppercase font-medium tracking-wider text-stone-500 block mb-0.5">Remaining Workload</span>
-                        <span id="summary-remaining-hours" class="text-2xl font-semibold text-sakuraPetal block drop-shadow-[0_0_6px_rgba(255,183,197,0.2)]">232<span class="text-xs font-light text-sakuraPetal/60">h</span></span>
+                        <span id="summary-remaining-hours" class="text-2xl font-semibold text-sakuraPetal block drop-shadow-[0_0_6px_rgba(255,183,197,0.2)]">300<span class="text-xs font-light text-sakuraPetal/60">h</span></span>
                     </div>
                 </div>
 
@@ -298,11 +300,7 @@
                             </tr>
                         </thead>
                         <tbody id="live-time-logs-table" class="divide-y divide-pink-950/10 text-stone-300 font-light">
-                            <tr class="hover:bg-pink-950/5 group" id="log-row-1"><td class="py-2.5 font-mono text-stone-400">2026-07-06</td><td>Network switch framework configuration & mapping</td><td class="py-2.5 text-right font-semibold text-registryTeal">8 h</td><td class="py-2.5 text-center"><button onclick="deleteTimeLogRow('log-row-1', 8)" class="text-rose-400/60 hover:text-rose-400 text-[10px] font-mono transition-colors">✕</button></td></tr>
-                            <tr class="hover:bg-pink-950/5 group" id="log-row-2"><td class="py-2.5 font-mono text-stone-400">2026-07-07</td><td>IT infrastructure technical hardware provisioning</td><td class="py-2.5 text-right font-semibold text-registryTeal">8 h</td><td class="py-2.5 text-center"><button onclick="deleteTimeLogRow('log-row-2', 8)" class="text-rose-400/60 hover:text-rose-400 text-[10px] font-mono transition-colors">✕</button></td></tr>
-                            <tr class="hover:bg-pink-950/5 group" id="log-row-3"><td class="py-2.5 font-mono text-stone-400">2026-07-08</td><td>DepEd localized server diagnostics optimization</td><td class="py-2.5 text-right font-semibold text-registryTeal">8 h</td><td class="py-2.5 text-center"><button onclick="deleteTimeLogRow('log-row-3', 8)" class="text-rose-400/60 hover:text-rose-400 text-[10px] font-mono transition-colors">✕</button></td></tr>
-                            <tr class="hover:bg-pink-950/5 group" id="log-row-4"><td class="py-2.5 font-mono text-stone-400">2026-07-09</td><td>Workstation network client configuration</td><td class="py-2.5 text-right font-semibold text-registryTeal">8 h</td><td class="py-2.5 text-center"><button onclick="deleteTimeLogRow('log-row-4', 8)" class="text-rose-400/60 hover:text-rose-400 text-[10px] font-mono transition-colors">✕</button></td></tr>
-                            <tr class="hover:bg-pink-950/5 group" id="log-row-5"><td class="py-2.5 font-mono text-stone-400">2026-07-10</td><td>System update logs compilation and data architecture review</td><td class="py-2.5 text-right font-semibold text-registryTeal">36 h</td><td class="py-2.5 text-center"><button onclick="deleteTimeLogRow('log-row-5', 36)" class="text-rose-400/60 hover:text-rose-400 text-[10px] font-mono transition-colors">✕</button></td></tr>
+                            <!-- Injected dynamically via script storage mechanics -->
                         </tbody>
                     </table>
                 </div>
@@ -348,10 +346,14 @@
         let currentPanelIndex = 0;
         const totalPanels = 3;
 
-        let totalLoggedHours = 68;
+        // Base Configuration Targets
         const targetHoursRequirement = 300;
+        let totalLoggedHours = 0; 
 
-        const docRegistry = [
+        // Core Fallback Seeds (Changed to clean empty configuration array)
+        const defaultTimeLogs = [];
+
+        const docRegistryNames = [
             "Memorandum of Agreement (MOA)",
             "Letter of Intent (LOI)",
             "Endorsement Letter",
@@ -361,16 +363,36 @@
             "Final Assessment Form"
         ];
         
-        let uploadedDocsMemory = {};
-        
-        // Multi-image album database mapping
-        let weeklyAlbumsMemory = { 1: [], 2: [], 3: [], 4: [], 5: [], 6: [], 7: [], 8: [] };
+        // --- SECURE ATOMIC LOCALSTORAGE CACHE SYNC ENGINE ---
+        let uploadedDocsMemory = JSON.parse(localStorage.getItem('uploadedDocsMemory')) || {};
+        let weeklyAlbumsMemory = JSON.parse(localStorage.getItem('weeklyAlbumsMemory')) || { 1: [], 2: [], 3: [], 4: [], 5: [], 6: [], 7: [], 8: [] };
+        let dynamicTimeLogs = JSON.parse(localStorage.getItem('dynamicTimeLogs'));
+
+        // Initialize defaults if data context is blank
+        if (dynamicTimeLogs === null) {
+            dynamicTimeLogs = defaultTimeLogs;
+            localStorage.setItem('dynamicTimeLogs', JSON.stringify(dynamicTimeLogs));
+        }
 
         window.addEventListener('DOMContentLoaded', () => {
+            renderAllTimeLogs();
             refreshHoursMetrics();
+            buildRegistryModalUI();
+            updateRegistryCountDisplay();
+            
+            // Build out album strips for weeks 1-8
+            for(let i = 1; i <= 8; i++) {
+                renderAlbumStrip(i);
+            }
+        });
 
+        /* --- 01. THE 7 REGISTRY SUBMITTED ENTRY PERSISTENCE ENGINE --- */
+        function buildRegistryModalUI() {
             const listContainer = document.getElementById('modal-items-container');
-            docRegistry.forEach((docName, index) => {
+            listContainer.innerHTML = ""; // Clear existing templates
+            
+            docRegistryNames.forEach((docName, index) => {
+                const hasAsset = uploadedDocsMemory[index];
                 listContainer.innerHTML += `
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between p-3 rounded-xl bg-stone-950/30 border border-pink-950/20 gap-3">
                         <div class="flex items-center gap-3">
@@ -378,36 +400,94 @@
                             <span class="text-xs text-stone-200 font-medium tracking-wide">${docName}</span>
                         </div>
                         <div class="flex items-center gap-2 self-end sm:self-auto">
-                            <span id="doc-status-${index}" class="text-[10px] text-stone-600 font-mono italic pr-2">Missing</span>
+                            <span id="doc-status-${index}" class="${hasAsset ? 'text-emerald-400' : 'text-stone-600 italic'} text-[10px] font-mono pr-2">${hasAsset ? 'Loaded Successfully' : 'Missing'}</span>
                             <input type="file" id="reg-file-${index}" accept="image/*" class="hidden" onchange="processRegistryDoc(event, ${index}, '${docName}')">
                             <button onclick="document.getElementById('reg-file-${index}').click()" class="text-[10px] uppercase font-semibold text-registryTeal/80 hover:text-registryTeal border border-registryTeal/20 bg-registryTeal/5 px-2.5 py-1 rounded transition-colors">Upload</button>
-                            <button id="view-btn-${index}" onclick="launchLightbox(${index})" class="hidden text-[10px] uppercase font-semibold text-sakuraPetal border border-pink-950/60 bg-pink-950/10 px-2.5 py-1 rounded hover:bg-pink-950/30 transition-all flex items-center gap-1">👁 Preview</button>
-                            <button id="clear-btn-${index}" onclick="removeRegistryDoc(${index})" class="hidden text-[10px] uppercase font-semibold text-rose-400 border border-rose-950/60 bg-rose-950/10 px-2 py-1 rounded hover:bg-rose-950/30 transition-all">✕</button>
+                            <button id="view-btn-${index}" onclick="launchLightbox(${index})" class="${hasAsset ? '' : 'hidden'} text-[10px] uppercase font-semibold text-sakuraPetal border border-pink-950/60 bg-pink-950/10 px-2.5 py-1 rounded hover:bg-pink-950/30 transition-all flex items-center gap-1">👁 Preview</button>
+                            <button id="clear-btn-${index}" onclick="removeRegistryDoc(${index})" class="${hasAsset ? '' : 'hidden'} text-[10px] uppercase font-semibold text-rose-400 border border-rose-950/60 bg-rose-950/10 px-2 py-1 rounded hover:bg-rose-950/30 transition-all">✕</button>
                         </div>
                     </div>
                 `;
             });
-        });
+        }
 
-        /* --- DYNAMIC MULTI-IMAGE ALBUM GRID LOGIC --- */
+        function processRegistryDoc(event, idx, docName) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    uploadedDocsMemory[idx] = { data: e.target.result, name: docName };
+                    localStorage.setItem('uploadedDocsMemory', JSON.stringify(uploadedDocsMemory));
+                    
+                    // Instant runtime status adjustments
+                    const statusText = document.getElementById(`doc-status-${idx}`);
+                    statusText.innerText = "Loaded Successfully";
+                    statusText.className = "text-emerald-400 text-[10px] font-mono pr-2";
+                    document.getElementById(`view-btn-${idx}`).classList.remove('hidden');
+                    document.getElementById(`clear-btn-${idx}`).classList.remove('hidden');
+                    updateRegistryCountDisplay();
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function removeRegistryDoc(idx) {
+            if(uploadedDocsMemory[idx]) {
+                delete uploadedDocsMemory[idx];
+                localStorage.setItem('uploadedDocsMemory', JSON.stringify(uploadedDocsMemory));
+                
+                const statusText = document.getElementById(`doc-status-${idx}`);
+                statusText.innerText = "Missing";
+                statusText.className = "text-stone-600 italic text-[10px] font-mono pr-2";
+                document.getElementById(`view-btn-${idx}`).classList.add('hidden');
+                document.getElementById(`clear-btn-${idx}`).classList.add('hidden');
+                document.getElementById(`reg-file-${idx}`).value = "";
+                updateRegistryCountDisplay();
+            }
+        }
+
+        function updateRegistryCountDisplay() {
+            const totalUploaded = Object.keys(uploadedDocsMemory).length;
+            document.getElementById('global-docs-count-display').innerText = `${totalUploaded} Units ↗`;
+        }
+
+        function openRegistryModal() { document.getElementById('registry-modal').classList.replace('hidden', 'flex'); }
+        function closeRegistryModal() { document.getElementById('registry-modal').classList.replace('flex', 'hidden'); }
+
+        function launchLightbox(idx) {
+            const asset = uploadedDocsMemory[idx];
+            if (asset) {
+                document.getElementById('lightbox-img').src = asset.data;
+                document.getElementById('lightbox-caption').innerText = `Document Structure: ${asset.name}`;
+                document.getElementById('lightbox-viewer').classList.replace('hidden', 'flex');
+            }
+        }
+
+        /* --- 02. WEEKLY MULTI-IMAGE ALBUM GRID PERSISTENCE ENGINE --- */
         function processWeeklyImages(event, weekIdx) {
             const files = event.target.files;
             if (files.length === 0) return;
 
+            let loadedCount = 0;
             Array.from(files).forEach(file => {
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     weeklyAlbumsMemory[weekIdx].push(e.target.result);
-                    renderAlbumStrip(weekIdx);
+                    loadedCount++;
+                    if(loadedCount === files.length) {
+                        localStorage.setItem('weeklyAlbumsMemory', JSON.stringify(weeklyAlbumsMemory));
+                        renderAlbumStrip(weekIdx);
+                    }
                 }
                 reader.readAsDataURL(file);
             });
-            event.target.value = ""; // Clear file string selector trigger
+            event.target.value = ""; 
         }
 
         function removeAlbumImage(weekIdx, imgIdx, event) {
-            event.stopPropagation(); // Avoid triggering lightbox clicks on row items
+            event.stopPropagation(); 
             weeklyAlbumsMemory[weekIdx].splice(imgIdx, 1);
+            localStorage.setItem('weeklyAlbumsMemory', JSON.stringify(weeklyAlbumsMemory));
             renderAlbumStrip(weekIdx);
         }
 
@@ -415,7 +495,7 @@
             const strip = document.getElementById(`album-strip-week-${weekIdx}`);
             const images = weeklyAlbumsMemory[weekIdx];
 
-            if(images.length === 0) {
+            if(!images || images.length === 0) {
                 strip.innerHTML = `<span class="text-[10px] text-stone-600 italic block w-full text-center">Empty Album</span>`;
                 return;
             }
@@ -442,12 +522,43 @@
                 document.getElementById('lightbox-viewer').classList.replace('hidden', 'flex');
             }
         }
+        function closeLightbox() { document.getElementById('lightbox-viewer').classList.replace('flex', 'hidden'); }
 
-        /* --- TIME MATRIX METRICS ENGINE --- */
+        /* --- 03. TIME SEQUENCE STORAGE ENGINE --- */
         document.getElementById('input-log-date').valueAsDate = new Date();
 
         function toggleLogForm() {
             document.getElementById('log-creation-box').classList.toggle('hidden');
+        }
+
+        function renderAllTimeLogs() {
+            const tableBody = document.getElementById('live-time-logs-table');
+            tableBody.innerHTML = "";
+            totalLoggedHours = 0;
+
+            if (dynamicTimeLogs.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="4" class="py-6 text-center text-stone-600 italic font-mono text-[11px]">
+                            Empty Matrix — No logs recorded
+                        </td>
+                    </tr>`;
+                return;
+            }
+
+            dynamicTimeLogs.forEach(log => {
+                totalLoggedHours += log.hours;
+                tableBody.innerHTML += `
+                    <tr class="hover:bg-pink-950/5 group" id="${log.id}">
+                        <td class="py-2.5 font-mono text-stone-400">${log.date}</td>
+                        <td>${log.desc}</td>
+                        <td class="py-2.5 text-right font-semibold text-registryTeal">${log.hours} h</td>
+                        <td class="py-2.5 text-center">
+                            <button onclick="deleteTimeLogRow('${log.id}')" class="text-rose-400/60 hover:text-rose-400 text-[10px] font-mono transition-colors">✕</button>
+                        </td>
+                    </tr>
+                `;
+            });
         }
 
         function commitNewTimeLog() {
@@ -460,23 +571,17 @@
                 return;
             }
 
-            const rowId = 'log-row-' + Date.now();
-            const tableBody = document.getElementById('live-time-logs-table');
-            
-            const newRow = document.createElement('tr');
-            newRow.className = "hover:bg-pink-950/5 group";
-            newRow.id = rowId;
-            newRow.innerHTML = `
-                <td class="py-2.5 font-mono text-stone-400">${dateInput}</td>
-                <td>${descInput.trim()}</td>
-                <td class="py-2.5 text-right font-semibold text-registryTeal">${hoursInput} h</td>
-                <td class="py-2.5 text-center">
-                    <button onclick="deleteTimeLogRow('${rowId}', ${hoursInput})" class="text-rose-400/60 hover:text-rose-400 text-[10px] font-mono transition-colors">✕</button>
-                </td>
-            `;
+            const newLog = {
+                id: 'log-row-' + Date.now(),
+                date: dateInput,
+                desc: descInput.trim(),
+                hours: hoursInput
+            };
 
-            tableBody.insertBefore(newRow, tableBody.firstChild);
-            totalLoggedHours += hoursInput;
+            dynamicTimeLogs.unshift(newLog);
+            localStorage.setItem('dynamicTimeLogs', JSON.stringify(dynamicTimeLogs));
+            
+            renderAllTimeLogs();
             refreshHoursMetrics();
 
             document.getElementById('input-log-hours').value = "";
@@ -484,14 +589,12 @@
             toggleLogForm();
         }
 
-        function deleteTimeLogRow(id, hours) {
-            const targetedRow = document.getElementById(id);
-            if(targetedRow) {
-                targetedRow.remove();
-                totalLoggedHours -= hours;
-                if(totalLoggedHours < 0) totalLoggedHours = 0;
-                refreshHoursMetrics();
-            }
+        function deleteTimeLogRow(id) {
+            dynamicTimeLogs = dynamicTimeLogs.filter(log => log.id !== id);
+            localStorage.setItem('dynamicTimeLogs', JSON.stringify(dynamicTimeLogs));
+            
+            renderAllTimeLogs();
+            refreshHoursMetrics();
         }
 
         function refreshHoursMetrics() {
@@ -503,51 +606,7 @@
             document.getElementById('summary-remaining-hours').innerHTML = `${remaining}<span class="text-xs font-light text-sakuraPetal/60">h</span>`;
         }
 
-        /* --- REGISTRY POPUP SYSTEM CONTROLS --- */
-        function openRegistryModal() { document.getElementById('registry-modal').classList.replace('hidden', 'flex'); }
-        function closeRegistryModal() { document.getElementById('registry-modal').classList.replace('flex', 'hidden'); }
-
-        function processRegistryDoc(event, idx, docName) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    uploadedDocsMemory[idx] = { data: e.target.result, name: docName };
-                    const statusText = document.getElementById(`doc-status-${idx}`);
-                    statusText.innerText = "Loaded Successfully";
-                    statusText.classList.remove('text-stone-600', 'italic');
-                    statusText.classList.add('text-emerald-400');
-                    document.getElementById(`view-btn-${idx}`).classList.remove('hidden');
-                    document.getElementById(`clear-btn-${idx}`).classList.remove('hidden');
-                }
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function removeRegistryDoc(idx) {
-            if(uploadedDocsMemory[idx]) {
-                delete uploadedDocsMemory[idx];
-                const statusText = document.getElementById(`doc-status-${idx}`);
-                statusText.innerText = "Missing";
-                statusText.classList.remove('text-emerald-400');
-                statusText.classList.add('text-stone-600', 'italic');
-                document.getElementById(`view-btn-${idx}`).classList.add('hidden');
-                document.getElementById(`clear-btn-${idx}`).classList.add('hidden');
-                document.getElementById(`reg-file-${idx}`).value = "";
-            }
-        }
-
-        function launchLightbox(idx) {
-            const asset = uploadedDocsMemory[idx];
-            if (asset) {
-                document.getElementById('lightbox-img').src = asset.data;
-                document.getElementById('lightbox-caption').innerText = `Document Structure: ${asset.name}`;
-                document.getElementById('lightbox-viewer').classList.replace('hidden', 'flex');
-            }
-        }
-        function closeLightbox() { document.getElementById('lightbox-viewer').classList.replace('flex', 'hidden'); }
-
-        /* --- PANEL DECK LAYOUT NAVIGATION ENGINE --- */
+        /* --- 04. DECK NAVIGATION SYSTEM --- */
         function scrollToPanel(index) {
             currentPanelIndex = index;
             container.scrollTo({ left: index * window.innerWidth, behavior: 'smooth' });

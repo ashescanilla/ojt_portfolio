@@ -222,11 +222,16 @@
                                     </div>
 
                                     <div class="relative z-20 mt-auto w-full flex items-center justify-between border-t border-pink-950/20 pt-2 select-none">
-                                        <h3 class="text-stone-400 font-medium text-[11px] truncate max-w-[100px]">${isFinal ? 'Summary Documentation' : 'Activity Entry'}</h3>
-                                        <input type="file" id="file-week-${i}" accept="image/*" multiple class="hidden" onchange="processWeeklyImages(event, ${i})">
-                                        <button onclick="document.getElementById('file-week-${i}').click()" class="text-registryTeal/80 hover:text-registryTeal font-semibold tracking-wider text-[10px] uppercase inline-flex items-center gap-1 transition-colors">
-                                            Add Photos +
-                                        </button>
+                                        <h3 class="text-stone-400 font-medium text-[11px] truncate max-w-[90px]">${isFinal ? 'Summary Doc' : 'Activity Entry'}</h3>
+                                        <div class="flex items-center gap-2">
+                                            <button id="view-album-btn-${i}" onclick="launchFullAlbum(${i})" class="hidden text-sakuraPetal/90 hover:text-sakuraPetal font-semibold tracking-wider text-[10px] uppercase transition-colors">
+                                                View 👁
+                                            </button>
+                                            <input type="file" id="file-week-${i}" accept="image/*" multiple class="hidden" onchange="processWeeklyImages(event, ${i})">
+                                            <button onclick="document.getElementById('file-week-${i}').click()" class="text-registryTeal/80 hover:text-registryTeal font-semibold tracking-wider text-[10px] uppercase inline-flex items-center gap-1 transition-colors">
+                                                Add +
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             `);
@@ -324,13 +329,25 @@
         </div>
     </div>
 
-    <!-- LIGHTBOX PREVIEW SYSTEM -->
+    <!-- LIGHTBOX PREVIEW SYSTEM (CAROUSEL INTEGRATED) -->
     <div id="lightbox-viewer" class="fixed inset-0 bg-black/95 z-[60] hidden flex-col items-center justify-center p-6 select-none">
-        <div class="absolute top-6 right-6 flex gap-2">
+        <div class="absolute top-6 right-6 flex gap-2 z-[70]">
             <button onclick="toggleNativeFullscreen()" class="text-stone-400 hover:text-white text-xs tracking-widest uppercase border border-stone-800 bg-stone-900/40 px-4 py-2 rounded-lg transition-all flex items-center gap-1">Fullscreen ⛶</button>
             <button onclick="closeLightbox()" class="text-stone-400 hover:text-white text-xs tracking-widest uppercase border border-stone-800 bg-stone-900/40 px-4 py-2 rounded-lg transition-all">Exit Viewer ✕</button>
         </div>
+        
+        <!-- Left Carousel Control -->
+        <button id="lightbox-left" onclick="navigateLightbox(-1)" class="absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full border border-pink-950/30 bg-sakuraDark/80 text-stone-400 hover:text-white hover:border-pink-500/30 flex items-center justify-center z-[70] transition-all hidden shadow-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
+        </button>
+        
         <img id="lightbox-img" src="" alt="Live Documentation View" class="max-w-full max-h-[82vh] object-contain rounded-lg border border-pink-950/20 shadow-2xl transition-all duration-300">
+        
+        <!-- Right Carousel Control -->
+        <button id="lightbox-right" onclick="navigateLightbox(1)" class="absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full border border-pink-950/30 bg-sakuraDark/80 text-stone-400 hover:text-white hover:border-pink-500/30 flex items-center justify-center z-[70] transition-all hidden shadow-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+        </button>
+        
         <p id="lightbox-caption" class="text-xs text-stone-500 font-mono mt-4 tracking-wide"></p>
     </div>
 
@@ -349,11 +366,13 @@
         let currentPanelIndex = 0;
         const totalPanels = 3;
 
-        // Base Configuration Targets
+        // Carousel State Management Tracks
+        let currentLightboxType = null; 
+        let currentLightboxWeek = null;
+        let currentLightboxImgIdx = null;
+
         const targetHoursRequirement = 300;
         let totalLoggedHours = 0; 
-
-        // Core Fallback Seeds (Empty configurations)
         const defaultTimeLogs = [];
 
         const docRegistryNames = [
@@ -366,7 +385,6 @@
             "Final Assessment Form"
         ];
         
-        // --- SECURE ATOMIC LOCALSTORAGE CACHE SYNC ENGINE ---
         let uploadedDocsMemory = JSON.parse(localStorage.getItem('uploadedDocsMemory')) || {};
         let weeklyAlbumsMemory = JSON.parse(localStorage.getItem('weeklyAlbumsMemory')) || { 1: [], 2: [], 3: [], 4: [], 5: [], 6: [], 7: [], 8: [] };
         let dynamicTimeLogs = JSON.parse(localStorage.getItem('dynamicTimeLogs'));
@@ -455,11 +473,15 @@
         function closeRegistryModal() { document.getElementById('registry-modal').classList.replace('flex', 'hidden'); }
 
         function launchLightbox(idx) {
+            currentLightboxType = 'registry';
             const asset = uploadedDocsMemory[idx];
             if (asset && asset.data) {
                 document.getElementById('lightbox-img').src = asset.data;
                 document.getElementById('lightbox-caption').innerText = `Document Structure: ${asset.name}`;
                 document.getElementById('lightbox-viewer').classList.replace('hidden', 'flex');
+                
+                document.getElementById('lightbox-left').classList.add('hidden');
+                document.getElementById('lightbox-right').classList.add('hidden');
             }
         }
 
@@ -493,34 +515,70 @@
 
         function renderAlbumStrip(weekIdx) {
             const strip = document.getElementById(`album-strip-week-${weekIdx}`);
+            const viewBtn = document.getElementById(`view-album-btn-${weekIdx}`);
             const images = weeklyAlbumsMemory[weekIdx];
 
             if(!images || images.length === 0) {
                 strip.innerHTML = `<span class="text-[10px] text-stone-600 italic block w-full text-center">Empty Album</span>`;
+                if(viewBtn) viewBtn.classList.add('hidden');
                 return;
             }
+
+            if(viewBtn) viewBtn.classList.remove('hidden');
 
             strip.innerHTML = "";
             images.forEach((imgData, imgIdx) => {
                 strip.innerHTML += `
-                    <div class="relative w-12 h-12 rounded border border-pink-950/40 flex-shrink-0 cursor-pointer group/thumb shadow overflow-hidden bg-stone-950" 
-                         onclick="launchAlbumLightbox(${weekIdx}, ${imgIdx})">
+                    <div class="relative w-12 h-12 rounded border border-pink-950/40 flex-shrink-0 cursor-pointer group/thumb shadow overflow-hidden bg-stone-950">
                         <img src="${imgData}" alt="Uploaded Asset" class="w-full h-full object-cover pointer-events-none" />
-                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover/thumb:opacity-100 flex items-center justify-center transition-opacity rounded">
-                            <button onclick="removeAlbumImage(${weekIdx}, ${imgIdx}, event)" class="text-[10px] text-rose-400 font-bold hover:text-rose-300 px-1">✕</button>
+                        <div onclick="launchAlbumLightbox(${weekIdx}, ${imgIdx})" class="absolute inset-0 bg-black/40 opacity-0 group-hover/thumb:opacity-100 flex items-center justify-center transition-opacity rounded z-10">
+                            <button onclick="removeAlbumImage(${weekIdx}, ${imgIdx}, event)" class="absolute top-0 right-0 m-0.5 text-[9px] bg-stone-950/80 text-rose-400 font-bold hover:text-rose-300 w-3.5 h-3.5 flex items-center justify-center rounded-full z-20">✕</button>
                         </div>
                     </div>
                 `;
             });
         }
 
-        function launchAlbumLightbox(weekIdx, imgIdx) {
-            const data = weeklyAlbumsMemory[weekIdx][imgIdx];
-            if(data) {
-                document.getElementById('lightbox-img').src = data;
-                document.getElementById('lightbox-caption').innerText = `Week ${weekIdx} — Activity Asset Variant ${imgIdx + 1}`;
-                document.getElementById('lightbox-viewer').classList.replace('hidden', 'flex');
+        function launchFullAlbum(weekIdx) {
+            const images = weeklyAlbumsMemory[weekIdx];
+            if(images && images.length > 0) {
+                launchAlbumLightbox(weekIdx, 0);
             }
+        }
+
+        function launchAlbumLightbox(weekIdx, imgIdx) {
+            currentLightboxType = 'album';
+            currentLightboxWeek = weekIdx;
+            currentLightboxImgIdx = imgIdx;
+
+            const images = weeklyAlbumsMemory[weekIdx];
+            if(images && images[imgIdx]) {
+                document.getElementById('lightbox-img').src = images[imgIdx];
+                document.getElementById('lightbox-caption').innerText = `Week ${weekIdx} — Photo ${imgIdx + 1} of ${images.length}`;
+                document.getElementById('lightbox-viewer').classList.replace('hidden', 'flex');
+                
+                const lArrow = document.getElementById('lightbox-left');
+                const rArrow = document.getElementById('lightbox-right');
+                if(images.length > 1) {
+                    lArrow.classList.remove('hidden');
+                    rArrow.classList.remove('hidden');
+                } else {
+                    lArrow.classList.add('hidden');
+                    rArrow.classList.add('hidden');
+                }
+            }
+        }
+
+        function navigateLightbox(direction) {
+            if(currentLightboxType !== 'album') return;
+            const images = weeklyAlbumsMemory[currentLightboxWeek];
+            if(!images || images.length === 0) return;
+
+            let targetIdx = currentLightboxImgIdx + direction;
+            if(targetIdx < 0) targetIdx = images.length - 1;
+            if(targetIdx >= images.length) targetIdx = 0;
+
+            launchAlbumLightbox(currentLightboxWeek, targetIdx);
         }
         
         function closeLightbox() { 
@@ -529,6 +587,16 @@
                 document.exitFullscreen().catch(() => {});
             }
         }
+
+        /* --- KEYBOARD CAROUSEL CAPTURE INTERCEPTOR --- */
+        document.addEventListener('keydown', (e) => {
+            const viewer = document.getElementById('lightbox-viewer');
+            if(viewer && !viewer.classList.contains('hidden') && currentLightboxType === 'album') {
+                if(e.key === 'ArrowLeft') navigateLightbox(-1);
+                if(e.key === 'ArrowRight') navigateLightbox(1);
+                if(e.key === 'Escape') closeLightbox();
+            }
+        });
 
         /* --- NATIVE FULLSCREEN API ENGINE --- */
         function toggleNativeFullscreen() {
@@ -546,7 +614,6 @@
             }
         }
 
-        // Handle native escape or exit from full-screen cleanly
         document.addEventListener('fullscreenchange', () => {
             const img = document.getElementById('lightbox-img');
             if (!document.fullscreenElement) {
@@ -690,7 +757,6 @@
             });
         });
 
-        // Independent passive layout safety listener to fix focus drift cleanly
         window.addEventListener('scroll', () => {
             if (window.scrollY !== 0) {
                 window.scrollTo(0, 0);

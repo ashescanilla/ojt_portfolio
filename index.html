@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joanna Ashley | Centralized OJT Hub</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sakuraDark: '#1a1216',    
+                        sakuraCard: '#241920',    
+                        sakuraPetal: '#ffb7c5',   
+                        sakuraGlow: '#fbcfe8',    
+                        registryTeal: '#4fd1c5',   
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* --- SAKURA AMBIENT THEME ENGINE --- */
+        @keyframes ambientBreeze {
+            0%, 100% { background-size: 40px 40px; opacity: 0.8; }
+            50% { background-size: 41px 41px; opacity: 1; }
+        }
+        .sakura-bg {
+            background-color: #160e12;
+            background-image: linear-gradient(rgba(255, 183, 197, 0.015) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255, 183, 197, 0.015) 1px, transparent 1px);
+            animation: ambientBreeze 18s ease-in-out infinite;
+        }
+
+        @keyframes sakuraGlowDrift {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.35; filter: blur(80px); }
+            50% { transform: translate(-47%, -53%) scale(1.1); opacity: 0.5; filter: blur(100px); }
+        }
+        .sakura-glow-sphere {
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(255, 183, 197, 0.08) 0%, rgba(244, 114, 182, 0.02) 50%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            pointer-events: none;
+            z-index: 0;
+            animation: sakuraGlowDrift 12s ease-in-out infinite;
+        }
+
+        @keyframes petalFloatA {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-3px) rotate(0.5deg); }
+        }
+        @keyframes petalFloatB {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(3px) rotate(-0.5deg); }
+        }
+        .card-float-a { animation: petalFloatA 7s ease-in-out infinite; }
+        .card-float-b { animation: petalFloatB 9s ease-in-out infinite; }
+
+        @keyframes floralTextShimmer {
+            0%, 100% { opacity: 0.9; text-shadow: 0 0 4px rgba(255, 183, 197, 0); }
+            50% { opacity: 1; text-shadow: 0 0 15px rgba(255, 183, 197, 0.4); color: #fff; }
+        }
+        .shimmer-floral { animation: floralTextShimmer 5s ease-in-out infinite; }
+
+        @keyframes ringSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .avatar-ring { animation: ringSpin 30s linear infinite; }
+
+        ::-webkit-scrollbar { height: 4px; width: 6px; }
+        ::-webkit-scrollbar-track { background: #160e12; }
+        ::-webkit-scrollbar-thumb { background: #2d1d25; border-radius: 99px; }
+        ::-webkit-scrollbar-thumb:hover { background: #ffb7c5; }
+
+        .lantern-card {
+            position: relative;
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .lantern-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(to bottom, rgba(255, 183, 197, 0.1), rgba(255, 183, 197, 0));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-content-box: content-box, padding-box;
+            -webkit-mask-composite: XOR;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+        .lantern-card:hover {
+            transform: translateY(-3px) scale(1.005) !important;
+            animation-play-state: paused !important;
+            background-color: #2d1f28;
+            border-color: rgba(255, 183, 197, 0.3);
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.6), 0 0 20px 2px rgba(255, 183, 197, 0.08);
+        }
+
+        .panel-view {
+            transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="sakura-bg text-stone-300 font-sans antialiased h-screen overflow-hidden flex flex-col relative select-none">
+    
+    <div class="sakura-glow-sphere z-0"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="bg-sakuraDark/60 backdrop-blur-xl z-40 border-b border-pink-950/20 flex-shrink-0 relative">
+        <div class="max-w-7xl mx-auto flex justify-between items-center px-8 py-4">
+            <div class="flex items-center gap-3 group cursor-pointer">
+                <div class="w-6 h-6 rounded-full bg-sakuraPetal/5 flex items-center justify-center border border-sakuraPetal/20 group-hover:border-sakuraPetal/60 group-hover:bg-sakuraPetal/10 transition-all duration-500 shadow-sm">
+                    <div class="w-1.5 h-1.5 rounded-full bg-sakuraPetal group-hover:scale-125 transition-transform shadow-[0_0_8px_rgba(255,183,197,0.8)]"></div>
+                </div>
+                <span class="text-stone-400 group-hover:text-stone-100 font-medium tracking-widest text-xs uppercase transition-colors">Escanilla <span class="text-sakuraPetal/40">🌸</span> Workspace</span>
+            </div>
+            <div class="flex gap-2 p-1 bg-stone-950/40 rounded-full border border-pink-950/30 text-[11px] tracking-wide uppercase font-medium">
+                <button onclick="scrollToPanel(0)" id="nav-0" class="nav-btn px-4 py-1.5 rounded-full text-sakuraPetal bg-sakuraCard border border-pink-900/30 transition-all duration-300">01. Profile</button>
+                <button onclick="scrollToPanel(1)" id="nav-1" class="nav-btn px-4 py-1.5 rounded-full text-stone-500 hover:text-stone-200 transition-all duration-300">02. Documentation</button>
+                <button onclick="scrollToPanel(2)" id="nav-2" class="nav-btn px-4 py-1.5 rounded-full text-stone-500 hover:text-stone-200 transition-all duration-300">03. Time Logs</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Navigation Deck Control Arrows -->
+    <button onclick="navigateDeck(-1)" id="left-arrow" class="fixed left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full border border-pink-950/40 bg-sakuraDark/80 backdrop-blur-md flex items-center justify-center text-stone-400 hover:text-white hover:border-pink-500/30 hover:bg-sakuraCard z-40 opacity-0 pointer-events-none transition-all duration-300 shadow-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
+    </button>
+    <button onclick="navigateDeck(1)" id="right-arrow" class="fixed right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full border border-pink-950/40 bg-sakuraDark/80 backdrop-blur-md flex items-center justify-center text-stone-400 hover:text-white hover:border-pink-500/30 hover:bg-sakuraCard z-40 transition-all duration-300 shadow-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+    </button>
+
+    <!-- Horizontal Presentation Deck Engine -->
+    <main id="deck-container" class="flex-1 overflow-x-auto overflow-y-hidden flex snap-x snap-mandatory scroll-smooth relative z-10">
+
+        <!-- PANEL 1: EXECUTIVE PROFILE -->
+        <section class="panel-view w-screen min-w-[100vw] snap-start flex-shrink-0 flex items-center justify-center px-6 md:px-12 z-20">
+            <div class="max-w-5xl w-full space-y-12">
+                
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-12 items-center justify-items-center md:justify-items-start">
+                    <div class="flex justify-center w-full relative">
+                        <div class="w-40 h-40 rounded-full border border-pink-950/40 bg-sakuraCard/90 flex items-center justify-center text-sakuraPetal text-3xl font-light tracking-widest relative group transition-all duration-700 hover:border-sakuraPetal/40 shadow-[0_0_30px_rgba(255,183,197,0.03)]">
+                            <span class="z-10 transition-transform duration-500 group-hover:scale-105 group-hover:text-white font-normal drop-shadow-[0_2px_10px_rgba(255,183,197,0.3)]">JA</span>
+                            <div class="absolute inset-2 rounded-full bg-gradient-to-tr from-sakuraPetal/[0.05] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                            <div class="avatar-ring absolute inset-0 rounded-full border border-dashed border-pink-900/40 scale-[1.05]"></div>
+                            <div class="absolute inset-0 rounded-full border border-sakuraPetal/20 scale-100 opacity-0 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="md:col-span-3 space-y-4 text-center md:text-left">
+                        <div>
+                            <span class="inline-flex items-center gap-2 bg-pink-950/30 text-sakuraPetal/70 text-[10px] font-semibold tracking-widest uppercase px-3 py-1 rounded-full border border-pink-900/30 transition-all">
+                                🌸 Spring Deployment Cycle
+                            </span>
+                        </div>
+                        <h1 class="text-4xl font-bold text-stone-100 tracking-tight shimmer-floral">Joanna Ashley A. Escanilla</h1>
+                        <div class="space-y-1 text-xs md:text-sm text-stone-400 font-light tracking-wide mx-auto md:mx-0 max-w-max text-left">
+                            <p class="hover:text-sakuraPetal transition-colors">🎓 Bachelor of Science in Computer Engineering</p>
+                            <p class="hover:text-sakuraPetal transition-colors">🏫 Polytechnic University of the Philippines — Sta. Mesa</p>
+                            <p class="text-stone-400">🏢 Department of Education — SDO San Jose Del Monte</p>
+                        </div>
+                        <p class="text-stone-500 text-xs md:text-sm font-light leading-relaxed max-w-xl mx-auto md:mx-0">
+                            Official technical archive mapping academic validation workflows, systems deployment structures, and standard operational reviews completed under the Information Technology department at DepEd.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Core Dashboard Metrics Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 pt-4">
+                    <div class="lantern-card card-float-a bg-sakuraCard border border-pink-950/20 p-6 rounded-2xl text-center sm:text-left">
+                        <span class="text-2xl md:text-3xl font-semibold text-stone-200 tracking-tight block">300 Hours</span>
+                        <span class="text-[11px] uppercase font-medium tracking-wider text-stone-500 mt-1 block">Required Work Hours</span>
+                    </div>
+                    
+                    <!-- DYNAMIC TIME TRACKER CARD -->
+                    <div class="lantern-card card-float-b bg-sakuraCard border border-pink-950/20 p-6 rounded-2xl text-center sm:text-left">
+                        <span id="global-hours-display" class="text-2xl md:text-3xl font-semibold text-sakuraPetal tracking-tight block drop-shadow-[0_0_8px_rgba(255,183,197,0.3)]">0 / 300</span>
+                        <span class="text-[11px] uppercase font-medium tracking-wider text-stone-500 mt-1 block">Hours Rendered Logs</span>
+                    </div>
+                    
+                    <!-- Clickable 7 Units Button -->
+                    <button onclick="openRegistryModal()" class="lantern-card card-float-a bg-sakuraCard border border-pink-950/20 p-6 rounded-2xl text-center sm:text-left focus:outline-none hover:border-registryTeal/50 transition-all text-left w-full group">
+                        <span id="global-docs-count-display" class="text-2xl md:text-3xl font-semibold text-stone-200 tracking-tight block group-hover:text-registryTeal transition-colors">0 Units ↗</span>
+                        <span class="text-[11px] uppercase font-medium tracking-wider text-stone-500 mt-1 block">Documents Submitted</span>
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- PANEL 2: PROJECT DOCUMENTATION ALBUM GRID -->
+        <section class="panel-view w-screen min-w-[100vw] snap-start flex-shrink-0 flex items-center justify-center px-6 md:px-12 z-20 overflow-y-auto py-8">
+            <div class="max-w-5xl w-full space-y-6 my-auto">
+                <div class="text-center md:text-left select-none">
+                    <span class="text-xs font-semibold tracking-wider text-registryTeal uppercase shimmer-floral">Weekly Multi-Asset Albums</span>
+                    <h2 class="text-2xl font-semibold text-stone-100 tracking-tight mt-0.5">Project Documentation Grid</h2>
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 max-h-[60vh] overflow-y-auto pr-2">
+                    <script>
+                        for(let i = 1; i <= 8; i++) {
+                            const isFinal = (i === 8);
+                            document.write(`
+                                <div class="lantern-card bg-sakuraCard/60 border border-pink-950/20 p-4 rounded-xl flex flex-col justify-between group relative overflow-hidden h-[185px]">
+                                    <div class="relative z-20 select-none flex justify-between items-start w-full">
+                                        <span class="text-[10px] px-2 py-0.5 rounded-md bg-stone-950/50 border border-pink-950/40 text-stone-400 font-medium font-mono">WK-${String(i).padStart(2, '0')}</span>
+                                        ${isFinal ? '<span class="text-[9px] px-1.5 py-0.5 rounded bg-registryTeal text-sakuraDark border border-registryTeal/30 uppercase tracking-widest font-semibold scale-90">Final</span>' : ''}
+                                    </div>
+                                    
+                                    <!-- Dynamic Filmstrip Row Container -->
+                                    <div id="album-strip-week-${i}" class="flex items-center gap-2 overflow-x-auto py-2 my-2 w-full no-scrollbar min-h-[50px]">
+                                        <span class="text-[10px] text-stone-600 italic block w-full text-center">Empty Album</span>
+                                    </div>
+
+                                    <div class="relative z-20 mt-auto w-full flex items-center justify-between border-t border-pink-950/20 pt-2">
+                                        <h3 class="text-stone-400 font-medium text-[11px] truncate max-w-[100px]">${isFinal ? 'Summary Documentation' : 'Activity Entry'}</h3>
+                                        <input type="file" id="file-week-${i}" accept="image/*" multiple class="hidden" onchange="processWeeklyImages(event, ${i})">
+                                        <button onclick="document.getElementById('file-week-${i}').click()" class="text-registryTeal/80 hover:text-registryTeal font-semibold tracking-wider text-[10px] uppercase inline-flex items-center gap-1 transition-colors">
+                                            Add Photos +
+                                        </button>
+                                    </div>
+                                </div>
+                            `);
+                        }
+                    </script>
+                </div>
+            </div>
+        </section>
+
+        <!-- PANEL 3: TIME LOGS ENGINE -->
+        <section class="panel-view w-screen min-w-[100vw] snap-start flex-shrink-0 flex items-center justify-center px-6 md:px-12 z-20 overflow-y-auto py-6">
+            <div class="max-w-5xl w-full space-y-6 my-auto">
+                
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-0.5 bg-pink-950/20 rounded-xl overflow-hidden border border-pink-950/30">
+                    <div class="bg-sakuraCard p-4 text-center">
+                        <span class="text-[10px] uppercase font-medium tracking-wider text-stone-500 block mb-0.5">Required</span>
+                        <span class="text-2xl font-semibold text-stone-300">300<span class="text-xs font-light text-stone-500">h</span></span>
+                    </div>
+                    <div class="bg-sakuraCard p-4 text-center">
+                        <span class="text-[10px] uppercase font-medium tracking-wider text-stone-500 block mb-0.5">Logged</span>
+                        <span id="summary-logged-hours" class="text-2xl font-semibold text-stone-300">0<span class="text-xs font-light text-stone-500">h</span></span>
+                    </div>
+                    <div class="bg-sakuraCard p-4 text-center">
+                        <span class="text-[10px] uppercase font-medium tracking-wider text-stone-500 block mb-0.5">Remaining Workload</span>
+                        <span id="summary-remaining-hours" class="text-2xl font-semibold text-sakuraPetal block drop-shadow-[0_0_6px_rgba(255,183,197,0.2)]">300<span class="text-xs font-light text-sakuraPetal/60">h</span></span>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-pink-950/20 pb-2">
+                    <div class="space-y-0.5 text-center sm:text-left">
+                        <h3 class="text-lg font-medium text-stone-100 tracking-tight shimmer-floral">Rendered Time Sequences</h3>
+                        <p class="text-[11px] text-stone-500">Interactive Track Registry Matrix</p>
+                    </div>
+                    <button onclick="toggleLogForm()" class="text-xs bg-sakuraCard text-sakuraPetal border border-pink-950/50 hover:border-sakuraPetal/50 px-4 py-2 rounded-xl transition-all font-medium">
+                        + Create log sequence entry
+                    </button>
+                </div>
+
+                <!-- LIVE LOG ENTRY GENERATION SUB-FORM -->
+                <div id="log-creation-box" class="hidden bg-sakuraCard/80 border border-pink-950/40 p-4 rounded-xl space-y-3">
+                    <h4 class="text-xs uppercase tracking-wider text-sakuraPetal font-semibold">New Operational Time Entry</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div class="flex flex-col">
+                            <label class="text-[10px] text-stone-500 mb-1">Date Signature</label>
+                            <input type="date" id="input-log-date" class="bg-stone-950/50 border border-pink-950/40 p-2 text-xs rounded text-stone-300 outline-none focus:border-sakuraPetal/40">
+                        </div>
+                        <div class="flex flex-col">
+                            <label class="text-[10px] text-stone-500 mb-1">Hours Rendered Value</label>
+                            <input type="number" id="input-log-hours" min="1" max="24" placeholder="e.g. 8" class="bg-stone-950/50 border border-pink-950/40 p-2 text-xs rounded text-stone-300 outline-none focus:border-sakuraPetal/40">
+                        </div>
+                        <div class="flex flex-col">
+                            <label class="text-[10px] text-stone-500 mb-1">Task Scope Blueprint</label>
+                            <input type="text" id="input-log-desc" placeholder="System maintenance, etc." class="bg-stone-950/50 border border-pink-950/40 p-2 text-xs rounded text-stone-300 outline-none focus:border-sakuraPetal/40">
+                        </div>
+                    </div>
+                    <div class="flex justify-end gap-2 text-xs pt-1">
+                        <button onclick="toggleLogForm()" class="px-3 py-1.5 rounded border border-pink-950/40 text-stone-400 hover:text-stone-200">Cancel</button>
+                        <button onclick="commitNewTimeLog()" class="px-4 py-1.5 rounded bg-registryTeal text-sakuraDark font-semibold">Commit Sequence Entry</button>
+                    </div>
+                </div>
+
+                <!-- LIVE INTERACTIVE LOG DATA GRID WITH DELETE FUNCTIONALITY -->
+                <div class="max-h-[30vh] overflow-y-auto pr-1">
+                    <table class="w-full text-left text-xs border-collapse">
+                        <thead>
+                            <tr class="border-b border-pink-950/30 text-stone-500 font-mono text-[10px] uppercase">
+                                <th class="py-2">Date</th>
+                                <th class="py-2">Activity Task Scope Description</th>
+                                <th class="py-2 text-right">Hours</th>
+                                <th class="py-2 text-center w-12">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="live-time-logs-table" class="divide-y divide-pink-950/10 text-stone-300 font-light">
+                            <!-- Injected dynamically via script storage mechanics -->
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- POPUP MODAL (THE 7 UNITS REGISTRY LIST) -->
+    <div id="registry-modal" class="fixed inset-0 bg-sakuraDark/90 backdrop-blur-md hidden items-center justify-center z-50 p-4">
+        <div class="bg-sakuraCard border border-pink-950/40 w-full max-w-2xl rounded-2xl p-6 shadow-2xl space-y-6 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b border-pink-950/30 pb-4">
+                <div>
+                    <span class="text-[10px] text-registryTeal font-mono uppercase tracking-widest">Document Registry Workspace</span>
+                    <h3 class="text-xl font-bold text-white tracking-tight">7 Required Clearance Units</h3>
+                </div>
+                <button onclick="closeRegistryModal()" class="text-stone-500 hover:text-white transition-colors text-sm border border-pink-950/40 px-3 py-1 rounded-md bg-stone-950/20">Close ✕</button>
+            </div>
+            <div class="space-y-3" id="modal-items-container"></div>
+        </div>
+    </div>
+
+    <!-- LIGHTBOX PREVIEW SYSTEM -->
+    <div id="lightbox-viewer" class="fixed inset-0 bg-black/95 z-[60] hidden flex-col items-center justify-center p-6">
+        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-stone-400 hover:text-white text-xs tracking-widest uppercase border border-stone-800 bg-stone-900/40 px-4 py-2 rounded-lg transition-all">Exit Viewer ✕</button>
+        <img id="lightbox-img" src="" alt="Live Documentation View" class="max-w-full max-h-[82vh] object-contain rounded-lg border border-pink-950/20 shadow-2xl">
+        <p id="lightbox-caption" class="text-xs text-stone-500 font-mono mt-4 tracking-wide"></p>
+    </div>
+
+    <!-- Global Footer -->
+    <footer class="text-center py-4 text-[10px] font-light text-stone-600 border-t border-pink-950/10 flex-shrink-0 bg-sakuraDark/30 z-40 relative">
+        <p>&copy; 2026 Joanna Ashley A. Escanilla. Interactive Sakura Engine operating live.</p>
+    </footer>
+
+    <!-- Script Engines -->
+    <script>
+        const container = document.getElementById('deck-container');
+        const panels = document.querySelectorAll('.panel-view');
+        const leftArrow = document.getElementById('left-arrow');
+        const rightArrow = document.getElementById('right-arrow');
+        
+        let currentPanelIndex = 0;
+        const totalPanels = 3;
+
+        // Base Configuration Targets
+        const targetHoursRequirement = 300;
+        let totalLoggedHours = 0; 
+
+        // Core Fallback Seeds (Empty configurations)
+        const defaultTimeLogs = [];
+
+        const docRegistryNames = [
+            "Memorandum of Agreement (MOA)",
+            "Letter of Intent (LOI)",
+            "Endorsement Letter",
+            "Consent Form",
+            "Student Waiver",
+            "Internship Agreement",
+            "Final Assessment Form"
+        ];
+        
+        // --- SECURE ATOMIC LOCALSTORAGE CACHE SYNC ENGINE ---
+        let uploadedDocsMemory = JSON.parse(localStorage.getItem('uploadedDocsMemory')) || {};
+        let weeklyAlbumsMemory = JSON.parse(localStorage.getItem('weeklyAlbumsMemory')) || { 1: [], 2: [], 3: [], 4: [], 5: [], 6: [], 7: [], 8: [] };
+        let dynamicTimeLogs = JSON.parse(localStorage.getItem('dynamicTimeLogs'));
+
+        if (dynamicTimeLogs === null) {
+            dynamicTimeLogs = defaultTimeLogs;
+            localStorage.setItem('dynamicTimeLogs', JSON.stringify(dynamicTimeLogs));
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderAllTimeLogs();
+            refreshHoursMetrics();
+            buildRegistryModalUI();
+            updateRegistryCountDisplay();
+            
+            for(let i = 1; i <= 8; i++) {
+                renderAlbumStrip(i);
+            }
+        });
+
+        /* --- 01. THE 7 REGISTRY SUBMITTED ENTRY PERSISTENCE ENGINE --- */
+        function buildRegistryModalUI() {
+            const listContainer = document.getElementById('modal-items-container');
+            listContainer.innerHTML = ""; 
+            
+            docRegistryNames.forEach((docName, index) => {
+                const hasAsset = uploadedDocsMemory[index];
+                listContainer.innerHTML += `
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between p-3 rounded-xl bg-stone-950/30 border border-pink-950/20 gap-3">
+                        <div class="flex items-center gap-3">
+                            <span class="w-5 h-5 rounded-full bg-pink-950/40 text-sakuraPetal border border-pink-900/30 text-[10px] flex items-center justify-center font-mono">${index + 1}</span>
+                            <span class="text-xs text-stone-200 font-medium tracking-wide">${docName}</span>
+                        </div>
+                        <div class="flex items-center gap-2 self-end sm:self-auto">
+                            <span id="doc-status-${index}" class="${hasAsset ? 'text-emerald-400' : 'text-stone-600 italic'} text-[10px] font-mono pr-2">${hasAsset ? 'Loaded Successfully' : 'Missing'}</span>
+                            <input type="file" id="reg-file-${index}" accept="image/*" class="hidden" onchange="processRegistryDoc(event, ${index}, '${docName}')">
+                            <button onclick="document.getElementById('reg-file-${index}').click()" class="text-[10px] uppercase font-semibold text-registryTeal/80 hover:text-registryTeal border border-registryTeal/20 bg-registryTeal/5 px-2.5 py-1 rounded transition-colors">Upload</button>
+                            <button id="view-btn-${index}" onclick="launchLightbox(${index})" class="${hasAsset ? '' : 'hidden'} text-[10px] uppercase font-semibold text-sakuraPetal border border-pink-950/60 bg-pink-950/10 px-2.5 py-1 rounded hover:bg-pink-950/30 transition-all flex items-center gap-1">👁 Preview</button>
+                            <button id="clear-btn-${index}" onclick="removeRegistryDoc(${index})" class="${hasAsset ? '' : 'hidden'} text-[10px] uppercase font-semibold text-rose-400 border border-rose-950/60 bg-rose-950/10 px-2 py-1 rounded hover:bg-rose-950/30 transition-all">✕</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function processRegistryDoc(event, idx, docName) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    uploadedDocsMemory[idx] = { data: e.target.result, name: docName };
+                    localStorage.setItem('uploadedDocsMemory', JSON.stringify(uploadedDocsMemory));
+                    
+                    const statusText = document.getElementById(`doc-status-${idx}`);
+                    statusText.innerText = "Loaded Successfully";
+                    statusText.className = "text-emerald-400 text-[10px] font-mono pr-2";
+                    document.getElementById(`view-btn-${idx}`).classList.remove('hidden');
+                    document.getElementById(`clear-btn-${idx}`).classList.remove('hidden');
+                    updateRegistryCountDisplay();
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function removeRegistryDoc(idx) {
+            if(uploadedDocsMemory[idx]) {
+                delete uploadedDocsMemory[idx];
+                localStorage.setItem('uploadedDocsMemory', JSON.stringify(uploadedDocsMemory));
+                
+                const statusText = document.getElementById(`doc-status-${idx}`);
+                statusText.innerText = "Missing";
+                statusText.className = "text-stone-600 italic text-[10px] font-mono pr-2";
+                document.getElementById(`view-btn-${idx}`).classList.add('hidden');
+                document.getElementById(`clear-btn-${idx}`).classList.add('hidden');
+                document.getElementById(`reg-file-${idx}`).value = "";
+                updateRegistryCountDisplay();
+            }
+        }
+
+        function updateRegistryCountDisplay() {
+            const totalUploaded = Object.keys(uploadedDocsMemory).length;
+            document.getElementById('global-docs-count-display').innerText = `${totalUploaded} Units ↗`;
+        }
+
+        function openRegistryModal() { document.getElementById('registry-modal').classList.replace('hidden', 'flex'); }
+        function closeRegistryModal() { document.getElementById('registry-modal').classList.replace('flex', 'hidden'); }
+
+        function launchLightbox(idx) {
+            const asset = uploadedDocsMemory[idx];
+            if (asset) {
+                document.getElementById('lightbox-img').src = asset.data;
+                document.getElementById('lightbox-caption').innerText = `Document Structure: ${asset.name}`;
+                document.getElementById('lightbox-viewer').classList.replace('hidden', 'flex');
+            }
+        }
+
+        /* --- 02. WEEKLY MULTI-IMAGE ALBUM GRID ENGINE (RECONFIGURED DETACHED VECTORS) --- */
+        function processWeeklyImages(event, weekIdx) {
+            const files = event.target.files;
+            if (files.length === 0) return;
+
+            let loadedCount = 0;
+            Array.from(files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    weeklyAlbumsMemory[weekIdx].push(e.target.result);
+                    loadedCount++;
+                    if(loadedCount === files.length) {
+                        localStorage.setItem('weeklyAlbumsMemory', JSON.stringify(weeklyAlbumsMemory));
+                        renderAlbumStrip(weekIdx);
+                    }
+                }
+                reader.readAsDataURL(file);
+            });
+            event.target.value = ""; 
+        }
+
+        function removeAlbumImage(weekIdx, imgIdx, event) {
+            event.stopPropagation(); 
+            weeklyAlbumsMemory[weekIdx].splice(imgIdx, 1);
+            localStorage.setItem('weeklyAlbumsMemory', JSON.stringify(weeklyAlbumsMemory));
+            renderAlbumStrip(weekIdx);
+        }
+
+        function renderAlbumStrip(weekIdx) {
+            const strip = document.getElementById(`album-strip-week-${weekIdx}`);
+            const images = weeklyAlbumsMemory[weekIdx];
+
+            if(!images || images.length === 0) {
+                strip.innerHTML = `<span class="text-[10px] text-stone-600 italic block w-full text-center">Empty Album</span>`;
+                return;
+            }
+
+            strip.innerHTML = "";
+            images.forEach((imgData, imgIdx) => {
+                strip.innerHTML += `
+                    <div class="relative w-12 h-12 rounded border border-pink-950/40 flex-shrink-0 cursor-pointer group/thumb shadow overflow-hidden bg-stone-950" 
+                         onclick="launchAlbumLightbox(${weekIdx}, ${imgIdx})">
+                        <img src="${imgData}" alt="Uploaded Asset" class="w-full h-full object-cover pointer-events-none" />
+                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover/thumb:opacity-100 flex items-center justify-center transition-opacity rounded">
+                            <button onclick="removeAlbumImage(${weekIdx}, ${imgIdx}, event)" class="text-[10px] text-rose-400 font-bold hover:text-rose-300 px-1">✕</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function launchAlbumLightbox(weekIdx, imgIdx) {
+            const data = weeklyAlbumsMemory[weekIdx][imgIdx];
+            if(data) {
+                document.getElementById('lightbox-img').src = data;
+                document.getElementById('lightbox-caption').innerText = `Week ${weekIdx} — Activity Asset Variant ${imgIdx + 1}`;
+                document.getElementById('lightbox-viewer').classList.replace('hidden', 'flex');
+            }
+        }
+        function closeLightbox() { document.getElementById('lightbox-viewer').classList.replace('flex', 'hidden'); }
+
+        /* --- 03. TIME SEQUENCE STORAGE ENGINE --- */
+        document.getElementById('input-log-date').valueAsDate = new Date();
+
+        function toggleLogForm() {
+            document.getElementById('log-creation-box').classList.toggle('hidden');
+        }
+
+        function renderAllTimeLogs() {
+            const tableBody = document.getElementById('live-time-logs-table');
+            tableBody.innerHTML = "";
+            totalLoggedHours = 0;
+
+            if (dynamicTimeLogs.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="4" class="py-6 text-center text-stone-600 italic font-mono text-[11px]">
+                            Empty Matrix — No logs recorded
+                        </td>
+                    </tr>`;
+                return;
+            }
+
+            dynamicTimeLogs.forEach(log => {
+                totalLoggedHours += log.hours;
+                tableBody.innerHTML += `
+                    <tr class="hover:bg-pink-950/5 group" id="${log.id}">
+                        <td class="py-2.5 font-mono text-stone-400">${log.date}</td>
+                        <td>${log.desc}</td>
+                        <td class="py-2.5 text-right font-semibold text-registryTeal">${log.hours} h</td>
+                        <td class="py-2.5 text-center">
+                            <button onclick="deleteTimeLogRow('${log.id}')" class="text-rose-400/60 hover:text-rose-400 text-[10px] font-mono transition-colors">✕</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function commitNewTimeLog() {
+            const dateInput = document.getElementById('input-log-date').value;
+            const hoursInput = parseInt(document.getElementById('input-log-hours').value);
+            const descInput = document.getElementById('input-log-desc').value;
+
+            if(!dateInput || isNaN(hoursInput) || hoursInput <= 0 || !descInput.trim()) {
+                alert("Please fill out all metric entry values accurately.");
+                return;
+            }
+
+            const newLog = {
+                id: 'log-row-' + Date.now(),
+                date: dateInput,
+                desc: descInput.trim(),
+                hours: hoursInput
+            };
+
+            dynamicTimeLogs.unshift(newLog);
+            localStorage.setItem('dynamicTimeLogs', JSON.stringify(dynamicTimeLogs));
+            
+            renderAllTimeLogs();
+            refreshHoursMetrics();
+
+            document.getElementById('input-log-hours').value = "";
+            document.getElementById('input-log-desc').value = "";
+            toggleLogForm();
+        }
+
+        function deleteTimeLogRow(id) {
+            dynamicTimeLogs = dynamicTimeLogs.filter(log => log.id !== id);
+            localStorage.setItem('dynamicTimeLogs', JSON.stringify(dynamicTimeLogs));
+            
+            renderAllTimeLogs();
+            refreshHoursMetrics();
+        }
+
+        function refreshHoursMetrics() {
+            document.getElementById('global-hours-display').innerText = `${totalLoggedHours} / ${targetHoursRequirement}`;
+            document.getElementById('summary-logged-hours').innerHTML = `${totalLoggedHours}<span class="text-xs font-light text-stone-500">h</span>`;
+            
+            let remaining = targetHoursRequirement - totalLoggedHours;
+            if(remaining < 0) remaining = 0;
+            document.getElementById('summary-remaining-hours').innerHTML = `${remaining}<span class="text-xs font-light text-sakuraPetal/60">h</span>`;
+        }
+
+        /* --- 04. DECK NAVIGATION SYSTEM --- */
+        function scrollToPanel(index) {
+            currentPanelIndex = index;
+            container.scrollTo({ left: index * window.innerWidth, behavior: 'smooth' });
+            updateNavState(index);
+            updateArrowVisibility(index);
+        }
+
+        function navigateDeck(direction) {
+            let targetIndex = currentPanelIndex + direction;
+            if (targetIndex >= 0 && targetIndex < totalPanels) scrollToPanel(targetIndex);
+        }
+
+        function updateArrowVisibility(index) {
+            if (index === 0) leftArrow.classList.add('opacity-0', 'pointer-events-none'); 
+            else leftArrow.classList.remove('opacity-0', 'pointer-events-none');
+            if (index === totalPanels - 1) rightArrow.classList.add('opacity-0', 'pointer-events-none'); 
+            else rightArrow.classList.remove('opacity-0', 'pointer-events-none');
+        }
+
+        function updateNavState(activeIndex) {
+            document.querySelectorAll('.nav-btn').forEach((btn, idx) => {
+                if(idx === activeIndex) {
+                    btn.classList.remove('text-stone-500');
+                    btn.classList.add('text-sakuraPetal', 'bg-sakuraCard', 'border-pink-900/30');
+                } else {
+                    btn.classList.remove('text-sakuraPetal', 'bg-sakuraCard', 'border-pink-900/30');
+                    btn.classList.add('text-stone-500');
+                }
+            });
+        }
+
+        container.addEventListener('scroll', () => {
+            const index = Math.round(container.scrollLeft / window.innerWidth);
+            currentPanelIndex = index;
+            updateNavState(index);
+            updateArrowVisibility(index);
+            panels.forEach((panel, idx) => {
+                if(idx === currentPanelIndex) {
+                    panel.style.opacity = '1';
+                    panel.style.transform = 'scale(1)';
+                } else {
+                    panel.style.opacity = '0.15';
+                    panel.style.transform = 'scale(0.99)';
+                }
+            });
+        });
+
+        window.addEventListener('load', () => scrollToPanel(0));
+    </script>
+</body>
+</html>

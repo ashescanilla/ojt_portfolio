@@ -350,7 +350,7 @@
         const targetHoursRequirement = 300;
         let totalLoggedHours = 0; 
 
-        // Core Fallback Seeds (Changed to clean empty configuration array)
+        // Core Fallback Seeds (Empty configurations)
         const defaultTimeLogs = [];
 
         const docRegistryNames = [
@@ -368,7 +368,6 @@
         let weeklyAlbumsMemory = JSON.parse(localStorage.getItem('weeklyAlbumsMemory')) || { 1: [], 2: [], 3: [], 4: [], 5: [], 6: [], 7: [], 8: [] };
         let dynamicTimeLogs = JSON.parse(localStorage.getItem('dynamicTimeLogs'));
 
-        // Initialize defaults if data context is blank
         if (dynamicTimeLogs === null) {
             dynamicTimeLogs = defaultTimeLogs;
             localStorage.setItem('dynamicTimeLogs', JSON.stringify(dynamicTimeLogs));
@@ -380,7 +379,6 @@
             buildRegistryModalUI();
             updateRegistryCountDisplay();
             
-            // Build out album strips for weeks 1-8
             for(let i = 1; i <= 8; i++) {
                 renderAlbumStrip(i);
             }
@@ -389,7 +387,7 @@
         /* --- 01. THE 7 REGISTRY SUBMITTED ENTRY PERSISTENCE ENGINE --- */
         function buildRegistryModalUI() {
             const listContainer = document.getElementById('modal-items-container');
-            listContainer.innerHTML = ""; // Clear existing templates
+            listContainer.innerHTML = ""; 
             
             docRegistryNames.forEach((docName, index) => {
                 const hasAsset = uploadedDocsMemory[index];
@@ -419,12 +417,11 @@
                     uploadedDocsMemory[idx] = { data: e.target.result, name: docName };
                     localStorage.setItem('uploadedDocsMemory', JSON.stringify(uploadedDocsMemory));
                     
-                    // Instant runtime status adjustments
-                    const statusText = document.getElementById(`doc-status-${idx}`);
+                    const statusText = document.getElementById('doc-status-' + idx);
                     statusText.innerText = "Loaded Successfully";
                     statusText.className = "text-emerald-400 text-[10px] font-mono pr-2";
-                    document.getElementById(`view-btn-${idx}`).classList.remove('hidden');
-                    document.getElementById(`clear-btn-${idx}`).classList.remove('hidden');
+                    document.getElementById('view-btn-' + idx).classList.remove('hidden');
+                    document.getElementById('clear-btn-' + idx).classList.remove('hidden');
                     updateRegistryCountDisplay();
                 }
                 reader.readAsDataURL(file);
@@ -436,12 +433,12 @@
                 delete uploadedDocsMemory[idx];
                 localStorage.setItem('uploadedDocsMemory', JSON.stringify(uploadedDocsMemory));
                 
-                const statusText = document.getElementById(`doc-status-${idx}`);
+                const statusText = document.getElementById('doc-status-' + idx);
                 statusText.innerText = "Missing";
                 statusText.className = "text-stone-600 italic text-[10px] font-mono pr-2";
-                document.getElementById(`view-btn-${idx}`).classList.add('hidden');
-                document.getElementById(`clear-btn-${idx}`).classList.add('hidden');
-                document.getElementById(`reg-file-${idx}`).value = "";
+                document.getElementById('view-btn-' + idx).classList.add('hidden');
+                document.getElementById('clear-btn-' + idx).classList.add('hidden');
+                document.getElementById('reg-file-' + idx).value = "";
                 updateRegistryCountDisplay();
             }
         }
@@ -456,14 +453,14 @@
 
         function launchLightbox(idx) {
             const asset = uploadedDocsMemory[idx];
-            if (asset) {
+            if (asset && asset.data) {
                 document.getElementById('lightbox-img').src = asset.data;
                 document.getElementById('lightbox-caption').innerText = `Document Structure: ${asset.name}`;
                 document.getElementById('lightbox-viewer').classList.replace('hidden', 'flex');
             }
         }
 
-        /* --- 02. WEEKLY MULTI-IMAGE ALBUM GRID PERSISTENCE ENGINE --- */
+        /* --- 02. WEEKLY MULTI-IMAGE ALBUM GRID ENGINE --- */
         function processWeeklyImages(event, weekIdx) {
             const files = event.target.files;
             if (files.length === 0) return;
@@ -477,11 +474,11 @@
                     if(loadedCount === files.length) {
                         localStorage.setItem('weeklyAlbumsMemory', JSON.stringify(weeklyAlbumsMemory));
                         renderAlbumStrip(weekIdx);
+                        event.target.value = ""; 
                     }
                 }
                 reader.readAsDataURL(file);
             });
-            event.target.value = ""; 
         }
 
         function removeAlbumImage(weekIdx, imgIdx, event) {
@@ -503,9 +500,9 @@
             strip.innerHTML = "";
             images.forEach((imgData, imgIdx) => {
                 strip.innerHTML += `
-                    <div class="relative w-12 h-12 rounded bg-cover bg-center border border-pink-950/40 flex-shrink-0 cursor-pointer group/thumb shadow" 
-                         style="background-image: url('${imgData}')" 
+                    <div class="relative w-12 h-12 rounded border border-pink-950/40 flex-shrink-0 cursor-pointer group/thumb shadow overflow-hidden bg-stone-950" 
                          onclick="launchAlbumLightbox(${weekIdx}, ${imgIdx})">
+                        <img src="${imgData}" alt="Uploaded Asset" class="w-full h-full object-cover pointer-events-none" />
                         <div class="absolute inset-0 bg-black/60 opacity-0 group-hover/thumb:opacity-100 flex items-center justify-center transition-opacity rounded">
                             <button onclick="removeAlbumImage(${weekIdx}, ${imgIdx}, event)" class="text-[10px] text-rose-400 font-bold hover:text-rose-300 px-1">✕</button>
                         </div>

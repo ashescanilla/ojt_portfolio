@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth h-full overflow-hidden">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -110,7 +110,7 @@
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="sakura-bg text-stone-300 font-sans antialiased h-screen overflow-hidden flex flex-col relative">
+<body class="sakura-bg text-stone-300 font-sans antialiased h-full overflow-hidden flex flex-col relative w-full fixed inset-0">
     
     <div class="sakura-glow-sphere z-0"></div>
 
@@ -140,10 +140,10 @@
     </button>
 
     <!-- Horizontal Presentation Deck Engine -->
-    <main id="deck-container" class="flex-1 overflow-x-auto overflow-y-hidden flex snap-x snap-mandatory scroll-smooth relative z-10">
+    <main id="deck-container" class="flex-1 overflow-x-auto overflow-y-hidden flex snap-x snap-mandatory scroll-smooth relative z-10 w-full h-full">
 
         <!-- PANEL 1: EXECUTIVE PROFILE -->
-        <section class="panel-view w-screen min-w-[100vw] snap-start flex-shrink-0 flex items-center justify-center px-6 md:px-12 z-20">
+        <section class="panel-view w-screen min-w-[100vw] h-full snap-start flex-shrink-0 flex items-center justify-center px-6 md:px-12 z-20">
             <div class="max-w-5xl w-full space-y-12">
                 
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-12 items-center justify-items-center md:justify-items-start">
@@ -198,8 +198,8 @@
         </section>
 
         <!-- PANEL 2: PROJECT DOCUMENTATION ALBUM GRID -->
-        <section class="panel-view w-screen min-w-[100vw] snap-start flex-shrink-0 flex items-center justify-center px-6 md:px-12 z-20 overflow-y-auto py-8">
-            <div class="max-w-5xl w-full space-y-6 my-auto">
+        <section class="panel-view w-screen min-w-[100vw] h-full snap-start flex-shrink-0 flex items-center justify-center px-6 md:px-12 z-20 overflow-y-auto py-8">
+            <div class="max-w-5xl w-full space-y-6">
                 <div class="text-center md:text-left select-none">
                     <span class="text-xs font-semibold tracking-wider text-registryTeal uppercase shimmer-floral">Weekly Multi-Asset Albums</span>
                     <h2 class="text-2xl font-semibold text-stone-100 tracking-tight mt-0.5">Project Documentation Grid</h2>
@@ -237,8 +237,8 @@
         </section>
 
         <!-- PANEL 3: TIME LOGS ENGINE -->
-        <section class="panel-view w-screen min-w-[100vw] snap-start flex-shrink-0 flex items-center justify-center px-6 md:px-12 z-20 overflow-y-auto py-6">
-            <div class="max-w-5xl w-full space-y-6 my-auto">
+        <section class="panel-view w-screen min-w-[100vw] h-full snap-start flex-shrink-0 flex items-center justify-center px-6 md:px-12 z-20 overflow-y-auto py-6">
+            <div class="max-w-5xl w-full space-y-6">
                 
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-0.5 bg-pink-950/20 rounded-xl overflow-hidden border border-pink-950/30 select-none">
                     <div class="bg-sakuraCard p-4 text-center">
@@ -316,7 +316,7 @@
             <div class="flex justify-between items-center border-b border-pink-950/30 pb-4 select-none">
                 <div>
                     <span class="text-[10px] text-registryTeal font-mono uppercase tracking-widest">Document Registry Workspace</span>
-                    <h3 class="text-xl font-bold text-white tracking-tight">7 Required Clearance Units</h3>
+                    <span class="text-xl font-bold text-white tracking-tight block">7 Required Clearance Units</span>
                 </div>
                 <button onclick="closeRegistryModal()" class="text-stone-500 hover:text-white transition-colors text-sm border border-pink-950/40 px-3 py-1 rounded-md bg-stone-950/20">Close ✕</button>
             </div>
@@ -326,8 +326,11 @@
 
     <!-- LIGHTBOX PREVIEW SYSTEM -->
     <div id="lightbox-viewer" class="fixed inset-0 bg-black/95 z-[60] hidden flex-col items-center justify-center p-6 select-none">
-        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-stone-400 hover:text-white text-xs tracking-widest uppercase border border-stone-800 bg-stone-900/40 px-4 py-2 rounded-lg transition-all">Exit Viewer ✕</button>
-        <img id="lightbox-img" src="" alt="Live Documentation View" class="max-w-full max-h-[82vh] object-contain rounded-lg border border-pink-950/20 shadow-2xl">
+        <div class="absolute top-6 right-6 flex gap-2">
+            <button onclick="toggleNativeFullscreen()" class="text-stone-400 hover:text-white text-xs tracking-widest uppercase border border-stone-800 bg-stone-900/40 px-4 py-2 rounded-lg transition-all flex items-center gap-1">Fullscreen ⛶</button>
+            <button onclick="closeLightbox()" class="text-stone-400 hover:text-white text-xs tracking-widest uppercase border border-stone-800 bg-stone-900/40 px-4 py-2 rounded-lg transition-all">Exit Viewer ✕</button>
+        </div>
+        <img id="lightbox-img" src="" alt="Live Documentation View" class="max-w-full max-h-[82vh] object-contain rounded-lg border border-pink-950/20 shadow-2xl transition-all duration-300">
         <p id="lightbox-caption" class="text-xs text-stone-500 font-mono mt-4 tracking-wide"></p>
     </div>
 
@@ -519,7 +522,38 @@
                 document.getElementById('lightbox-viewer').classList.replace('hidden', 'flex');
             }
         }
-        function closeLightbox() { document.getElementById('lightbox-viewer').classList.replace('flex', 'hidden'); }
+        
+        function closeLightbox() { 
+            document.getElementById('lightbox-viewer').classList.replace('flex', 'hidden'); 
+            if (document.fullscreenElement) {
+                document.exitFullscreen().catch(() => {});
+            }
+        }
+
+        /* --- NATIVE FULLSCREEN API ENGINE --- */
+        function toggleNativeFullscreen() {
+            const viewer = document.getElementById('lightbox-viewer');
+            const img = document.getElementById('lightbox-img');
+            if (!document.fullscreenElement) {
+                viewer.requestFullscreen().then(() => {
+                    img.classList.remove('max-h-[82vh]');
+                    img.classList.add('max-h-[90vh]', 'scale-105');
+                }).catch(err => {
+                    console.error(`Error enabling full-screen mode: ${err.message}`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        // Handle native escape or exit from full-screen cleanly
+        document.addEventListener('fullscreenchange', () => {
+            const img = document.getElementById('lightbox-img');
+            if (!document.fullscreenElement) {
+                img.classList.remove('max-h-[90vh]', 'scale-105');
+                img.classList.add('max-h-[82vh]');
+            }
+        });
 
         /* --- 03. TIME SEQUENCE STORAGE ENGINE --- */
         document.getElementById('input-log-date').valueAsDate = new Date();
@@ -563,13 +597,11 @@
             const hoursInput = parseInt(document.getElementById('input-log-hours').value);
             let descInput = document.getElementById('input-log-desc').value.trim();
 
-            // Enforce only Date and Hours tracking parameters
             if(!dateInput || isNaN(hoursInput) || hoursInput <= 0) {
                 alert("Please fill out the Date and Hours values accurately.");
                 return;
             }
 
-            // Fallback default value assigned if left blank by user choice
             if (!descInput) {
                 descInput = "General OJT Duties";
             }
@@ -646,6 +678,7 @@
             currentPanelIndex = index;
             updateNavState(index);
             updateArrowVisibility(index);
+
             panels.forEach((panel, idx) => {
                 if(idx === currentPanelIndex) {
                     panel.style.opacity = '1';
@@ -655,6 +688,13 @@
                     panel.style.transform = 'scale(0.99)';
                 }
             });
+        });
+
+        // Independent passive layout safety listener to fix focus drift cleanly
+        window.addEventListener('scroll', () => {
+            if (window.scrollY !== 0) {
+                window.scrollTo(0, 0);
+            }
         });
 
         window.addEventListener('load', () => scrollToPanel(0));

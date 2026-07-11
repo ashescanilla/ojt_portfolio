@@ -110,12 +110,12 @@
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="sakura-bg text-stone-300 font-sans antialiased h-screen overflow-hidden flex flex-col relative select-none">
+<body class="sakura-bg text-stone-300 font-sans antialiased h-screen overflow-hidden flex flex-col relative">
     
     <div class="sakura-glow-sphere z-0"></div>
 
     <!-- Navigation Bar -->
-    <nav class="bg-sakuraDark/60 backdrop-blur-xl z-40 border-b border-pink-950/20 flex-shrink-0 relative">
+    <nav class="bg-sakuraDark/60 backdrop-blur-xl z-40 border-b border-pink-950/20 flex-shrink-0 relative select-none">
         <div class="max-w-7xl mx-auto flex justify-between items-center px-8 py-4">
             <div class="flex items-center gap-3 group cursor-pointer">
                 <div class="w-6 h-6 rounded-full bg-sakuraPetal/5 flex items-center justify-center border border-sakuraPetal/20 group-hover:border-sakuraPetal/60 group-hover:bg-sakuraPetal/10 transition-all duration-500 shadow-sm">
@@ -132,10 +132,10 @@
     </nav>
 
     <!-- Navigation Deck Control Arrows -->
-    <button onclick="navigateDeck(-1)" id="left-arrow" class="fixed left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full border border-pink-950/40 bg-sakuraDark/80 backdrop-blur-md flex items-center justify-center text-stone-400 hover:text-white hover:border-pink-500/30 hover:bg-sakuraCard z-40 opacity-0 pointer-events-none transition-all duration-300 shadow-lg">
+    <button onclick="navigateDeck(-1)" id="left-arrow" class="fixed left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full border border-pink-950/40 bg-sakuraDark/80 backdrop-blur-md flex items-center justify-center text-stone-400 hover:text-white hover:border-pink-500/30 hover:bg-sakuraCard z-40 opacity-0 pointer-events-none transition-all duration-300 shadow-lg select-none">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
     </button>
-    <button onclick="navigateDeck(1)" id="right-arrow" class="fixed right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full border border-pink-950/40 bg-sakuraDark/80 backdrop-blur-md flex items-center justify-center text-stone-400 hover:text-white hover:border-pink-500/30 hover:bg-sakuraCard z-40 transition-all duration-300 shadow-lg">
+    <button onclick="navigateDeck(1)" id="right-arrow" class="fixed right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full border border-pink-950/40 bg-sakuraDark/80 backdrop-blur-md flex items-center justify-center text-stone-400 hover:text-white hover:border-pink-500/30 hover:bg-sakuraCard z-40 transition-all duration-300 shadow-lg select-none">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
     </button>
 
@@ -147,7 +147,7 @@
             <div class="max-w-5xl w-full space-y-12">
                 
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-12 items-center justify-items-center md:justify-items-start">
-                    <div class="flex justify-center w-full relative">
+                    <div class="flex justify-center w-full relative select-none">
                         <div class="w-40 h-40 rounded-full border border-pink-950/40 bg-sakuraCard/90 flex items-center justify-center text-sakuraPetal text-3xl font-light tracking-widest relative group transition-all duration-700 hover:border-sakuraPetal/40 shadow-[0_0_30px_rgba(255,183,197,0.03)]">
                             <span class="z-10 transition-transform duration-500 group-hover:scale-105 group-hover:text-white font-normal drop-shadow-[0_2px_10px_rgba(255,183,197,0.3)]">JA</span>
                             <div class="absolute inset-2 rounded-full bg-gradient-to-tr from-sakuraPetal/[0.05] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
@@ -157,25 +157,25 @@
                     </div>
                     
                     <div class="md:col-span-3 space-y-4 text-center md:text-left">
-                        <div>
+                        <div class="select-none">
                             <span class="inline-flex items-center gap-2 bg-pink-950/30 text-sakuraPetal/70 text-[10px] font-semibold tracking-widest uppercase px-3 py-1 rounded-full border border-pink-900/30 transition-all">
                                 🌸 Spring Deployment Cycle
                             </span>
                         </div>
-                        <h1 class="text-4xl font-bold text-stone-100 tracking-tight shimmer-floral">Joanna Ashley A. Escanilla</h1>
+                        <h1 class="text-4xl font-bold text-stone-100 tracking-tight shimmer-floral select-none">Joanna Ashley A. Escanilla</h1>
                         <div class="space-y-1 text-xs md:text-sm text-stone-400 font-light tracking-wide mx-auto md:mx-0 max-w-max text-left">
                             <p class="hover:text-sakuraPetal transition-colors">🎓 Bachelor of Science in Computer Engineering</p>
                             <p class="hover:text-sakuraPetal transition-colors">🏫 Polytechnic University of the Philippines — Sta. Mesa</p>
                             <p class="text-stone-400">🏢 Department of Education — SDO San Jose Del Monte</p>
                         </div>
-                        <p class="text-stone-500 text-xs md:text-sm font-light leading-relaxed max-w-xl mx-auto md:mx-0">
+                        <p class="text-stone-500 text-xs md:text-sm font-light leading-relaxed max-w-xl mx-auto md:mx-0 select-none">
                             Official technical archive mapping academic validation workflows, systems deployment structures, and standard operational reviews completed under the Information Technology department at DepEd.
                         </p>
                     </div>
                 </div>
 
                 <!-- Core Dashboard Metrics Grid -->
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 pt-4">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 pt-4 select-none">
                     <div class="lantern-card card-float-a bg-sakuraCard border border-pink-950/20 p-6 rounded-2xl text-center sm:text-left">
                         <span class="text-2xl md:text-3xl font-semibold text-stone-200 tracking-tight block">300 Hours</span>
                         <span class="text-[11px] uppercase font-medium tracking-wider text-stone-500 mt-1 block">Required Work Hours</span>
@@ -217,11 +217,11 @@
                                     </div>
                                     
                                     <!-- Dynamic Filmstrip Row Container -->
-                                    <div id="album-strip-week-${i}" class="flex items-center gap-2 overflow-x-auto py-2 my-2 w-full no-scrollbar min-h-[50px]">
+                                    <div id="album-strip-week-${i}" class="flex items-center gap-2 overflow-x-auto py-2 my-2 w-full no-scrollbar min-h-[50px] select-none">
                                         <span class="text-[10px] text-stone-600 italic block w-full text-center">Empty Album</span>
                                     </div>
 
-                                    <div class="relative z-20 mt-auto w-full flex items-center justify-between border-t border-pink-950/20 pt-2">
+                                    <div class="relative z-20 mt-auto w-full flex items-center justify-between border-t border-pink-950/20 pt-2 select-none">
                                         <h3 class="text-stone-400 font-medium text-[11px] truncate max-w-[100px]">${isFinal ? 'Summary Documentation' : 'Activity Entry'}</h3>
                                         <input type="file" id="file-week-${i}" accept="image/*" multiple class="hidden" onchange="processWeeklyImages(event, ${i})">
                                         <button onclick="document.getElementById('file-week-${i}').click()" class="text-registryTeal/80 hover:text-registryTeal font-semibold tracking-wider text-[10px] uppercase inline-flex items-center gap-1 transition-colors">
@@ -240,7 +240,7 @@
         <section class="panel-view w-screen min-w-[100vw] snap-start flex-shrink-0 flex items-center justify-center px-6 md:px-12 z-20 overflow-y-auto py-6">
             <div class="max-w-5xl w-full space-y-6 my-auto">
                 
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-0.5 bg-pink-950/20 rounded-xl overflow-hidden border border-pink-950/30">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-0.5 bg-pink-950/20 rounded-xl overflow-hidden border border-pink-950/30 select-none">
                     <div class="bg-sakuraCard p-4 text-center">
                         <span class="text-[10px] uppercase font-medium tracking-wider text-stone-500 block mb-0.5">Required</span>
                         <span class="text-2xl font-semibold text-stone-300">300<span class="text-xs font-light text-stone-500">h</span></span>
@@ -256,33 +256,33 @@
                 </div>
 
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-pink-950/20 pb-2">
-                    <div class="space-y-0.5 text-center sm:text-left">
+                    <div class="space-y-0.5 text-center sm:text-left select-none">
                         <h3 class="text-lg font-medium text-stone-100 tracking-tight shimmer-floral">Rendered Time Sequences</h3>
                         <p class="text-[11px] text-stone-500">Interactive Track Registry Matrix</p>
                     </div>
-                    <button onclick="toggleLogForm()" class="text-xs bg-sakuraCard text-sakuraPetal border border-pink-950/50 hover:border-sakuraPetal/50 px-4 py-2 rounded-xl transition-all font-medium">
+                    <button onclick="toggleLogForm()" class="text-xs bg-sakuraCard text-sakuraPetal border border-pink-950/50 hover:border-sakuraPetal/50 px-4 py-2 rounded-xl transition-all font-medium select-none">
                         + Create log sequence entry
                     </button>
                 </div>
 
                 <!-- LIVE LOG ENTRY GENERATION SUB-FORM -->
                 <div id="log-creation-box" class="hidden bg-sakuraCard/80 border border-pink-950/40 p-4 rounded-xl space-y-3">
-                    <h4 class="text-xs uppercase tracking-wider text-sakuraPetal font-semibold">New Operational Time Entry</h4>
+                    <h4 class="text-xs uppercase tracking-wider text-sakuraPetal font-semibold select-none">New Operational Time Entry</h4>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <div class="flex flex-col">
-                            <label class="text-[10px] text-stone-500 mb-1">Date Signature</label>
+                            <label class="text-[10px] text-stone-500 mb-1 select-none">Date Signature</label>
                             <input type="date" id="input-log-date" class="bg-stone-950/50 border border-pink-950/40 p-2 text-xs rounded text-stone-300 outline-none focus:border-sakuraPetal/40">
                         </div>
                         <div class="flex flex-col">
-                            <label class="text-[10px] text-stone-500 mb-1">Hours Rendered Value</label>
+                            <label class="text-[10px] text-stone-500 mb-1 select-none">Hours Rendered Value</label>
                             <input type="number" id="input-log-hours" min="1" max="24" placeholder="e.g. 8" class="bg-stone-950/50 border border-pink-950/40 p-2 text-xs rounded text-stone-300 outline-none focus:border-sakuraPetal/40">
                         </div>
                         <div class="flex flex-col">
-                            <label class="text-[10px] text-stone-500 mb-1">Task Scope Blueprint</label>
-                            <input type="text" id="input-log-desc" placeholder="System maintenance, etc." class="bg-stone-950/50 border border-pink-950/40 p-2 text-xs rounded text-stone-300 outline-none focus:border-sakuraPetal/40">
+                            <label class="text-[10px] text-stone-500 mb-1 select-none">Task Scope Blueprint (Optional)</label>
+                            <input type="text" id="input-log-desc" placeholder="e.g. System maintenance (Optional)" class="bg-stone-950/50 border border-pink-950/40 p-2 text-xs rounded text-stone-300 outline-none focus:border-sakuraPetal/40">
                         </div>
                     </div>
-                    <div class="flex justify-end gap-2 text-xs pt-1">
+                    <div class="flex justify-end gap-2 text-xs pt-1 select-none">
                         <button onclick="toggleLogForm()" class="px-3 py-1.5 rounded border border-pink-950/40 text-stone-400 hover:text-stone-200">Cancel</button>
                         <button onclick="commitNewTimeLog()" class="px-4 py-1.5 rounded bg-registryTeal text-sakuraDark font-semibold">Commit Sequence Entry</button>
                     </div>
@@ -292,7 +292,7 @@
                 <div class="max-h-[30vh] overflow-y-auto pr-1">
                     <table class="w-full text-left text-xs border-collapse">
                         <thead>
-                            <tr class="border-b border-pink-950/30 text-stone-500 font-mono text-[10px] uppercase">
+                            <tr class="border-b border-pink-950/30 text-stone-500 font-mono text-[10px] uppercase select-none">
                                 <th class="py-2">Date</th>
                                 <th class="py-2">Activity Task Scope Description</th>
                                 <th class="py-2 text-right">Hours</th>
@@ -313,7 +313,7 @@
     <!-- POPUP MODAL (THE 7 UNITS REGISTRY LIST) -->
     <div id="registry-modal" class="fixed inset-0 bg-sakuraDark/90 backdrop-blur-md hidden items-center justify-center z-50 p-4">
         <div class="bg-sakuraCard border border-pink-950/40 w-full max-w-2xl rounded-2xl p-6 shadow-2xl space-y-6 max-h-[90vh] overflow-y-auto">
-            <div class="flex justify-between items-center border-b border-pink-950/30 pb-4">
+            <div class="flex justify-between items-center border-b border-pink-950/30 pb-4 select-none">
                 <div>
                     <span class="text-[10px] text-registryTeal font-mono uppercase tracking-widest">Document Registry Workspace</span>
                     <h3 class="text-xl font-bold text-white tracking-tight">7 Required Clearance Units</h3>
@@ -325,14 +325,14 @@
     </div>
 
     <!-- LIGHTBOX PREVIEW SYSTEM -->
-    <div id="lightbox-viewer" class="fixed inset-0 bg-black/95 z-[60] hidden flex-col items-center justify-center p-6">
+    <div id="lightbox-viewer" class="fixed inset-0 bg-black/95 z-[60] hidden flex-col items-center justify-center p-6 select-none">
         <button onclick="closeLightbox()" class="absolute top-6 right-6 text-stone-400 hover:text-white text-xs tracking-widest uppercase border border-stone-800 bg-stone-900/40 px-4 py-2 rounded-lg transition-all">Exit Viewer ✕</button>
         <img id="lightbox-img" src="" alt="Live Documentation View" class="max-w-full max-h-[82vh] object-contain rounded-lg border border-pink-950/20 shadow-2xl">
         <p id="lightbox-caption" class="text-xs text-stone-500 font-mono mt-4 tracking-wide"></p>
     </div>
 
     <!-- Global Footer -->
-    <footer class="text-center py-4 text-[10px] font-light text-stone-600 border-t border-pink-950/10 flex-shrink-0 bg-sakuraDark/30 z-40 relative">
+    <footer class="text-center py-4 text-[10px] font-light text-stone-600 border-t border-pink-950/10 flex-shrink-0 bg-sakuraDark/30 z-40 relative select-none">
         <p>&copy; 2026 Joanna Ashley A. Escanilla. Interactive Sakura Engine operating live.</p>
     </footer>
 
@@ -561,17 +561,23 @@
         function commitNewTimeLog() {
             const dateInput = document.getElementById('input-log-date').value;
             const hoursInput = parseInt(document.getElementById('input-log-hours').value);
-            const descInput = document.getElementById('input-log-desc').value;
+            let descInput = document.getElementById('input-log-desc').value.trim();
 
-            if(!dateInput || isNaN(hoursInput) || hoursInput <= 0 || !descInput.trim()) {
-                alert("Please fill out all metric entry values accurately.");
+            // Enforce only Date and Hours tracking parameters
+            if(!dateInput || isNaN(hoursInput) || hoursInput <= 0) {
+                alert("Please fill out the Date and Hours values accurately.");
                 return;
+            }
+
+            // Fallback default value assigned if left blank by user choice
+            if (!descInput) {
+                descInput = "General OJT Duties";
             }
 
             const newLog = {
                 id: 'log-row-' + Date.now(),
                 date: dateInput,
-                desc: descInput.trim(),
+                desc: descInput,
                 hours: hoursInput
             };
 

@@ -332,7 +332,8 @@
         ];
 
         // --- 2. EDIT YOUR 7 CORE DOCUMENTS HERE ---
-        // Cleaned up double-extension file name to exact 'medical.pdf'
+        // NOTE: If your PDF won't preview because of browser blocks, 
+        // save your file as an image (e.g. docs/medical.png) and write it here!
         const STATIC_DOCUMENTS = {
             0: "docs/moa.pdf",        // Memorandum of Agreement (MOA)
             1: "docs/loi.pdf",        // Letter of Intent (LOI)
@@ -340,7 +341,7 @@
             3: "docs/consent.pdf",    // PUP Consent Form
             4: "docs/waiver.pdf",     // Student Waiver
             5: "docs/agreement.pdf",  // Internship Agreement
-            6: "docs/medical.pdf"     // Medical Certificate
+            6: "docs/medical.png"     // Medical Certificate (Changed to PNG for perfect rendering)
         };
 
         // --- 3. EDIT YOUR 8 WEEKLY ALBUMS HERE ---
@@ -396,7 +397,7 @@
                             <span class="text-xs text-stone-200 font-medium tracking-wide">${docName}</span>
                         </div>
                         <div class="flex items-center gap-2 self-end sm:self-auto">
-                            <span class="${hasAsset ? 'text-emerald-400' : 'text-stone-600 italic'} text-[10px] font-mono pr-2">${hasAsset ? 'Verified PDF Archive' : 'Not Loaded'}</span>
+                            <span class="${hasAsset ? 'text-emerald-400' : 'text-stone-600 italic'} text-[10px] font-mono pr-2">${hasAsset ? 'Verified Asset' : 'Not Loaded'}</span>
                             <button onclick="launchLightbox(${index})" class="${hasAsset ? '' : 'hidden'} text-[10px] uppercase font-semibold text-sakuraPetal border border-pink-950/60 bg-pink-950/10 px-2.5 py-1 rounded hover:bg-pink-950/30 transition-all flex items-center gap-1">👁 Preview</button>
                         </div>
                     </div>
@@ -493,17 +494,17 @@
                 const imgEl = document.getElementById('lightbox-img');
                 const pdfEl = document.getElementById('lightbox-pdf');
 
-                // Check if the targeted link is a local PDF or Hosted PDF
+                // Clean routing check: Handles images (png, jpg) vs PDFs
                 if (assetUrl.toLowerCase().endsWith('.pdf')) {
                     imgEl.classList.add('hidden');
                     imgEl.src = "";
                     pdfEl.classList.remove('hidden');
-                    pdfEl.src = assetUrl; // Open directly in native viewer
+                    pdfEl.src = assetUrl; // Opens standard iframe PDF viewer
                 } else {
                     pdfEl.classList.add('hidden');
                     pdfEl.src = "";
                     imgEl.classList.remove('hidden');
-                    imgEl.src = assetUrl;
+                    imgEl.src = assetUrl; // Opens simple gorgeous picture viewer
                 }
 
                 document.getElementById('lightbox-caption').innerText = `Document Structure: ${docRegistryNames[idx]}`;
@@ -553,6 +554,13 @@
                 document.exitFullscreen().catch(() => {});
             }
         }
+
+        document.getElementById('lightbox-viewer').addEventListener('click', (e) => {
+            // Close lightbox if clicking the blank outer backdrop space
+            if (e.target === document.getElementById('lightbox-viewer') || e.target.id === 'lightbox-pdf-container') {
+                closeLightbox();
+            }
+        });
 
         function openRegistryModal() { document.getElementById('registry-modal').classList.replace('hidden', 'flex'); }
         function closeRegistryModal() { document.getElementById('registry-modal').classList.replace('flex', 'hidden'); }

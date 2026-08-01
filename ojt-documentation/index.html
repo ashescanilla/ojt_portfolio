@@ -322,13 +322,11 @@
     <!--          PORTFOLIO ARCHIVE DATA HUB (EDIT HERE!)              -->
     <!-- ============================================================= -->
     <script>
-        // --- 1. EDIT YOUR TIME LOGS HERE ---
+        // --- 1. EDIT YOUR TIME LOGS HERE (Total sums up to 128 hours) ---
         const STATIC_TIME_LOGS = [
-            { id: 'log-1', date: '2026-03-01', desc: 'Orientation and Department Briefing', hours: 8 },
-            { id: 'log-2', date: '2026-03-02', desc: 'System Diagnostics & Hardware Inventory', hours: 8 },
-            { id: 'log-3', date: '2026-03-03', desc: 'Network Switch Maintenance and Deployment', hours: 8 },
-            { id: 'log-4', date: '2026-03-04', desc: 'Active Directory Infrastructure Audit', hours: 6 },
-            { id: 'log-5', date: '2026-03-05', desc: 'Hardware Support & Diagnostic Troubleshooting', hours: 8 }
+            { id: 'log-1', date: '2026-03-01 to 03-05', desc: 'Orientation, System Diagnostics & Hardware Inventory', hours: 40 },
+            { id: 'log-2', date: '2026-03-08 to 03-12', desc: 'Network Switch Maintenance & Infrastructure Audit', hours: 40 },
+            { id: 'log-3', date: '2026-03-15 to 03-19', desc: 'Advanced Hardware Support & Technical Troubleshooting', hours: 48 }
         ];
 
         // --- 2. EDIT YOUR 7 CORE DOCUMENTS HERE ---
@@ -336,9 +334,9 @@
             0: "moa.pdf",             // Memorandum of Agreement (MOA)
             1: "loi.pdf",             // Letter of Intent (LOI)
             2: "loe.pdf",             // Letter of Endorsement (LOE)
-            3: "docs/consent.pdf",    // PUP Consent Form (Still looks in docs/ if added later)
+            3: "docs/consent.pdf",    // PUP Consent Form 
             4: "waiver.pdf",          // Student Waiver
-            5: "docs/agreement.pdf",  // Internship Agreement (Still looks in docs/ if added later)
+            5: "docs/agreement.pdf",  // Internship Agreement 
             6: "medical.pdf"          // Medical Certificate
         };
 
@@ -452,7 +450,6 @@
                 const imgEl = document.getElementById('lightbox-img');
                 const pdfEl = document.getElementById('lightbox-pdf');
 
-                // Switch off PDF view, show Image View
                 pdfEl.classList.add('hidden');
                 pdfEl.src = ""; 
                 imgEl.classList.remove('hidden');
@@ -492,17 +489,16 @@
                 const imgEl = document.getElementById('lightbox-img');
                 const pdfEl = document.getElementById('lightbox-pdf');
 
-                // Clean routing check: Handles images (png, jpg) vs PDFs
                 if (assetUrl.toLowerCase().endsWith('.pdf')) {
                     imgEl.classList.add('hidden');
                     imgEl.src = "";
                     pdfEl.classList.remove('hidden');
-                    pdfEl.src = assetUrl; // Opens standard iframe PDF viewer
+                    pdfEl.src = assetUrl;
                 } else {
                     pdfEl.classList.add('hidden');
                     pdfEl.src = "";
                     imgEl.classList.remove('hidden');
-                    imgEl.src = assetUrl; // Opens simple gorgeous picture viewer
+                    imgEl.src = assetUrl;
                 }
 
                 document.getElementById('lightbox-caption').innerText = `Document Structure: ${docRegistryNames[idx]}`;
@@ -516,7 +512,6 @@
         function renderAllTimeLogs() {
             const tableBody = document.getElementById('live-time-logs-table');
             tableBody.innerHTML = "";
-            let totalHours = 0;
 
             if (STATIC_TIME_LOGS.length === 0) {
                 tableBody.innerHTML = `<tr><td colspan="3" class="py-6 text-center text-stone-600 italic font-mono text-[11px]">Empty Matrix — No logs configured</td></tr>`;
@@ -524,7 +519,6 @@
             }
 
             STATIC_TIME_LOGS.forEach(log => {
-                totalHours += log.hours;
                 tableBody.innerHTML += `
                     <tr class="hover:bg-pink-950/5">
                         <td class="py-2.5 font-mono text-stone-400">${log.date}</td>
@@ -547,14 +541,13 @@
 
         function closeLightbox() { 
             document.getElementById('lightbox-viewer').classList.replace('flex', 'hidden'); 
-            document.getElementById('lightbox-pdf').src = ""; // Clear PDF buffer
+            document.getElementById('lightbox-pdf').src = ""; 
             if (document.fullscreenElement) {
                 document.exitFullscreen().catch(() => {});
             }
         }
 
         document.getElementById('lightbox-viewer').addEventListener('click', (e) => {
-            // Close lightbox if clicking the blank outer backdrop space
             if (e.target === document.getElementById('lightbox-viewer') || e.target.id === 'lightbox-pdf-container') {
                 closeLightbox();
             }

@@ -149,7 +149,7 @@
                         <span class="text-[11px] uppercase font-medium tracking-wider text-stone-500 mt-1 block">Hours Rendered Logs</span>
                     </div>
                     <button onclick="openRegistryModal()" class="lantern-card card-float-a bg-sakuraCard border border-pink-950/20 p-6 rounded-2xl text-center sm:text-left focus:outline-none hover:border-registryTeal/50 transition-all text-left w-full group">
-                        <span id="global-docs-count-display" class="text-2xl md:text-3xl font-semibold text-stone-200 tracking-tight block group-hover:text-registryTeal transition-colors">6 Units ↗</span>
+                        <span id="global-docs-count-display" class="text-2xl md:text-3xl font-semibold text-stone-200 tracking-tight block group-hover:text-registryTeal transition-colors">7 Units ↗</span>
                         <span class="text-[11px] uppercase font-medium tracking-wider text-stone-500 mt-1 block">Documents Submitted</span>
                     </button>
                 </div>
@@ -327,6 +327,7 @@
                 category: "Before OJT",
                 folderTag: "PRE-OJT REQUIREMENTS",
                 items: [
+                    { id: "internship_agreement", name: "Internship Agreement", file: "internship_agreement.pdf" },
                     { id: "moa", name: "Memorandum of Agreement (MOA)", file: "moa.pdf" },
                     { id: "loi", name: "Letter of Intent (LOI)", file: "loi.pdf" },
                     { id: "loe", name: "Letter of Endorsement (LOE)", file: "loe.pdf" },
@@ -334,7 +335,7 @@
                     { id: "medical", name: "Medical Certificate", file: "medical.pdf" },
                     { id: "consent", name: "PUP Consent Form", file: "consent.pdf" },
                     { id: "cv", name: "Curriculum Vitae (CV)", file: "" },
-                    { id: "insurance", name: "Insurance", file: "" }
+                    { id: "insurance", name: "Insurance", file: "insurance.pdf" }
                 ]
             },
             {
@@ -458,6 +459,67 @@
             });
         }
 
+        function renderAllTimeLogs() {
+            const tbody = document.getElementById('live-time-logs-table');
+            tbody.innerHTML = '';
+            STATIC_TIME_LOGS.forEach(log => {
+                tbody.innerHTML += `
+                    <tr class="hover:bg-pink-950/10 transition-colors">
+                        <td class="py-2.5 text-stone-400">${log.date}</td>
+                        <td class="py-2.5 text-stone-200 font-sans">${log.desc}</td>
+                        <td class="py-2.5 text-right font-bold text-sakuraPetal">${log.hours}h</td>
+                    </tr>
+                `;
+            });
+        }
+
+        function refreshHoursMetrics() {
+            const logged = STATIC_TIME_LOGS.reduce((acc, cur) => acc + cur.hours, 0);
+            const remaining = Math.max(0, targetHoursRequirement - logged);
+            
+            document.getElementById('global-hours-display').innerText = `${logged} / ${targetHoursRequirement}`;
+            document.getElementById('summary-logged-hours').innerHTML = `${logged}<span class="text-xs font-light text-stone-500">h</span>`;
+            document.getElementById('summary-remaining-hours').innerHTML = `${remaining}<span class="text-xs font-light text-sakuraPetal/60">h</span>`;
+        }
+
+        function openRegistryModal() {
+            document.getElementById('registry-modal').classList.remove('hidden');
+            document.getElementById('registry-modal').classList.add('flex');
+        }
+
+        function closeRegistryModal() {
+            document.getElementById('registry-modal').classList.add('hidden');
+            document.getElementById('registry-modal').classList.remove('flex');
+        }
+
+        function launchDocLightbox(filePath, docName) {
+            currentLightboxType = 'doc';
+            const viewer = document.getElementById('lightbox-viewer');
+            const imgEl = document.getElementById('lightbox-img');
+            const pdfEl = document.getElementById('lightbox-pdf');
+            const caption = document.getElementById('lightbox-caption');
+            const btnLeft = document.getElementById('lightbox-left');
+            const btnRight = document.getElementById('lightbox-right');
+
+            btnLeft.classList.add('hidden');
+            btnRight.classList.add('hidden');
+
+            const isPdf = filePath.toLowerCase().endsWith('.pdf');
+            if (isPdf) {
+                imgEl.classList.add('hidden');
+                pdfEl.classList.remove('hidden');
+                pdfEl.src = filePath;
+            } else {
+                pdfEl.classList.add('hidden');
+                imgEl.classList.remove('hidden');
+                imgEl.src = filePath;
+            }
+
+            caption.innerText = docName;
+            viewer.classList.remove('hidden');
+            viewer.classList.add('flex');
+        }
+
         function launchFullAlbum(weekIdx) {
             const images = STATIC_WEEK_ALBUMS[weekIdx];
             if(images && images.length > 0) launchAlbumLightbox(weekIdx, 0);
@@ -469,122 +531,54 @@
             currentLightboxImgIdx = imgIdx;
 
             const images = STATIC_WEEK_ALBUMS[weekIdx];
-            if(images && images[imgIdx]) {
-                const imgEl = document.getElementById('lightbox-img');
-                const pdfEl = document.getElementById('lightbox-pdf');
+            const viewer = document.getElementById('lightbox-viewer');
+            const imgEl = document.getElementById('lightbox-img');
+            const pdfEl = document.getElementById('lightbox-pdf');
+            const caption = document.getElementById('lightbox-caption');
+            const btnLeft = document.getElementById('lightbox-left');
+            const btnRight = document.getElementById('lightbox-right');
 
-                pdfEl.classList.add('hidden');
-                pdfEl.src = ""; 
-                imgEl.classList.remove('hidden');
-                imgEl.src = images[imgIdx];
-                
-                document.getElementById('lightbox-caption').innerText = `Week ${weekIdx} — Photo ${imgIdx + 1} of ${images.length}`;
-                document.getElementById('lightbox-viewer').classList.replace('hidden', 'flex');
-                
-                const lArrow = document.getElementById('lightbox-left');
-                const rArrow = document.getElementById('lightbox-right');
-                if(images.length > 1) {
-                    lArrow.classList.remove('hidden');
-                    rArrow.classList.remove('hidden');
-                } else {
-                    lArrow.classList.add('hidden');
-                    rArrow.classList.add('hidden');
-                }
+            pdfEl.classList.add('hidden');
+            imgEl.classList.remove('hidden');
+            imgEl.src = images[imgIdx];
+            caption.innerText = `Week ${weekIdx} Asset (${imgIdx + 1} of ${images.length})`;
+
+            if (images.length > 1) {
+                btnLeft.classList.remove('hidden');
+                btnRight.classList.remove('hidden');
+            } else {
+                btnLeft.classList.add('hidden');
+                btnRight.classList.add('hidden');
             }
+
+            viewer.classList.remove('hidden');
+            viewer.classList.add('flex');
         }
 
         function navigateLightbox(direction) {
-            if(currentLightboxType !== 'album') return;
+            if (currentLightboxType !== 'album') return;
             const images = STATIC_WEEK_ALBUMS[currentLightboxWeek];
-            if(!images || images.length === 0) return;
-
-            let targetIdx = currentLightboxImgIdx + direction;
-            if(targetIdx < 0) targetIdx = images.length - 1;
-            if(targetIdx >= images.length) targetIdx = 0;
-
-            launchAlbumLightbox(currentLightboxWeek, targetIdx);
+            let newIndex = currentLightboxImgIdx + direction;
+            if (newIndex < 0) newIndex = images.length - 1;
+            if (newIndex >= images.length) newIndex = 0;
+            launchAlbumLightbox(currentLightboxWeek, newIndex);
         }
 
-        function launchDocLightbox(fileUrl, docName) {
-            currentLightboxType = 'registry';
-            if (fileUrl && fileUrl !== "") {
-                const imgEl = document.getElementById('lightbox-img');
-                const pdfEl = document.getElementById('lightbox-pdf');
-
-                if (fileUrl.toLowerCase().endsWith('.pdf')) {
-                    imgEl.classList.add('hidden');
-                    imgEl.src = "";
-                    pdfEl.classList.remove('hidden');
-                    pdfEl.src = fileUrl;
-                } else {
-                    pdfEl.classList.add('hidden');
-                    pdfEl.src = "";
-                    imgEl.classList.remove('hidden');
-                    imgEl.src = fileUrl;
-                }
-
-                document.getElementById('lightbox-caption').innerText = `Document File: ${docName}`;
-                document.getElementById('lightbox-viewer').classList.replace('hidden', 'flex');
-                document.getElementById('lightbox-left').classList.add('hidden');
-                document.getElementById('lightbox-right').classList.add('hidden');
-            }
+        function closeLightbox() {
+            const viewer = document.getElementById('lightbox-viewer');
+            const pdfEl = document.getElementById('lightbox-pdf');
+            pdfEl.src = '';
+            viewer.classList.add('hidden');
+            viewer.classList.remove('flex');
         }
-
-        function renderAllTimeLogs() {
-            const tableBody = document.getElementById('live-time-logs-table');
-            tableBody.innerHTML = "";
-
-            if (STATIC_TIME_LOGS.length === 0) {
-                tableBody.innerHTML = `<tr><td colspan="3" class="py-6 text-center text-stone-600 italic font-mono text-[11px]">Empty Matrix — No logs configured</td></tr>`;
-                return;
-            }
-
-            STATIC_TIME_LOGS.forEach(log => {
-                tableBody.innerHTML += `
-                    <tr class="hover:bg-pink-950/5">
-                        <td class="py-2.5 font-mono text-stone-400">${log.date}</td>
-                        <td class="text-stone-300 font-sans">${log.desc}</td>
-                        <td class="py-2.5 text-right font-semibold text-registryTeal">${log.hours} h</td>
-                    </tr>
-                `;
-            });
-        }
-
-        function refreshHoursMetrics() {
-            let totalHours = STATIC_TIME_LOGS.reduce((acc, log) => acc + log.hours, 0);
-            document.getElementById('global-hours-display').innerText = `${totalHours} / ${targetHoursRequirement}`;
-            document.getElementById('summary-logged-hours').innerHTML = `${totalHours}<span class="text-xs font-light text-stone-500">h</span>`;
-            
-            let remaining = targetHoursRequirement - totalHours;
-            if(remaining < 0) remaining = 0;
-            document.getElementById('summary-remaining-hours').innerHTML = `${remaining}<span class="text-xs font-light text-sakuraPetal/60">h</span>`;
-        }
-
-        function closeLightbox() { 
-            document.getElementById('lightbox-viewer').classList.replace('flex', 'hidden'); 
-            document.getElementById('lightbox-pdf').src = ""; 
-        }
-
-        function openRegistryModal() { document.getElementById('registry-modal').classList.replace('hidden', 'flex'); }
-        function closeRegistryModal() { document.getElementById('registry-modal').classList.replace('flex', 'hidden'); }
 
         function toggleNativeFullscreen() {
-            const viewer = document.getElementById('lightbox-viewer');
             if (!document.fullscreenElement) {
-                viewer.requestFullscreen().catch(() => {});
+                document.documentElement.requestFullscreen().catch(() => {});
             } else {
-                document.exitFullscreen();
+                if (document.exitFullscreen) document.exitFullscreen();
             }
         }
-
-        document.addEventListener('keydown', (e) => {
-            const viewer = document.getElementById('lightbox-viewer');
-            if(viewer && !viewer.classList.contains('hidden')) {
-                if(e.key === 'ArrowLeft') navigateLightbox(-1);
-                if(e.key === 'ArrowRight') navigateLightbox(1);
-                if(e.key === 'Escape') closeLightbox();
-            }
-        });
     </script>
 </body>
 </html>

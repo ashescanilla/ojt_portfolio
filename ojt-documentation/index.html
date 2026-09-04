@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Joanna Ashley | Centralized OJT Hub</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -87,7 +86,6 @@
     
     <div class="sakura-glow-sphere z-0"></div>
 
-    <!-- Navigation Bar -->
     <nav class="bg-sakuraDark/60 backdrop-blur-xl z-40 border-b border-pink-950/20 flex-shrink-0 relative select-none">
         <div class="max-w-7xl mx-auto flex justify-between items-center px-8 py-4">
             <div class="flex items-center gap-3 group cursor-pointer">
@@ -104,7 +102,6 @@
         </div>
     </nav>
 
-    <!-- Navigation Deck Arrows -->
     <button onclick="navigateDeck(-1)" id="left-arrow" class="fixed left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full border border-pink-950/40 bg-sakuraDark/80 backdrop-blur-md flex items-center justify-center text-stone-400 hover:text-white hover:border-pink-500/30 hover:bg-sakuraCard z-40 opacity-0 pointer-events-none transition-all duration-300 shadow-lg select-none">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
     </button>
@@ -112,10 +109,8 @@
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
     </button>
 
-    <!-- Horizontal Deck Engine -->
     <main id="deck-container" class="flex-1 overflow-x-auto overflow-y-hidden flex snap-x snap-mandatory scroll-smooth relative z-10 w-full h-full">
 
-        <!-- PANEL 1: PROFILE -->
         <section class="panel-view w-screen min-w-[100vw] h-full snap-start flex-shrink-0 flex items-center justify-center px-6 md:px-12 z-20">
             <div class="max-w-5xl w-full space-y-12">
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-12 items-center justify-items-center md:justify-items-start">
@@ -138,7 +133,6 @@
                     </div>
                 </div>
 
-                <!-- Metrics Grid -->
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 pt-4 select-none">
                     <div class="lantern-card card-float-a bg-sakuraCard border border-pink-950/20 p-6 rounded-2xl text-center sm:text-left">
                         <span class="text-2xl md:text-3xl font-semibold text-stone-200 tracking-tight block">240 Hours</span>
@@ -149,14 +143,13 @@
                         <span class="text-[11px] uppercase font-medium tracking-wider text-stone-500 mt-1 block">Hours Rendered Logs</span>
                     </div>
                     <button onclick="openRegistryModal()" class="lantern-card card-float-a bg-sakuraCard border border-pink-950/20 p-6 rounded-2xl text-center sm:text-left focus:outline-none hover:border-registryTeal/50 transition-all text-left w-full group">
-                        <span id="global-docs-count-display" class="text-2xl md:text-3xl font-semibold text-stone-200 tracking-tight block group-hover:text-registryTeal transition-colors">7 Units ↗</span>
+                        <span id="global-docs-count-display" class="text-2xl md:text-3xl font-semibold text-stone-200 tracking-tight block group-hover:text-registryTeal transition-colors">8 Units ↗</span>
                         <span class="text-[11px] uppercase font-medium tracking-wider text-stone-500 mt-1 block">Documents Submitted</span>
                     </button>
                 </div>
             </div>
         </section>
 
-        <!-- PANEL 2: DOCUMENTATION ALBUMS -->
         <section class="panel-view w-screen min-w-[100vw] h-full snap-start flex-shrink-0 flex items-center justify-center px-6 md:px-12 z-20 overflow-y-auto py-8">
             <div class="max-w-5xl w-full space-y-6">
                 <div class="text-center md:text-left select-none">
@@ -191,7 +184,6 @@
             </div>
         </section>
 
-        <!-- PANEL 3: TIME LOGS -->
         <section class="panel-view w-screen min-w-[100vw] h-full snap-start flex-shrink-0 flex items-center justify-center px-6 md:px-12 z-20 overflow-y-auto py-6">
             <div class="max-w-5xl w-full space-y-6">
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-0.5 bg-pink-950/20 rounded-xl overflow-hidden border border-pink-950/30 select-none">
@@ -216,7 +208,6 @@
                     </div>
                 </div>
 
-                <!-- Data Table Matrix -->
                 <div class="max-h-[35vh] overflow-y-auto pr-1">
                     <table class="w-full text-left text-xs border-collapse">
                         <thead>
@@ -233,7 +224,6 @@
         </section>
     </main>
 
-    <!-- POPUP MODAL (CATEGORIZED FOLDERS: BEFORE, DURING, AFTER OJT) -->
     <div id="registry-modal" class="fixed inset-0 bg-sakuraDark/90 backdrop-blur-md hidden items-center justify-center z-50 p-4">
         <div class="bg-sakuraCard border border-pink-950/40 w-full max-w-3xl rounded-2xl p-6 shadow-2xl space-y-6 max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center border-b border-pink-950/30 pb-4 select-none">
@@ -247,7 +237,6 @@
         </div>
     </div>
 
-    <!-- LIGHTBOX SYSTEM -->
     <div id="lightbox-viewer" class="fixed inset-0 bg-black/95 z-[60] hidden flex-col items-center justify-center p-6 select-none">
         <div class="absolute top-6 right-6 flex gap-2 z-[70]">
             <button onclick="toggleNativeFullscreen()" class="text-stone-400 hover:text-white text-xs border border-stone-800 bg-stone-900/40 px-4 py-2 rounded-lg">Fullscreen ⛶</button>
@@ -273,7 +262,6 @@
         <p>&copy; 2026 Joanna Ashley A. Escanilla. Fully Integrated Showcase.</p>
     </footer>
 
-    <!-- NAVIGATION SYSTEM ENGINE -->
     <script>
         const container = document.getElementById('deck-container');
         const panels = document.querySelectorAll('.panel-view');
@@ -313,7 +301,6 @@
         window.addEventListener('load', () => scrollToPanel(0));
     </script>
 
-    <!-- PORTFOLIO ARCHIVE DATA HUB -->
     <script>
         const STATIC_TIME_LOGS = [
             { id: 'log-1', date: '2026-03-01 to 03-05', desc: 'Orientation, System Diagnostics & Hardware Inventory', hours: 40 },
@@ -334,7 +321,7 @@
                     { id: "waiver", name: "Student Waiver", file: "waiver.pdf" },
                     { id: "medical", name: "Medical Certificate", file: "medical.pdf" },
                     { id: "consent", name: "PUP Consent Form", file: "consent.pdf" },
-                    { id: "cv", name: "Curriculum Vitae (CV)", file: "" },
+                    { id: "cv", name: "Curriculum Vitae (CV)", file: "cv.pdf" },
                     { id: "insurance", name: "Insurance", file: "insurance.pdf" }
                 ]
             },
@@ -372,7 +359,6 @@
         };
     </script>
 
-    <!-- CORE LOGIC ENGINE -->
     <script>
         const targetHoursRequirement = 240;
         let currentLightboxType = null;
@@ -467,18 +453,18 @@
                     <tr class="hover:bg-pink-950/10 transition-colors">
                         <td class="py-2.5 text-stone-400">${log.date}</td>
                         <td class="py-2.5 text-stone-200 font-sans">${log.desc}</td>
-                        <td class="py-2.5 text-right font-bold text-sakuraPetal">${log.hours}h</td>
+                        <td class="py-2.5 text-right font-medium text-sakuraPetal">${log.hours}h</td>
                     </tr>
                 `;
             });
         }
 
         function refreshHoursMetrics() {
-            const logged = STATIC_TIME_LOGS.reduce((acc, cur) => acc + cur.hours, 0);
-            const remaining = Math.max(0, targetHoursRequirement - logged);
-            
-            document.getElementById('global-hours-display').innerText = `${logged} / ${targetHoursRequirement}`;
-            document.getElementById('summary-logged-hours').innerHTML = `${logged}<span class="text-xs font-light text-stone-500">h</span>`;
+            const totalLogged = STATIC_TIME_LOGS.reduce((acc, curr) => acc + curr.hours, 0);
+            const remaining = Math.max(0, targetHoursRequirement - totalLogged);
+
+            document.getElementById('global-hours-display').innerText = `${totalLogged} / ${targetHoursRequirement}`;
+            document.getElementById('summary-logged-hours').innerHTML = `${totalLogged}<span class="text-xs font-light text-stone-500">h</span>`;
             document.getElementById('summary-remaining-hours').innerHTML = `${remaining}<span class="text-xs font-light text-sakuraPetal/60">h</span>`;
         }
 
@@ -492,37 +478,30 @@
             document.getElementById('registry-modal').classList.remove('flex');
         }
 
-        function launchDocLightbox(filePath, docName) {
+        function launchDocLightbox(file, name) {
             currentLightboxType = 'doc';
-            const viewer = document.getElementById('lightbox-viewer');
             const imgEl = document.getElementById('lightbox-img');
             const pdfEl = document.getElementById('lightbox-pdf');
             const caption = document.getElementById('lightbox-caption');
-            const btnLeft = document.getElementById('lightbox-left');
-            const btnRight = document.getElementById('lightbox-right');
+            const leftBtn = document.getElementById('lightbox-left');
+            const rightBtn = document.getElementById('lightbox-right');
 
-            btnLeft.classList.add('hidden');
-            btnRight.classList.add('hidden');
+            leftBtn.classList.add('hidden');
+            rightBtn.classList.add('hidden');
 
-            const isPdf = filePath.toLowerCase().endsWith('.pdf');
-            if (isPdf) {
+            if(file.endsWith('.pdf')) {
                 imgEl.classList.add('hidden');
                 pdfEl.classList.remove('hidden');
-                pdfEl.src = filePath;
+                pdfEl.src = file;
             } else {
                 pdfEl.classList.add('hidden');
                 imgEl.classList.remove('hidden');
-                imgEl.src = filePath;
+                imgEl.src = file;
             }
 
-            caption.innerText = docName;
-            viewer.classList.remove('hidden');
-            viewer.classList.add('flex');
-        }
-
-        function launchFullAlbum(weekIdx) {
-            const images = STATIC_WEEK_ALBUMS[weekIdx];
-            if(images && images.length > 0) launchAlbumLightbox(weekIdx, 0);
+            caption.innerText = `Document Asset: ${name}`;
+            document.getElementById('lightbox-viewer').classList.remove('hidden');
+            document.getElementById('lightbox-viewer').classList.add('flex');
         }
 
         function launchAlbumLightbox(weekIdx, imgIdx) {
@@ -530,53 +509,66 @@
             currentLightboxWeek = weekIdx;
             currentLightboxImgIdx = imgIdx;
 
-            const images = STATIC_WEEK_ALBUMS[weekIdx];
-            const viewer = document.getElementById('lightbox-viewer');
+            updateAlbumLightboxDisplay();
+            document.getElementById('lightbox-viewer').classList.remove('hidden');
+            document.getElementById('lightbox-viewer').classList.add('flex');
+        }
+
+        function launchFullAlbum(weekIdx) {
+            launchAlbumLightbox(weekIdx, 0);
+        }
+
+        function updateAlbumLightboxDisplay() {
+            const images = STATIC_WEEK_ALBUMS[currentLightboxWeek] || [];
+            if(images.length === 0) return;
+
             const imgEl = document.getElementById('lightbox-img');
             const pdfEl = document.getElementById('lightbox-pdf');
             const caption = document.getElementById('lightbox-caption');
-            const btnLeft = document.getElementById('lightbox-left');
-            const btnRight = document.getElementById('lightbox-right');
+            const leftBtn = document.getElementById('lightbox-left');
+            const rightBtn = document.getElementById('lightbox-right');
 
             pdfEl.classList.add('hidden');
             imgEl.classList.remove('hidden');
-            imgEl.src = images[imgIdx];
-            caption.innerText = `Week ${weekIdx} Asset (${imgIdx + 1} of ${images.length})`;
+            imgEl.src = images[currentLightboxImgIdx];
 
-            if (images.length > 1) {
-                btnLeft.classList.remove('hidden');
-                btnRight.classList.remove('hidden');
+            caption.innerText = `Week ${currentLightboxWeek} Documentation Archive (${currentLightboxImgIdx + 1} of ${images.length})`;
+
+            if(images.length > 1) {
+                leftBtn.classList.remove('hidden');
+                rightBtn.classList.remove('hidden');
             } else {
-                btnLeft.classList.add('hidden');
-                btnRight.classList.add('hidden');
+                leftBtn.classList.add('hidden');
+                rightBtn.classList.add('hidden');
             }
-
-            viewer.classList.remove('hidden');
-            viewer.classList.add('flex');
         }
 
         function navigateLightbox(direction) {
-            if (currentLightboxType !== 'album') return;
-            const images = STATIC_WEEK_ALBUMS[currentLightboxWeek];
-            let newIndex = currentLightboxImgIdx + direction;
-            if (newIndex < 0) newIndex = images.length - 1;
-            if (newIndex >= images.length) newIndex = 0;
-            launchAlbumLightbox(currentLightboxWeek, newIndex);
+            if(currentLightboxType !== 'album') return;
+            const images = STATIC_WEEK_ALBUMS[currentLightboxWeek] || [];
+            if(images.length <= 1) return;
+
+            currentLightboxImgIdx += direction;
+            if(currentLightboxImgIdx < 0) currentLightboxImgIdx = images.length - 1;
+            if(currentLightboxImgIdx >= images.length) currentLightboxImgIdx = 0;
+
+            updateAlbumLightboxDisplay();
         }
 
         function closeLightbox() {
-            const viewer = document.getElementById('lightbox-viewer');
-            const pdfEl = document.getElementById('lightbox-pdf');
-            pdfEl.src = '';
-            viewer.classList.add('hidden');
-            viewer.classList.remove('flex');
+            document.getElementById('lightbox-viewer').classList.add('hidden');
+            document.getElementById('lightbox-viewer').classList.remove('flex');
+            document.getElementById('lightbox-img').src = "";
+            document.getElementById('lightbox-pdf').src = "";
         }
 
         function toggleNativeFullscreen() {
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen().catch(() => {});
             } else {
-                if (document.exitFullscreen) document.exitFullscreen();
+                if (document.exitFullscreen) {
+                    document.exitFullscreen().catch(() => {});
+                }
             }
         }
     </script>

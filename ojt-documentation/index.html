@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Joanna Ashley | Centralized OJT Hub</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -86,6 +87,7 @@
     
     <div class="sakura-glow-sphere z-0"></div>
 
+    <!-- Navigation Bar -->
     <nav class="bg-sakuraDark/60 backdrop-blur-xl z-40 border-b border-pink-950/20 flex-shrink-0 relative select-none">
         <div class="max-w-7xl mx-auto flex justify-between items-center px-8 py-4">
             <div class="flex items-center gap-3 group cursor-pointer">
@@ -102,6 +104,7 @@
         </div>
     </nav>
 
+    <!-- Navigation Deck Arrows -->
     <button onclick="navigateDeck(-1)" id="left-arrow" class="fixed left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full border border-pink-950/40 bg-sakuraDark/80 backdrop-blur-md flex items-center justify-center text-stone-400 hover:text-white hover:border-pink-500/30 hover:bg-sakuraCard z-40 opacity-0 pointer-events-none transition-all duration-300 shadow-lg select-none">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
     </button>
@@ -109,8 +112,10 @@
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
     </button>
 
+    <!-- Horizontal Deck Engine -->
     <main id="deck-container" class="flex-1 overflow-x-auto overflow-y-hidden flex snap-x snap-mandatory scroll-smooth relative z-10 w-full h-full">
 
+        <!-- PANEL 1: PROFILE -->
         <section class="panel-view w-screen min-w-[100vw] h-full snap-start flex-shrink-0 flex items-center justify-center px-6 md:px-12 z-20">
             <div class="max-w-5xl w-full space-y-12">
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-12 items-center justify-items-center md:justify-items-start">
@@ -133,6 +138,7 @@
                     </div>
                 </div>
 
+                <!-- Metrics Grid -->
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 pt-4 select-none">
                     <div class="lantern-card card-float-a bg-sakuraCard border border-pink-950/20 p-6 rounded-2xl text-center sm:text-left">
                         <span class="text-2xl md:text-3xl font-semibold text-stone-200 tracking-tight block">240 Hours</span>
@@ -143,13 +149,14 @@
                         <span class="text-[11px] uppercase font-medium tracking-wider text-stone-500 mt-1 block">Hours Rendered Logs</span>
                     </div>
                     <button onclick="openRegistryModal()" class="lantern-card card-float-a bg-sakuraCard border border-pink-950/20 p-6 rounded-2xl text-center sm:text-left focus:outline-none hover:border-registryTeal/50 transition-all text-left w-full group">
-                        <span id="global-docs-count-display" class="text-2xl md:text-3xl font-semibold text-stone-200 tracking-tight block group-hover:text-registryTeal transition-colors">7 Units ↗</span>
+                        <span id="global-docs-count-display" class="text-2xl md:text-3xl font-semibold text-stone-200 tracking-tight block group-hover:text-registryTeal transition-colors">6 Units ↗</span>
                         <span class="text-[11px] uppercase font-medium tracking-wider text-stone-500 mt-1 block">Documents Submitted</span>
                     </button>
                 </div>
             </div>
         </section>
 
+        <!-- PANEL 2: DOCUMENTATION ALBUMS -->
         <section class="panel-view w-screen min-w-[100vw] h-full snap-start flex-shrink-0 flex items-center justify-center px-6 md:px-12 z-20 overflow-y-auto py-8">
             <div class="max-w-5xl w-full space-y-6">
                 <div class="text-center md:text-left select-none">
@@ -184,6 +191,7 @@
             </div>
         </section>
 
+        <!-- PANEL 3: TIME LOGS -->
         <section class="panel-view w-screen min-w-[100vw] h-full snap-start flex-shrink-0 flex items-center justify-center px-6 md:px-12 z-20 overflow-y-auto py-6">
             <div class="max-w-5xl w-full space-y-6">
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-0.5 bg-pink-950/20 rounded-xl overflow-hidden border border-pink-950/30 select-none">
@@ -208,6 +216,7 @@
                     </div>
                 </div>
 
+                <!-- Data Table Matrix -->
                 <div class="max-h-[35vh] overflow-y-auto pr-1">
                     <table class="w-full text-left text-xs border-collapse">
                         <thead>
@@ -224,6 +233,7 @@
         </section>
     </main>
 
+    <!-- POPUP MODAL (CATEGORIZED FOLDERS: BEFORE, DURING, AFTER OJT) -->
     <div id="registry-modal" class="fixed inset-0 bg-sakuraDark/90 backdrop-blur-md hidden items-center justify-center z-50 p-4">
         <div class="bg-sakuraCard border border-pink-950/40 w-full max-w-3xl rounded-2xl p-6 shadow-2xl space-y-6 max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center border-b border-pink-950/30 pb-4 select-none">
@@ -237,6 +247,7 @@
         </div>
     </div>
 
+    <!-- LIGHTBOX SYSTEM -->
     <div id="lightbox-viewer" class="fixed inset-0 bg-black/95 z-[60] hidden flex-col items-center justify-center p-6 select-none">
         <div class="absolute top-6 right-6 flex gap-2 z-[70]">
             <button onclick="toggleNativeFullscreen()" class="text-stone-400 hover:text-white text-xs border border-stone-800 bg-stone-900/40 px-4 py-2 rounded-lg">Fullscreen ⛶</button>
@@ -262,6 +273,7 @@
         <p>&copy; 2026 Joanna Ashley A. Escanilla. Fully Integrated Showcase.</p>
     </footer>
 
+    <!-- NAVIGATION SYSTEM ENGINE -->
     <script>
         const container = document.getElementById('deck-container');
         const panels = document.querySelectorAll('.panel-view');
@@ -301,6 +313,7 @@
         window.addEventListener('load', () => scrollToPanel(0));
     </script>
 
+    <!-- PORTFOLIO ARCHIVE DATA HUB -->
     <script>
         const STATIC_TIME_LOGS = [
             { id: 'log-1', date: '2026-03-01 to 03-05', desc: 'Orientation, System Diagnostics & Hardware Inventory', hours: 40 },
@@ -318,11 +331,11 @@
                     { id: "loi", name: "Letter of Intent (LOI)", file: "loi.pdf" },
                     { id: "loe", name: "Letter of Endorsement (LOE)", file: "loe.pdf" },
                     { id: "waiver", name: "Student Waiver", file: "waiver.pdf" },
-                    { id: "agreement", name: "Internship Agreement", file: "docs/agreement.pdf" },
-                    { id: "consent", name: "PUP Consent Form", file: "docs/consent.pdf" },
+                    { id: "medical", name: "Medical Certificate", file: "medical.pdf" },
+                    { id: "agreement", name: "Internship Agreement", file: "" },
+                    { id: "consent", name: "PUP Consent Form", file: "consent.pdf" },
                     { id: "cv", name: "Curriculum Vitae (CV)", file: "" },
-                    { id: "insurance", name: "Insurance", file: "" },
-                    { id: "medical", name: "Medical Certificate", file: "medical.pdf" }
+                    { id: "insurance", name: "Insurance", file: "" }
                 ]
             },
             {
@@ -359,6 +372,7 @@
         };
     </script>
 
+    <!-- CORE LOGIC ENGINE -->
     <script>
         const targetHoursRequirement = 240;
         let currentLightboxType = null;

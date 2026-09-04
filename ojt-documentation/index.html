@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Joanna Ashley | Centralized OJT Hub</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -87,7 +86,6 @@
     
     <div class="sakura-glow-sphere z-0"></div>
 
-    <!-- Navigation Bar -->
     <nav class="bg-sakuraDark/60 backdrop-blur-xl z-40 border-b border-pink-950/20 flex-shrink-0 relative select-none">
         <div class="max-w-7xl mx-auto flex justify-between items-center px-8 py-4">
             <div class="flex items-center gap-3 group cursor-pointer">
@@ -104,7 +102,6 @@
         </div>
     </nav>
 
-    <!-- Navigation Deck Arrows -->
     <button onclick="navigateDeck(-1)" id="left-arrow" class="fixed left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full border border-pink-950/40 bg-sakuraDark/80 backdrop-blur-md flex items-center justify-center text-stone-400 hover:text-white hover:border-pink-500/30 hover:bg-sakuraCard z-40 opacity-0 pointer-events-none transition-all duration-300 shadow-lg select-none">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
     </button>
@@ -112,10 +109,8 @@
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
     </button>
 
-    <!-- Horizontal Deck Engine -->
     <main id="deck-container" class="flex-1 overflow-x-auto overflow-y-hidden flex snap-x snap-mandatory scroll-smooth relative z-10 w-full h-full">
 
-        <!-- PANEL 1: PROFILE -->
         <section class="panel-view w-screen min-w-[100vw] h-full snap-start flex-shrink-0 flex items-center justify-center px-6 md:px-12 z-20">
             <div class="max-w-5xl w-full space-y-12">
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-12 items-center justify-items-center md:justify-items-start">
@@ -138,25 +133,23 @@
                     </div>
                 </div>
 
-                <!-- Metrics Grid -->
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 pt-4 select-none">
                     <div class="lantern-card card-float-a bg-sakuraCard border border-pink-950/20 p-6 rounded-2xl text-center sm:text-left">
-                        <span class="text-2xl md:text-3xl font-semibold text-stone-200 tracking-tight block">300 Hours</span>
+                        <span class="text-2xl md:text-3xl font-semibold text-stone-200 tracking-tight block">240 Hours</span>
                         <span class="text-[11px] uppercase font-medium tracking-wider text-stone-500 mt-1 block">Required Work Hours</span>
                     </div>
                     <div class="lantern-card card-float-b bg-sakuraCard border border-pink-950/20 p-6 rounded-2xl text-center sm:text-left">
-                        <span id="global-hours-display" class="text-2xl md:text-3xl font-semibold text-sakuraPetal tracking-tight block drop-shadow-[0_0_8px_rgba(255,183,197,0.3)]">0 / 300</span>
+                        <span id="global-hours-display" class="text-2xl md:text-3xl font-semibold text-sakuraPetal tracking-tight block drop-shadow-[0_0_8px_rgba(255,183,197,0.3)]">0 / 240</span>
                         <span class="text-[11px] uppercase font-medium tracking-wider text-stone-500 mt-1 block">Hours Rendered Logs</span>
                     </div>
                     <button onclick="openRegistryModal()" class="lantern-card card-float-a bg-sakuraCard border border-pink-950/20 p-6 rounded-2xl text-center sm:text-left focus:outline-none hover:border-registryTeal/50 transition-all text-left w-full group">
-                        <span id="global-docs-count-display" class="text-2xl md:text-3xl font-semibold text-stone-200 tracking-tight block group-hover:text-registryTeal transition-colors">0 Units ↗</span>
+                        <span id="global-docs-count-display" class="text-2xl md:text-3xl font-semibold text-stone-200 tracking-tight block group-hover:text-registryTeal transition-colors">7 Units ↗</span>
                         <span class="text-[11px] uppercase font-medium tracking-wider text-stone-500 mt-1 block">Documents Submitted</span>
                     </button>
                 </div>
             </div>
         </section>
 
-        <!-- PANEL 2: DOCUMENTATION ALBUMS -->
         <section class="panel-view w-screen min-w-[100vw] h-full snap-start flex-shrink-0 flex items-center justify-center px-6 md:px-12 z-20 overflow-y-auto py-8">
             <div class="max-w-5xl w-full space-y-6">
                 <div class="text-center md:text-left select-none">
@@ -191,21 +184,20 @@
             </div>
         </section>
 
-        <!-- PANEL 3: TIME LOGS -->
         <section class="panel-view w-screen min-w-[100vw] h-full snap-start flex-shrink-0 flex items-center justify-center px-6 md:px-12 z-20 overflow-y-auto py-6">
             <div class="max-w-5xl w-full space-y-6">
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-0.5 bg-pink-950/20 rounded-xl overflow-hidden border border-pink-950/30 select-none">
                     <div class="bg-sakuraCard p-4 text-center">
                         <span class="text-[10px] uppercase font-medium tracking-wider text-stone-500 block mb-0.5">Required</span>
-                        <span class="text-2xl font-semibold text-stone-300">300<span class="text-xs font-light text-stone-500">h</span></span>
+                        <span class="text-2xl font-semibold text-stone-300">240<span class="text-xs font-light text-stone-500">h</span></span>
                     </div>
                     <div class="bg-sakuraCard p-4 text-center">
                         <span class="text-[10px] uppercase font-medium tracking-wider text-stone-500 block mb-0.5">Logged</span>
-                        <span id="summary-logged-hours" class="text-2xl font-semibold text-stone-300">0<span class="text-xs font-light text-stone-500">h</span></span>
+                        <span id="summary-logged-hours" class="text-2xl font-semibold text-stone-300">184<span class="text-xs font-light text-stone-500">h</span></span>
                     </div>
                     <div class="bg-sakuraCard p-4 text-center">
                         <span class="text-[10px] uppercase font-medium tracking-wider text-stone-500 block mb-0.5">Remaining Workload</span>
-                        <span id="summary-remaining-hours" class="text-2xl font-semibold text-sakuraPetal block drop-shadow-[0_0_6px_rgba(255,183,197,0.2)]">300<span class="text-xs font-light text-sakuraPetal/60">h</span></span>
+                        <span id="summary-remaining-hours" class="text-2xl font-semibold text-sakuraPetal block drop-shadow-[0_0_6px_rgba(255,183,197,0.2)]">56<span class="text-xs font-light text-sakuraPetal/60">h</span></span>
                     </div>
                 </div>
 
@@ -216,7 +208,6 @@
                     </div>
                 </div>
 
-                <!-- Data Table Matrix -->
                 <div class="max-h-[35vh] overflow-y-auto pr-1">
                     <table class="w-full text-left text-xs border-collapse">
                         <thead>
@@ -233,37 +224,31 @@
         </section>
     </main>
 
-    <!-- POPUP MODAL (THE 7 CLEARANCE UNITS) -->
     <div id="registry-modal" class="fixed inset-0 bg-sakuraDark/90 backdrop-blur-md hidden items-center justify-center z-50 p-4">
-        <div class="bg-sakuraCard border border-pink-950/40 w-full max-w-2xl rounded-2xl p-6 shadow-2xl space-y-6 max-h-[90vh] overflow-y-auto">
+        <div class="bg-sakuraCard border border-pink-950/40 w-full max-w-3xl rounded-2xl p-6 shadow-2xl space-y-6 max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center border-b border-pink-950/30 pb-4 select-none">
                 <div>
-                    <span class="text-[10px] text-registryTeal font-mono uppercase tracking-widest">Document Registry Workspace</span>
-                    <span class="text-xl font-bold text-white tracking-tight block">7 Required Clearance Units</span>
+                    <span id="modal-subtitle" class="text-[10px] text-registryTeal font-mono uppercase tracking-widest">Document Registry Workspace</span>
+                    <span class="text-xl font-bold text-white tracking-tight block">Categorized Clearance Folders</span>
                 </div>
                 <button onclick="closeRegistryModal()" class="text-stone-500 hover:text-white text-sm border border-pink-950/40 px-3 py-1 rounded-md bg-stone-950/20">Close ✕</button>
             </div>
-            <div class="space-y-3" id="modal-items-container"></div>
+            <div class="space-y-6" id="modal-items-container"></div>
         </div>
     </div>
 
-    <!-- LIGHTBOX SYSTEM (Supports Images & PDFs natively) -->
     <div id="lightbox-viewer" class="fixed inset-0 bg-black/95 z-[60] hidden flex-col items-center justify-center p-6 select-none">
         <div class="absolute top-6 right-6 flex gap-2 z-[70]">
             <button onclick="toggleNativeFullscreen()" class="text-stone-400 hover:text-white text-xs border border-stone-800 bg-stone-900/40 px-4 py-2 rounded-lg">Fullscreen ⛶</button>
             <button onclick="closeLightbox()" class="text-stone-400 hover:text-white text-xs border border-stone-800 bg-stone-900/40 px-4 py-2 rounded-lg">Exit Viewer ✕</button>
         </div>
         
-        <!-- Navigation Buttons (Albums Only) -->
         <button id="lightbox-left" onclick="navigateLightbox(-1)" class="absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full border border-pink-950/30 bg-sakuraDark/80 text-stone-400 hover:text-white flex items-center justify-center z-[70] hidden shadow-lg">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
         </button>
 
-        <!-- Adaptive Media Container -->
         <div class="w-full max-w-5xl h-[80vh] flex items-center justify-center relative">
-            <!-- Normal Image Viewer -->
             <img id="lightbox-img" src="" alt="Live Document View" class="hidden max-w-full max-h-full object-contain rounded-lg border border-pink-950/20 shadow-2xl transition-all duration-300">
-            <!-- Native PDF Viewer Frame -->
             <iframe id="lightbox-pdf" src="" class="hidden w-full h-full rounded-lg border border-pink-950/20 shadow-2xl bg-stone-900"></iframe>
         </div>
 
@@ -277,7 +262,6 @@
         <p>&copy; 2026 Joanna Ashley A. Escanilla. Fully Integrated Showcase.</p>
     </footer>
 
-    <!-- NAVIGATION SYSTEM ENGINE -->
     <script>
         const container = document.getElementById('deck-container');
         const panels = document.querySelectorAll('.panel-view');
@@ -314,33 +298,55 @@
                 else { panel.style.opacity = '0.15'; panel.style.transform = 'scale(0.99)'; }
             });
         });
-        window.addEventListener('scroll', () => { if (window.scrollY !== 0) window.scrollTo(0, 0); });
         window.addEventListener('load', () => scrollToPanel(0));
     </script>
 
-    <!-- ============================================================= -->
-    <!--          PORTFOLIO ARCHIVE DATA HUB (EDIT HERE!)              -->
-    <!-- ============================================================= -->
     <script>
-        // --- 1. EDIT YOUR TIME LOGS HERE (Total sums up to 128 hours) ---
         const STATIC_TIME_LOGS = [
             { id: 'log-1', date: '2026-03-01 to 03-05', desc: 'Orientation, System Diagnostics & Hardware Inventory', hours: 40 },
             { id: 'log-2', date: '2026-03-08 to 03-12', desc: 'Network Switch Maintenance & Infrastructure Audit', hours: 40 },
-            { id: 'log-3', date: '2026-03-15 to 03-19', desc: 'Advanced Hardware Support & Technical Troubleshooting', hours: 48 }
+            { id: 'log-3', date: '2026-03-15 to 03-19', desc: 'Advanced Hardware Support & Technical Troubleshooting', hours: 48 },
+            { id: 'log-4', date: '2026-03-22 to 03-26', desc: 'System Integration & Database Optimization', hours: 56 }
         ];
 
-        // --- 2. EDIT YOUR 7 CORE DOCUMENTS HERE ---
-        const STATIC_DOCUMENTS = {
-            0: "moa.pdf",             // Memorandum of Agreement (MOA)
-            1: "loi.pdf",             // Letter of Intent (LOI)
-            2: "loe.pdf",             // Letter of Endorsement (LOE)
-            3: "docs/consent.pdf",    // PUP Consent Form 
-            4: "waiver.pdf",          // Student Waiver
-            5: "docs/agreement.pdf",  // Internship Agreement 
-            6: "medical.pdf"          // Medical Certificate
-        };
+        const DOCUMENT_REGISTRY = [
+            {
+                category: "Before OJT",
+                folderTag: "PRE-OJT REQUIREMENTS",
+                items: [
+                    { id: "moa", name: "Memorandum of Agreement (MOA)", file: "moa.pdf" },
+                    { id: "loi", name: "Letter of Intent (LOI)", file: "loi.pdf" },
+                    { id: "loe", name: "Letter of Endorsement (LOE)", file: "loe.pdf" },
+                    { id: "waiver", name: "Student Waiver", file: "waiver.pdf" },
+                    { id: "agreement", name: "Internship Agreement", file: "docs/agreement.pdf" },
+                    { id: "consent", name: "PUP Consent Form", file: "docs/consent.pdf" },
+                    { id: "cv", name: "Curriculum Vitae (CV)", file: "" },
+                    { id: "insurance", name: "Insurance", file: "" },
+                    { id: "medical", name: "Medical Certificate", file: "medical.pdf" }
+                ]
+            },
+            {
+                category: "During OJT",
+                folderTag: "PROGRESS & ATTENDANCE LOGS",
+                items: [
+                    { id: "attendance", name: "Daily Attendance Report", file: "" },
+                    { id: "weekly_docu", name: "Weekly Photo Documentation Report", file: "" },
+                    { id: "weekly_report", name: "Weekly Report", file: "" }
+                ]
+            },
+            {
+                category: "After OJT",
+                folderTag: "EVALUATIONS & CLEARANCE",
+                items: [
+                    { id: "eval_supervisor", name: "Training Supervisor Evaluation", file: "" },
+                    { id: "eval_hte", name: "HTE Performance Evaluation", file: "" },
+                    { id: "eval_adviser", name: "OJT Adviser Performance Evaluation", file: "" },
+                    { id: "eval_intern", name: "Student Intern Evaluation / Trainee Performance", file: "" },
+                    { id: "eval_grading", name: "Performance Evaluation Grading System", file: "" }
+                ]
+            }
+        ];
 
-        // --- 3. EDIT YOUR 8 WEEKLY ALBUMS HERE ---
         const STATIC_WEEK_ALBUMS = {
             1: [
                 "https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=1000",
@@ -349,30 +355,18 @@
             2: [
                 "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1000"
             ],
-            3: [],
-            4: [],
-            5: [],
-            6: [],
-            7: [],
-            8: []
+            3: [], 4: [], 5: [], 6: [], 7: [], 8: []
         };
     </script>
 
-    <!-- CORE LOGIC ENGINE (DO NOT EDIT) -->
     <script>
-        const targetHoursRequirement = 300;
+        const targetHoursRequirement = 240;
         let currentLightboxType = null;
         let currentLightboxWeek = null;
         let currentLightboxImgIdx = null;
 
-        const docRegistryNames = [
-            "Memorandum of Agreement (MOA)", "Letter of Intent (LOI)", "Letter of Endorsement (LOE)",
-            "PUP Consent Form", "Student Waiver", "Internship Agreement", "Medical Certificate"
-        ];
-
         window.addEventListener('DOMContentLoaded', () => {
             buildRegistryModalUI();
-            updateRegistryCountDisplay();
             renderAllTimeLogs();
             refreshHoursMetrics();
             
@@ -384,29 +378,48 @@
         function buildRegistryModalUI() {
             const listContainer = document.getElementById('modal-items-container');
             listContainer.innerHTML = ""; 
-            docRegistryNames.forEach((docName, index) => {
-                const hasAsset = STATIC_DOCUMENTS[index] && STATIC_DOCUMENTS[index] !== "";
-                listContainer.innerHTML += `
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between p-3 rounded-xl bg-stone-950/30 border border-pink-950/20 gap-3">
-                        <div class="flex items-center gap-3">
-                            <span class="w-5 h-5 rounded-full bg-pink-950/40 text-sakuraPetal border border-pink-900/30 text-[10px] flex items-center justify-center font-mono">${index + 1}</span>
-                            <span class="text-xs text-stone-200 font-medium tracking-wide">${docName}</span>
-                        </div>
-                        <div class="flex items-center gap-2 self-end sm:self-auto">
-                            <span class="${hasAsset ? 'text-emerald-400' : 'text-stone-600 italic'} text-[10px] font-mono pr-2">${hasAsset ? 'Verified Asset' : 'Not Loaded'}</span>
-                            <button onclick="launchLightbox(${index})" class="${hasAsset ? '' : 'hidden'} text-[10px] uppercase font-semibold text-sakuraPetal border border-pink-950/60 bg-pink-950/10 px-2.5 py-1 rounded hover:bg-pink-950/30 transition-all flex items-center gap-1">👁 Preview</button>
-                        </div>
-                    </div>
-                `;
-            });
-        }
+            
+            let totalDocs = 0;
+            let verifiedDocs = 0;
 
-        function updateRegistryCountDisplay() {
-            let totalUploaded = 0;
-            Object.keys(STATIC_DOCUMENTS).forEach(key => {
-                if (STATIC_DOCUMENTS[key] && STATIC_DOCUMENTS[key] !== "") totalUploaded++;
+            DOCUMENT_REGISTRY.forEach((folder) => {
+                let categoryHtml = `
+                    <div class="space-y-3 bg-stone-950/20 p-4 rounded-xl border border-pink-950/20">
+                        <div class="flex items-center justify-between border-b border-pink-950/30 pb-2 select-none">
+                            <div class="flex items-center gap-2">
+                                <span class="text-sm font-bold text-sakuraPetal uppercase tracking-wide">📁 ${folder.category}</span>
+                                <span class="text-[10px] text-stone-500 font-mono">(${folder.items.length} Files)</span>
+                            </div>
+                            <span class="text-[9px] font-mono uppercase tracking-widest text-registryTeal bg-registryTeal/10 px-2 py-0.5 rounded border border-registryTeal/20">${folder.folderTag}</span>
+                        </div>
+                        <div class="grid grid-cols-1 gap-2">
+                `;
+
+                folder.items.forEach((doc, index) => {
+                    totalDocs++;
+                    const hasAsset = doc.file && doc.file !== "";
+                    if (hasAsset) verifiedDocs++;
+
+                    categoryHtml += `
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between p-2.5 rounded-lg bg-stone-950/40 border border-pink-950/10 gap-2 hover:border-pink-950/30 transition-all">
+                            <div class="flex items-center gap-3">
+                                <span class="w-5 h-5 rounded-full bg-pink-950/40 text-sakuraPetal border border-pink-900/30 text-[10px] flex items-center justify-center font-mono">${index + 1}</span>
+                                <span class="text-xs text-stone-200 font-medium tracking-wide">${doc.name}</span>
+                            </div>
+                            <div class="flex items-center gap-2 self-end sm:self-auto">
+                                <span class="${hasAsset ? 'text-emerald-400' : 'text-stone-600 italic'} text-[10px] font-mono pr-2">${hasAsset ? 'Verified Asset' : 'Pending'}</span>
+                                ${hasAsset ? `<button onclick="launchDocLightbox('${doc.file}', '${doc.name.replace(/'/g, "\\'")}')" class="text-[10px] uppercase font-semibold text-sakuraPetal border border-pink-950/60 bg-pink-950/10 px-2.5 py-1 rounded hover:bg-pink-950/30 transition-all flex items-center gap-1">👁 Preview</button>` : ''}
+                            </div>
+                        </div>
+                    `;
+                });
+
+                categoryHtml += `</div></div>`;
+                listContainer.innerHTML += categoryHtml;
             });
-            document.getElementById('global-docs-count-display').innerText = `${totalUploaded} Units ↗`;
+
+            document.getElementById('global-docs-count-display').innerText = `${verifiedDocs} Units ↗`;
+            document.getElementById('modal-subtitle').innerText = `${verifiedDocs} of ${totalDocs} Verified Units Across OJT Phases`;
         }
 
         function renderAlbumStrip(weekIdx) {
@@ -427,7 +440,6 @@
                 strip.innerHTML += `
                     <div onclick="launchAlbumLightbox(${weekIdx}, ${imgIdx})" class="relative w-12 h-12 rounded border border-pink-950/40 flex-shrink-0 cursor-pointer shadow overflow-hidden bg-stone-950">
                         <img src="${imgData}" alt="Uploaded Asset" class="w-full h-full object-cover pointer-events-none" />
-                        <div class="absolute inset-0 bg-black/20 opacity-0 hover:opacity-100 flex items-center justify-center transition-opacity rounded z-10"></div>
                     </div>
                 `;
             });
@@ -435,9 +447,7 @@
 
         function launchFullAlbum(weekIdx) {
             const images = STATIC_WEEK_ALBUMS[weekIdx];
-            if(images && images.length > 0) {
-                launchAlbumLightbox(weekIdx, 0);
-            }
+            if(images && images.length > 0) launchAlbumLightbox(weekIdx, 0);
         }
 
         function launchAlbumLightbox(weekIdx, imgIdx) {
@@ -453,8 +463,8 @@
                 pdfEl.classList.add('hidden');
                 pdfEl.src = ""; 
                 imgEl.classList.remove('hidden');
-                
                 imgEl.src = images[imgIdx];
+                
                 document.getElementById('lightbox-caption').innerText = `Week ${weekIdx} — Photo ${imgIdx + 1} of ${images.length}`;
                 document.getElementById('lightbox-viewer').classList.replace('hidden', 'flex');
                 
@@ -482,28 +492,26 @@
             launchAlbumLightbox(currentLightboxWeek, targetIdx);
         }
 
-        function launchLightbox(idx) {
+        function launchDocLightbox(fileUrl, docName) {
             currentLightboxType = 'registry';
-            const assetUrl = STATIC_DOCUMENTS[idx];
-            if (assetUrl && assetUrl !== "") {
+            if (fileUrl && fileUrl !== "") {
                 const imgEl = document.getElementById('lightbox-img');
                 const pdfEl = document.getElementById('lightbox-pdf');
 
-                if (assetUrl.toLowerCase().endsWith('.pdf')) {
+                if (fileUrl.toLowerCase().endsWith('.pdf')) {
                     imgEl.classList.add('hidden');
                     imgEl.src = "";
                     pdfEl.classList.remove('hidden');
-                    pdfEl.src = assetUrl;
+                    pdfEl.src = fileUrl;
                 } else {
                     pdfEl.classList.add('hidden');
                     pdfEl.src = "";
                     imgEl.classList.remove('hidden');
-                    imgEl.src = assetUrl;
+                    imgEl.src = fileUrl;
                 }
 
-                document.getElementById('lightbox-caption').innerText = `Document Structure: ${docRegistryNames[idx]}`;
+                document.getElementById('lightbox-caption').innerText = `Document File: ${docName}`;
                 document.getElementById('lightbox-viewer').classList.replace('hidden', 'flex');
-                
                 document.getElementById('lightbox-left').classList.add('hidden');
                 document.getElementById('lightbox-right').classList.add('hidden');
             }
@@ -542,50 +550,19 @@
         function closeLightbox() { 
             document.getElementById('lightbox-viewer').classList.replace('flex', 'hidden'); 
             document.getElementById('lightbox-pdf').src = ""; 
-            if (document.fullscreenElement) {
-                document.exitFullscreen().catch(() => {});
-            }
         }
-
-        document.getElementById('lightbox-viewer').addEventListener('click', (e) => {
-            if (e.target === document.getElementById('lightbox-viewer') || e.target.id === 'lightbox-pdf-container') {
-                closeLightbox();
-            }
-        });
 
         function openRegistryModal() { document.getElementById('registry-modal').classList.replace('hidden', 'flex'); }
         function closeRegistryModal() { document.getElementById('registry-modal').classList.replace('flex', 'hidden'); }
 
         function toggleNativeFullscreen() {
             const viewer = document.getElementById('lightbox-viewer');
-            const img = document.getElementById('lightbox-img');
-            const pdf = document.getElementById('lightbox-pdf');
             if (!document.fullscreenElement) {
-                viewer.requestFullscreen().then(() => {
-                    img.classList.remove('max-h-[82vh]');
-                    img.classList.add('max-h-[90vh]', 'scale-105');
-                    pdf.classList.remove('h-[80vh]');
-                    pdf.classList.add('h-[90vh]');
-                }).catch(() => {});
+                viewer.requestFullscreen().catch(() => {});
             } else {
                 document.exitFullscreen();
             }
         }
-
-        document.addEventListener('fullscreenchange', () => {
-            const img = document.getElementById('lightbox-img');
-            const pdf = document.getElementById('lightbox-pdf');
-            if (!document.fullscreenElement) {
-                if (img) {
-                    img.classList.remove('max-h-[90vh]', 'scale-105');
-                    img.classList.add('max-h-[82vh]');
-                }
-                if (pdf) {
-                    pdf.classList.remove('h-[90vh]');
-                    pdf.classList.add('h-[80vh]');
-                }
-            }
-        });
 
         document.addEventListener('keydown', (e) => {
             const viewer = document.getElementById('lightbox-viewer');

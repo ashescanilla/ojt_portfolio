@@ -1,7 +1,3 @@
-Here is the updated complete HTML code matching all the exact PDF filenames shown in your workspace folder (`weekly_docu1.pdf` through `weekly_docu4.pdf` and `weekly_report1.pdf` through `weekly_report4.pdf`).
-
-All PDF links in both the **Document Registry Modal** and the **Weekly Project Cards** (Panel 2) have been updated to connect directly to these files.
-
 ```html
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth h-full overflow-hidden">
@@ -154,7 +150,7 @@ All PDF links in both the **Document Registry Modal** and the **Weekly Project C
                         <span class="text-[11px] uppercase font-medium tracking-wider text-stone-500 mt-1 block">Hours Rendered Logs</span>
                     </div>
                     <button onclick="openRegistryModal()" class="lantern-card card-float-a bg-sakuraCard border border-pink-950/20 p-6 rounded-2xl text-center sm:text-left focus:outline-none hover:border-registryTeal/50 transition-all text-left w-full group">
-                        <span id="global-docs-count-display" class="text-2xl md:text-3xl font-semibold text-stone-200 tracking-tight block group-hover:text-registryTeal transition-colors">17 Units ↗</span>
+                        <span id="global-docs-count-display" class="text-2xl md:text-3xl font-semibold text-stone-200 tracking-tight block group-hover:text-registryTeal transition-colors">11 Units ↗</span>
                         <span class="text-[11px] uppercase font-medium tracking-wider text-stone-500 mt-1 block">Documents Submitted</span>
                     </button>
                 </div>
@@ -325,47 +321,59 @@ All PDF links in both the **Document Registry Modal** and the **Weekly Project C
             { id: 'log-4', date: '2026-03-22 to 03-26', desc: 'System Integration & Database Optimization', hours: 52 }
         ];
 
-        // Matched directly to the files shown in your docs/ folder
+        // Consolidated Weekly Reports and Photo Documentation to count as 1 unit each in registry
         const DOCUMENT_REGISTRY = [
             {
                 category: "Before OJT",
                 folderTag: "PRE-OJT REQUIREMENTS",
                 items: [
-                    { id: "internship_agreement", name: "Internship Agreement", file: "internship_agreement.pdf" },
-                    { id: "moa", name: "Memorandum of Agreement (MOA)", file: "moa.pdf" },
-                    { id: "loi", name: "Letter of Intent (LOI)", file: "loi.pdf" },
-                    { id: "loe", name: "Letter of Endorsement (LOE)", file: "loe.pdf" },
-                    { id: "waiver", name: "Student Waiver", file: "waiver.pdf" },
-                    { id: "medical", name: "Medical Certificate", file: "medical.pdf" },
-                    { id: "consent", name: "PUP Consent Form", file: "consent.pdf" },
-                    { id: "cv", name: "Curriculum Vitae (CV)", file: "cv.pdf" },
-                    { id: "insurance", name: "Insurance", file: "insurance.pdf" }
+                    { id: "internship_agreement", name: "Internship Agreement", files: [{ label: "PDF", file: "internship_agreement.pdf" }] },
+                    { id: "moa", name: "Memorandum of Agreement (MOA)", files: [{ label: "PDF", file: "moa.pdf" }] },
+                    { id: "loi", name: "Letter of Intent (LOI)", files: [{ label: "PDF", file: "loi.pdf" }] },
+                    { id: "loe", name: "Letter of Endorsement (LOE)", files: [{ label: "PDF", file: "loe.pdf" }] },
+                    { id: "waiver", name: "Student Waiver", files: [{ label: "PDF", file: "waiver.pdf" }] },
+                    { id: "medical", name: "Medical Certificate", files: [{ label: "PDF", file: "medical.pdf" }] },
+                    { id: "consent", name: "PUP Consent Form", files: [{ label: "PDF", file: "consent.pdf" }] },
+                    { id: "cv", name: "Curriculum Vitae (CV)", files: [{ label: "PDF", file: "cv.pdf" }] },
+                    { id: "insurance", name: "Insurance", files: [{ label: "PDF", file: "insurance.pdf" }] }
                 ]
             },
             {
                 category: "During OJT",
                 folderTag: "PROGRESS & ATTENDANCE LOGS",
                 items: [
-                    { id: "attendance", name: "Daily Attendance Report", file: "" },
-                    { id: "weekly_report1", name: "Weekly Report 1", file: "weekly_report1.pdf" },
-                    { id: "weekly_report2", name: "Weekly Report 2", file: "weekly_report2.pdf" },
-                    { id: "weekly_report3", name: "Weekly Report 3", file: "weekly_report3.pdf" },
-                    { id: "weekly_report4", name: "Weekly Report 4", file: "weekly_report4.pdf" },
-                    { id: "weekly_docu1", name: "Weekly Photo Documentation 1", file: "weekly_docu1.pdf" },
-                    { id: "weekly_docu2", name: "Weekly Photo Documentation 2", file: "weekly_docu2.pdf" },
-                    { id: "weekly_docu3", name: "Weekly Photo Documentation 3", file: "weekly_docu3.pdf" },
-                    { id: "weekly_docu4", name: "Weekly Photo Documentation 4", file: "weekly_docu4.pdf" }
+                    { id: "attendance", name: "Daily Attendance Report", files: [] },
+                    { 
+                        id: "weekly_reports", 
+                        name: "Weekly Reports (Weeks 1–4)", 
+                        files: [
+                            { label: "W1", file: "weekly_report1.pdf" },
+                            { label: "W2", file: "weekly_report2.pdf" },
+                            { label: "W3", file: "weekly_report3.pdf" },
+                            { label: "W4", file: "weekly_report4.pdf" }
+                        ] 
+                    },
+                    { 
+                        id: "weekly_docus", 
+                        name: "Weekly Photo Documentation (Weeks 1–4)", 
+                        files: [
+                            { label: "W1", file: "weekly_docu1.pdf" },
+                            { label: "W2", file: "weekly_docu2.pdf" },
+                            { label: "W3", file: "weekly_docu3.pdf" },
+                            { label: "W4", file: "weekly_docu4.pdf" }
+                        ] 
+                    }
                 ]
             },
             {
                 category: "After OJT",
                 folderTag: "EVALUATIONS & CLEARANCE",
                 items: [
-                    { id: "eval_supervisor", name: "Training Supervisor Evaluation", file: "" },
-                    { id: "eval_hte", name: "HTE Performance Evaluation", file: "" },
-                    { id: "eval_adviser", name: "OJT Adviser Performance Evaluation", file: "" },
-                    { id: "eval_intern", name: "Student Intern Evaluation / Trainee Performance", file: "" },
-                    { id: "eval_grading", name: "Performance Evaluation Grading System", file: "" }
+                    { id: "eval_supervisor", name: "Training Supervisor Evaluation", files: [] },
+                    { id: "eval_hte", name: "HTE Performance Evaluation", files: [] },
+                    { id: "eval_adviser", name: "OJT Adviser Performance Evaluation", files: [] },
+                    { id: "eval_intern", name: "Student Intern Evaluation / Trainee Performance", files: [] },
+                    { id: "eval_grading", name: "Performance Evaluation Grading System", files: [] }
                 ]
             }
         ];
@@ -394,7 +402,7 @@ All PDF links in both the **Document Registry Modal** and the **Weekly Project C
                         <div class="flex items-center justify-between border-b border-pink-950/30 pb-2 select-none">
                             <div class="flex items-center gap-2">
                                 <span class="text-sm font-bold text-sakuraPetal uppercase tracking-wide">📁 ${folder.category}</span>
-                                <span class="text-[10px] text-stone-500 font-mono">(${folder.items.length} Files)</span>
+                                <span class="text-[10px] text-stone-500 font-mono">(${folder.items.length} Required Items)</span>
                             </div>
                             <span class="text-[9px] font-mono uppercase tracking-widest text-registryTeal bg-registryTeal/10 px-2 py-0.5 rounded border border-registryTeal/20">${folder.folderTag}</span>
                         </div>
@@ -403,8 +411,15 @@ All PDF links in both the **Document Registry Modal** and the **Weekly Project C
 
                 folder.items.forEach((doc, index) => {
                     totalDocs++;
-                    const hasAsset = doc.file && doc.file !== "";
+                    const hasAsset = doc.files && doc.files.length > 0;
                     if (hasAsset) verifiedDocs++;
+
+                    let buttonsHtml = '';
+                    if (hasAsset) {
+                        buttonsHtml = doc.files.map(f => 
+                            `<button onclick="launchDocLightbox('${f.file}', '${doc.name.replace(/'/g, "\\'")} - ${f.label}')" class="text-[10px] uppercase font-semibold text-sakuraPetal border border-pink-950/60 bg-pink-950/10 px-2.5 py-1 rounded hover:bg-pink-950/30 transition-all flex items-center gap-1">👁 ${f.label}</button>`
+                        ).join(' ');
+                    }
 
                     categoryHtml += `
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between p-2.5 rounded-lg bg-stone-950/40 border border-pink-950/10 gap-2 hover:border-pink-950/30 transition-all">
@@ -414,7 +429,7 @@ All PDF links in both the **Document Registry Modal** and the **Weekly Project C
                             </div>
                             <div class="flex items-center gap-2 self-end sm:self-auto">
                                 <span class="${hasAsset ? 'text-emerald-400' : 'text-stone-600 italic'} text-[10px] font-mono pr-2">${hasAsset ? 'Verified Asset' : 'Pending'}</span>
-                                ${hasAsset ? `<button onclick="launchDocLightbox('${doc.file}', '${doc.name.replace(/'/g, "\\'")}')" class="text-[10px] uppercase font-semibold text-sakuraPetal border border-pink-950/60 bg-pink-950/10 px-2.5 py-1 rounded hover:bg-pink-950/30 transition-all flex items-center gap-1">👁 Preview</button>` : ''}
+                                <div class="flex gap-1 overflow-x-auto">${buttonsHtml}</div>
                             </div>
                         </div>
                     `;

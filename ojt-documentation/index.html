@@ -135,7 +135,6 @@
                     </div>
                 </div>
 
-                <!-- Metrics Grid -->
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 pt-4 select-none">
                     <div class="lantern-card card-float-a bg-sakuraCard border border-pink-950/20 p-6 rounded-2xl text-center sm:text-left">
                         <span class="text-2xl md:text-3xl font-semibold text-stone-200 tracking-tight block">240 Hours</span>
@@ -146,7 +145,6 @@
                         <span class="text-[11px] uppercase font-medium tracking-wider text-stone-500 mt-1 block">Hours Rendered Logs</span>
                     </div>
                     
-                    <!-- Explicit Document Button -->
                     <button onclick="openRegistryModal()" class="lantern-card card-float-a bg-sakuraCard border border-registryTeal/40 p-6 rounded-2xl text-center sm:text-left focus:outline-none hover:border-registryTeal hover:bg-registryTeal/5 transition-all text-left w-full group relative overflow-hidden shadow-[0_0_20px_rgba(79,209,197,0.15)] cursor-pointer">
                         <div class="absolute top-0 right-0 bg-registryTeal text-sakuraDark text-[9px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-widest shadow-lg">Click to View</div>
                         <span id="global-docs-count-display" class="text-2xl md:text-3xl font-semibold text-registryTeal tracking-tight block group-hover:text-emerald-300 transition-colors mt-2 drop-shadow-[0_0_8px_rgba(79,209,197,0.4)]">28 Units</span>
@@ -160,13 +158,14 @@
             </div>
         </section>
 
-        <!-- PANEL 2: DOCUMENTATION ALBUMS -->
-        <section class="panel-view w-screen min-w-[100vw] h-full snap-start flex-shrink-0 flex items-center justify-center px-6 md:px-12 z-20 overflow-y-auto py-8">
-            <div class="max-w-5xl w-full space-y-6">
-                <div class="text-center md:text-left select-none flex flex-col md:flex-row justify-between items-center gap-4">
+        <!-- PANEL 2: TIKTOK-STYLE DOCUMENTATION FEED -->
+        <section class="panel-view w-screen min-w-[100vw] h-full snap-start flex-shrink-0 flex items-center justify-center px-4 md:px-12 z-20 py-8">
+            <div class="max-w-4xl w-full h-full flex flex-col space-y-6">
+                <!-- Header -->
+                <div class="text-center md:text-left select-none flex flex-col md:flex-row justify-between items-center gap-4 flex-shrink-0">
                     <div>
                         <span class="text-xs font-semibold tracking-wider text-registryTeal uppercase shimmer-floral">Weekly Progress Archives</span>
-                        <h2 class="text-2xl font-semibold text-stone-100 tracking-tight mt-0.5">Project Documentation Grid (Weeks 1–13)</h2>
+                        <h2 class="text-2xl font-semibold text-stone-100 tracking-tight mt-0.5">Project Documentation Feed</h2>
                     </div>
                     <button onclick="launchDocLightbox('daily_attendance_report.pdf', 'Daily Attendance Report')" class="px-4 py-2 rounded-xl bg-pink-950/30 hover:bg-pink-950/60 border border-pink-900/40 text-xs text-sakuraPetal hover:text-white transition-all flex items-center gap-2 shadow-sm">
                         <span>📋 Master Daily Attendance Report</span>
@@ -174,40 +173,68 @@
                     </button>
                 </div>
                 
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 max-h-[60vh] overflow-y-auto pr-2">
-                    <script>
-                        for(let i = 1; i <= 13; i++) {
-                            const isFinal = (i === 13);
-                            document.write(`
-                                <details class="group lantern-card bg-sakuraCard/60 border border-pink-950/20 rounded-xl overflow-hidden transition-all duration-300" ${i === 13 ? 'open' : ''}>
-                                    <summary class="p-4 cursor-pointer select-none flex flex-col justify-between h-[80px] hover:bg-pink-950/20 transition-colors">
-                                        <div class="flex justify-between items-start w-full">
-                                            <span class="text-[10px] px-2 py-0.5 rounded-md bg-stone-950/50 border border-pink-950/40 text-stone-400 font-medium font-mono">WK-${String(i).padStart(2, '0')}</span>
-                                            <div class="flex items-center gap-1.5">
-                                                ${isFinal ? '<span class="text-[9px] px-1.5 py-0.5 rounded bg-registryTeal text-sakuraDark border border-registryTeal/30 uppercase tracking-widest font-semibold">Final</span>' : ''}
-                                                <span class="text-stone-500 text-[10px] group-open:rotate-180 transition-transform duration-300">▼</span>
+                <!-- Interactive Vertical Swipe Feed Container -->
+                <div class="flex-1 w-full relative rounded-[2.5rem] overflow-hidden border border-pink-950/30 bg-[#120a0f] shadow-[inset_0_0_50px_rgba(0,0,0,0.8)] group">
+                    
+                    <!-- Overlay Hints (Swipe Up/Down) -->
+                    <div class="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-[#120a0f] to-transparent z-10 pointer-events-none flex justify-center pt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <span class="text-[10px] uppercase tracking-widest text-stone-500 font-bold drop-shadow-md animate-pulse">▲ Swipe Up</span>
+                    </div>
+                    <div class="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#120a0f] to-transparent z-10 pointer-events-none flex items-end justify-center pb-4 opacity-100">
+                        <span class="text-[10px] uppercase tracking-widest text-stone-500 font-bold drop-shadow-md animate-pulse">▼ Swipe Down to explore</span>
+                    </div>
+
+                    <!-- The Snapping Scroll Container -->
+                    <div id="vertical-feed" class="w-full h-full overflow-y-auto snap-y snap-mandatory no-scrollbar overscroll-contain relative scroll-smooth">
+                        <script>
+                            for(let i = 1; i <= 13; i++) {
+                                const isFinal = (i === 13);
+                                document.write(`
+                                    <div class="feed-item w-full h-full snap-center snap-always flex items-center justify-center p-4">
+                                        <!-- The Card that scales and illuminates when centered -->
+                                        <div class="snap-card-inner w-full max-w-lg bg-sakuraCard/60 backdrop-blur-md border border-pink-950/30 rounded-[2rem] p-8 md:p-10 flex flex-col items-center justify-center gap-8 transition-all duration-700 ease-out transform scale-90 opacity-40 translate-y-8">
+                                            
+                                            <!-- Top Labels -->
+                                            <div class="flex flex-col items-center gap-3 text-center w-full">
+                                                <div class="w-12 h-1 mb-2 rounded-full bg-pink-950/50"></div>
+                                                <span class="text-[12px] px-5 py-1.5 rounded-full bg-stone-950/90 border border-pink-950/40 text-sakuraPetal font-bold font-mono uppercase tracking-widest shadow-[0_0_15px_rgba(255,183,197,0.1)]">Week ${String(i).padStart(2, '0')}</span>
+                                                <h3 class="text-3xl text-stone-100 font-bold tracking-tight mt-1">Project Archives</h3>
+                                                <div class="flex items-center gap-2 mt-1">
+                                                    ${isFinal ? '<span class="text-[10px] px-2.5 py-0.5 rounded bg-registryTeal text-sakuraDark border border-registryTeal/30 uppercase tracking-widest font-bold">Final Submission</span>' : ''}
+                                                    <span class="text-[10px] text-emerald-400 font-mono tracking-widest uppercase">✓ Verified Status</span>
+                                                </div>
+                                            </div>
+
+                                            <!-- Document Buttons -->
+                                            <div class="w-full space-y-4">
+                                                <button onclick="launchDocLightbox('weekly_report${i}.pdf', 'Weekly Report - Week ${i}')" class="w-full group/btn relative overflow-hidden p-5 rounded-2xl bg-stone-950/70 hover:bg-[#2d1b24] border border-pink-950/40 hover:border-sakuraPetal/60 transition-all duration-300 flex items-center justify-between shadow-sm hover:shadow-[0_0_25px_rgba(255,183,197,0.15)]">
+                                                    <div class="flex items-center gap-4">
+                                                        <div class="w-12 h-12 rounded-xl bg-pink-950/30 border border-pink-900/30 flex items-center justify-center text-xl group-hover/btn:scale-110 group-hover/btn:-rotate-6 transition-transform shadow-inner">📄</div>
+                                                        <div class="text-left">
+                                                            <span class="text-sm font-semibold text-stone-200 group-hover/btn:text-white transition-colors block">Weekly Report</span>
+                                                            <span class="text-[10px] text-stone-500 font-light">View time & task summaries</span>
+                                                        </div>
+                                                    </div>
+                                                    <span class="text-[10px] font-mono text-stone-500 bg-stone-900 border border-stone-800 px-3 py-1.5 rounded-lg group-hover/btn:bg-sakuraPetal/20 group-hover/btn:text-sakuraPetal group-hover/btn:border-sakuraPetal/30 transition-colors">PDF</span>
+                                                </button>
+
+                                                <button onclick="launchDocLightbox('weekly_docu${i}.pdf', 'Photo Documentation - Week ${i}')" class="w-full group/btn relative overflow-hidden p-5 rounded-2xl bg-stone-950/70 hover:bg-[#2d1b24] border border-pink-950/40 hover:border-sakuraPetal/60 transition-all duration-300 flex items-center justify-between shadow-sm hover:shadow-[0_0_25px_rgba(255,183,197,0.15)]">
+                                                    <div class="flex items-center gap-4">
+                                                        <div class="w-12 h-12 rounded-xl bg-pink-950/30 border border-pink-900/30 flex items-center justify-center text-xl group-hover/btn:scale-110 group-hover/btn:rotate-6 transition-transform shadow-inner">📸</div>
+                                                        <div class="text-left">
+                                                            <span class="text-sm font-semibold text-stone-200 group-hover/btn:text-white transition-colors block">Photo Documentation</span>
+                                                            <span class="text-[10px] text-stone-500 font-light">View on-site activities</span>
+                                                        </div>
+                                                    </div>
+                                                    <span class="text-[10px] font-mono text-stone-500 bg-stone-900 border border-stone-800 px-3 py-1.5 rounded-lg group-hover/btn:bg-sakuraPetal/20 group-hover/btn:text-sakuraPetal group-hover/btn:border-sakuraPetal/30 transition-colors">PDF</span>
+                                                </button>
                                             </div>
                                         </div>
-                                        <div class="flex items-center justify-between border-t border-pink-950/20 pt-1.5">
-                                            <h3 class="text-stone-300 font-medium text-[11px]">Week ${i} Documents</h3>
-                                            <span class="text-[9px] text-emerald-400 font-mono">✓ Ready</span>
-                                        </div>
-                                    </summary>
-                                    
-                                    <div class="px-4 pb-4 pt-1 space-y-1.5 text-xs text-stone-300 border-t border-pink-950/20 bg-stone-950/30">
-                                        <button onclick="launchDocLightbox('weekly_report${i}.pdf', 'Weekly Report - Week ${i}')" class="w-full text-left p-2 rounded bg-stone-950/60 hover:bg-pink-950/50 border border-pink-950/20 text-[11px] text-stone-300 hover:text-sakuraPetal transition-all flex items-center justify-between">
-                                            <span>📄 Weekly Report</span>
-                                            <span class="text-stone-500 font-mono text-[9px]">PDF</span>
-                                        </button>
-                                        <button onclick="launchDocLightbox('weekly_docu${i}.pdf', 'Photo Documentation - Week ${i}')" class="w-full text-left p-2 rounded bg-stone-950/60 hover:bg-pink-950/50 border border-pink-950/20 text-[11px] text-stone-300 hover:text-sakuraPetal transition-all flex items-center justify-between">
-                                            <span>📷 Photo Docu</span>
-                                            <span class="text-stone-500 font-mono text-[9px]">PDF</span>
-                                        </button>
                                     </div>
-                                </details>
-                            `);
-                        }
-                    </script>
+                                `);
+                            }
+                        </script>
+                    </div>
                 </div>
             </div>
         </section>
@@ -237,7 +264,6 @@
                     </div>
                 </div>
 
-                <!-- Collapsible Monthly Data Container -->
                 <div id="live-time-logs-container" class="space-y-3 max-h-[40vh] overflow-y-auto pr-2 pb-6">
                     <!-- Javascript will inject months and days here -->
                 </div>
@@ -276,6 +302,43 @@
         <p>&copy; 2026 Joanna Ashley A. Escanilla. Fully Integrated Showcase.</p>
     </footer>
 
+    <!-- INTERSECTION OBSERVER FOR TIKTOK FEED (THE SATISFYING FEEL) -->
+    <script>
+        function initializeFeedObserver() {
+            const feed = document.getElementById('vertical-feed');
+            if (!feed) return;
+
+            const options = {
+                root: feed,
+                rootMargin: '0px',
+                threshold: 0.6 // Card snaps in when 60% is visible
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const inner = entry.target.querySelector('.snap-card-inner');
+                    if (entry.isIntersecting) {
+                        // Activate (Scale up, brighten, shadow)
+                        inner.classList.remove('scale-90', 'opacity-40', 'translate-y-8');
+                        inner.classList.add('scale-100', 'opacity-100', 'translate-y-0');
+                        inner.style.borderColor = 'rgba(255, 183, 197, 0.5)';
+                        inner.style.boxShadow = '0 25px 50px -12px rgba(0,0,0,0.8), 0 0 40px rgba(255, 183, 197, 0.15)';
+                    } else {
+                        // Deactivate (Scale down, fade out, push down slightly)
+                        inner.classList.add('scale-90', 'opacity-40', 'translate-y-8');
+                        inner.classList.remove('scale-100', 'opacity-100', 'translate-y-0');
+                        inner.style.borderColor = 'rgba(255, 183, 197, 0.2)';
+                        inner.style.boxShadow = 'none';
+                    }
+                });
+            }, options);
+
+            document.querySelectorAll('.feed-item').forEach(item => {
+                observer.observe(item);
+            });
+        }
+    </script>
+
     <!-- NAVIGATION SYSTEM ENGINE -->
     <script>
         const container = document.getElementById('deck-container');
@@ -313,12 +376,14 @@
                 else { panel.style.opacity = '0.15'; panel.style.transform = 'scale(0.99)'; }
             });
         });
-        window.addEventListener('load', () => scrollToPanel(0));
+        window.addEventListener('load', () => {
+            scrollToPanel(0);
+            initializeFeedObserver(); // Start the TikTok observer effect
+        });
     </script>
 
     <!-- PORTFOLIO ARCHIVE DATA HUB -->
     <script>
-        // Generated 13 weeks dynamically for the registry menu
         const weeksArray = Array.from({ length: 13 }, (_, i) => i + 1);
 
         const DOCUMENT_REGISTRY = [
@@ -374,7 +439,6 @@
             }
         ];
 
-        // 240 HOURS DISTRIBUTED ACROSS MONTHS & DAYS (Editable placeholders)
         const MONTHLY_TIME_LOGS = [
             {
                 month: "March 2026",
@@ -520,7 +584,6 @@
             container.innerHTML = '';
             
             MONTHLY_TIME_LOGS.forEach((monthData, index) => {
-                // Keep the first month open by default for visibility
                 const isOpen = index === 0 ? 'open' : ''; 
                 
                 let daysHtml = monthData.days.map(day => `
@@ -551,7 +614,6 @@
         }
 
         function refreshHoursMetrics() {
-            // Recalculate total directly from the new monthly logs structure
             let totalLogged = 0;
             MONTHLY_TIME_LOGS.forEach(month => {
                 totalLogged += month.totalHours;

@@ -158,7 +158,7 @@
             </div>
         </section>
 
-        <!-- PANEL 2: TIKTOK-STYLE DOCUMENTATION FEED -->
+        <!-- PANEL 2: DOCUMENTATION FEED -->
         <section class="panel-view w-screen min-w-[100vw] h-full snap-start flex-shrink-0 flex items-center justify-center px-4 md:px-12 z-20 py-8">
             <div class="max-w-4xl w-full h-full flex flex-col space-y-6">
                 <!-- Header -->
@@ -176,7 +176,6 @@
                 <!-- Interactive Vertical Swipe Feed Container -->
                 <div class="flex-1 w-full relative rounded-[2.5rem] overflow-hidden border border-pink-950/30 bg-[#120a0f] shadow-[inset_0_0_50px_rgba(0,0,0,0.8)] group">
                     
-                    <!-- Overlay Hints (Swipe Up/Down) -->
                     <div class="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-[#120a0f] to-transparent z-10 pointer-events-none flex justify-center pt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                         <span class="text-[10px] uppercase tracking-widest text-stone-500 font-bold drop-shadow-md animate-pulse">▲ Swipe Up</span>
                     </div>
@@ -184,14 +183,12 @@
                         <span class="text-[10px] uppercase tracking-widest text-stone-500 font-bold drop-shadow-md animate-pulse">▼ Swipe Down to explore</span>
                     </div>
 
-                    <!-- The Snapping Scroll Container -->
                     <div id="vertical-feed" class="w-full h-full overflow-y-auto snap-y snap-mandatory no-scrollbar overscroll-contain relative scroll-smooth">
                         <script>
                             for(let i = 1; i <= 13; i++) {
                                 const isFinal = (i === 13);
                                 document.write(`
                                     <div class="feed-item w-full h-full snap-center snap-always flex items-center justify-center p-4">
-                                        <!-- The Card that scales and illuminates when centered -->
                                         <div class="snap-card-inner w-full max-w-lg bg-sakuraCard/60 backdrop-blur-md border border-pink-950/30 rounded-[2rem] p-8 md:p-10 flex flex-col items-center justify-center gap-8 transition-all duration-700 ease-out transform scale-90 opacity-40 translate-y-8">
                                             
                                             <!-- Top Labels -->
@@ -239,33 +236,48 @@
             </div>
         </section>
 
-        <!-- PANEL 3: TIME LOGS -->
-        <section class="panel-view w-screen min-w-[100vw] h-full snap-start flex-shrink-0 flex items-center justify-center px-6 md:px-12 z-20 overflow-y-auto py-6">
-            <div class="max-w-5xl w-full space-y-6">
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-0.5 bg-pink-950/20 rounded-xl overflow-hidden border border-pink-950/30 select-none">
-                    <div class="bg-sakuraCard p-4 text-center">
-                        <span class="text-[10px] uppercase font-medium tracking-wider text-stone-500 block mb-0.5">Required</span>
-                        <span class="text-2xl font-semibold text-stone-300">240<span class="text-xs font-light text-stone-500">h</span></span>
+        <!-- PANEL 3: TIME LOGS FEED -->
+        <section class="panel-view w-screen min-w-[100vw] h-full snap-start flex-shrink-0 flex items-center justify-center px-4 md:px-12 z-20 py-8">
+            <div class="max-w-4xl w-full h-full flex flex-col space-y-6">
+                
+                <!-- Static Headers & Metrics -->
+                <div class="flex-shrink-0 space-y-5">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-0.5 bg-pink-950/20 rounded-xl overflow-hidden border border-pink-950/30 select-none">
+                        <div class="bg-sakuraCard p-4 text-center">
+                            <span class="text-[10px] uppercase font-medium tracking-wider text-stone-500 block mb-0.5">Required</span>
+                            <span class="text-2xl font-semibold text-stone-300">240<span class="text-xs font-light text-stone-500">h</span></span>
+                        </div>
+                        <div class="bg-sakuraCard p-4 text-center">
+                            <span class="text-[10px] uppercase font-medium tracking-wider text-stone-500 block mb-0.5">Logged</span>
+                            <span id="summary-logged-hours" class="text-2xl font-semibold text-emerald-300">240<span class="text-xs font-light text-emerald-500/60">h</span></span>
+                        </div>
+                        <div class="bg-sakuraCard p-4 text-center">
+                            <span class="text-[10px] uppercase font-medium tracking-wider text-stone-500 block mb-0.5">Remaining Workload</span>
+                            <span id="summary-remaining-hours" class="text-2xl font-semibold text-stone-500 block">0<span class="text-xs font-light text-stone-600">h</span></span>
+                        </div>
                     </div>
-                    <div class="bg-sakuraCard p-4 text-center">
-                        <span class="text-[10px] uppercase font-medium tracking-wider text-stone-500 block mb-0.5">Logged</span>
-                        <span id="summary-logged-hours" class="text-2xl font-semibold text-emerald-300">240<span class="text-xs font-light text-emerald-500/60">h</span></span>
-                    </div>
-                    <div class="bg-sakuraCard p-4 text-center">
-                        <span class="text-[10px] uppercase font-medium tracking-wider text-stone-500 block mb-0.5">Remaining Workload</span>
-                        <span id="summary-remaining-hours" class="text-2xl font-semibold text-stone-500 block">0<span class="text-xs font-light text-stone-600">h</span></span>
+
+                    <div class="text-center md:text-left select-none flex flex-col md:flex-row justify-between items-center gap-4">
+                        <div>
+                            <span class="text-xs font-semibold tracking-wider text-registryTeal uppercase shimmer-floral">Internship Tracker</span>
+                            <h3 class="text-2xl font-semibold text-stone-100 tracking-tight mt-0.5">Monthly Time Logs</h3>
+                        </div>
                     </div>
                 </div>
 
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-pink-950/20 pb-2">
-                    <div class="space-y-0.5 text-center sm:text-left select-none">
-                        <h3 class="text-lg font-medium text-stone-100 tracking-tight shimmer-floral">Daily Time Logs</h3>
-                        <p class="text-[11px] text-stone-500">Categorized by Month — Expand to view daily reports</p>
+                <!-- Interactive Vertical Swipe Feed Container -->
+                <div class="flex-1 w-full relative rounded-[2.5rem] overflow-hidden border border-pink-950/30 bg-[#120a0f] shadow-[inset_0_0_50px_rgba(0,0,0,0.8)] group">
+                    
+                    <div class="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-[#120a0f] to-transparent z-10 pointer-events-none flex justify-center pt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <span class="text-[10px] uppercase tracking-widest text-stone-500 font-bold drop-shadow-md animate-pulse">▲ Swipe Up</span>
                     </div>
-                </div>
+                    <div class="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#120a0f] to-transparent z-10 pointer-events-none flex items-end justify-center pb-4 opacity-100">
+                        <span class="text-[10px] uppercase tracking-widest text-stone-500 font-bold drop-shadow-md animate-pulse">▼ Swipe Down to explore logs</span>
+                    </div>
 
-                <div id="live-time-logs-container" class="space-y-3 max-h-[40vh] overflow-y-auto pr-2 pb-6">
-                    <!-- Javascript will inject months and days here -->
+                    <div id="timelogs-vertical-feed" class="w-full h-full overflow-y-auto snap-y snap-mandatory no-scrollbar overscroll-contain relative scroll-smooth">
+                        <!-- Javascript will inject months and days here -->
+                    </div>
                 </div>
             </div>
         </section>
@@ -299,42 +311,48 @@
     </div>
 
     <footer class="text-center py-4 text-[10px] font-light text-stone-600 border-t border-pink-950/10 flex-shrink-0 bg-sakuraDark/30 z-40 relative select-none">
-        <p>&copy; 2026 Joanna Ashley A. Escanilla. Fully Integrated Showcase.</p>
+        <p>&copy; 2026 Joanna Ashley A. Escanilla. CMPE 205 OJT 1 SUMMER.</p>
     </footer>
 
-    <!-- INTERSECTION OBSERVER FOR TIKTOK FEED (THE SATISFYING FEEL) -->
+    <!-- INTERSECTION OBSERVER FOR TIKTOK FEED -->
     <script>
         function initializeFeedObserver() {
-            const feed = document.getElementById('vertical-feed');
-            if (!feed) return;
+            const feeds = [
+                document.getElementById('vertical-feed'),
+                document.getElementById('timelogs-vertical-feed')
+            ];
 
-            const options = {
-                root: feed,
-                rootMargin: '0px',
-                threshold: 0.6 // Card snaps in when 60% is visible
-            };
+            feeds.forEach(feed => {
+                if (!feed) return;
 
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    const inner = entry.target.querySelector('.snap-card-inner');
-                    if (entry.isIntersecting) {
-                        // Activate (Scale up, brighten, shadow)
-                        inner.classList.remove('scale-90', 'opacity-40', 'translate-y-8');
-                        inner.classList.add('scale-100', 'opacity-100', 'translate-y-0');
-                        inner.style.borderColor = 'rgba(255, 183, 197, 0.5)';
-                        inner.style.boxShadow = '0 25px 50px -12px rgba(0,0,0,0.8), 0 0 40px rgba(255, 183, 197, 0.15)';
-                    } else {
-                        // Deactivate (Scale down, fade out, push down slightly)
-                        inner.classList.add('scale-90', 'opacity-40', 'translate-y-8');
-                        inner.classList.remove('scale-100', 'opacity-100', 'translate-y-0');
-                        inner.style.borderColor = 'rgba(255, 183, 197, 0.2)';
-                        inner.style.boxShadow = 'none';
-                    }
+                const options = {
+                    root: feed,
+                    rootMargin: '0px',
+                    threshold: 0.5 
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        const inner = entry.target.querySelector('.snap-card-inner');
+                        if (!inner) return;
+
+                        if (entry.isIntersecting) {
+                            inner.classList.remove('scale-90', 'opacity-40', 'translate-y-8');
+                            inner.classList.add('scale-100', 'opacity-100', 'translate-y-0');
+                            inner.style.borderColor = 'rgba(255, 183, 197, 0.5)';
+                            inner.style.boxShadow = '0 25px 50px -12px rgba(0,0,0,0.8), 0 0 40px rgba(255, 183, 197, 0.15)';
+                        } else {
+                            inner.classList.add('scale-90', 'opacity-40', 'translate-y-8');
+                            inner.classList.remove('scale-100', 'opacity-100', 'translate-y-0');
+                            inner.style.borderColor = 'rgba(255, 183, 197, 0.2)';
+                            inner.style.boxShadow = 'none';
+                        }
+                    });
+                }, options);
+
+                feed.querySelectorAll('.feed-item').forEach(item => {
+                    observer.observe(item);
                 });
-            }, options);
-
-            document.querySelectorAll('.feed-item').forEach(item => {
-                observer.observe(item);
             });
         }
     </script>
@@ -378,7 +396,7 @@
         });
         window.addEventListener('load', () => {
             scrollToPanel(0);
-            initializeFeedObserver(); // Start the TikTok observer effect
+            initializeFeedObserver(); 
         });
     </script>
 
@@ -441,52 +459,52 @@
 
         const MONTHLY_TIME_LOGS = [
             {
-                month: "March 2026",
+                month: "July 2026",
                 totalHours: 84,
                 days: [
-                    { date: "March 02, Mon", desc: "Internship Orientation, Facility Tour, and Initial IT Department Briefing", hours: 8 },
-                    { date: "March 03, Tue", desc: "System Diagnostics and Hardware Inventory Audit", hours: 8 },
-                    { date: "March 05, Thu", desc: "Deployment of Workstations and Network Configurations", hours: 8 },
-                    { date: "March 09, Mon", desc: "Troubleshooting Local Area Network (LAN) Connectivity Issues", hours: 8 },
-                    { date: "March 11, Wed", desc: "Software Installation, Updates, and OS Patching on End-user PCs", hours: 8 },
-                    { date: "March 13, Fri", desc: "Database Encoding and Archiving Legacy Files", hours: 8 },
-                    { date: "March 16, Mon", desc: "Assisting Employees with Peripheral Devices (Printers, Scanners)", hours: 8 },
-                    { date: "March 18, Wed", desc: "Inventory of Network Switches and Router Maintenance", hours: 8 },
-                    { date: "March 20, Fri", desc: "Drafting IT Support Incident Reports", hours: 8 },
-                    { date: "March 25, Wed", desc: "Cabling, RJ45 Crimping, and Physical Infrastructure Audits", hours: 8 },
-                    { date: "March 27, Fri", desc: "Weekly Progress Reporting and Time Logging", hours: 4 }
+                    { date: "July 01, Wed", desc: "Internship Orientation, Facility Tour, and Initial IT Department Briefing", hours: 8 },
+                    { date: "July 03, Fri", desc: "System Diagnostics and Hardware Inventory Audit", hours: 8 },
+                    { date: "July 06, Mon", desc: "Deployment of Workstations and Network Configurations", hours: 8 },
+                    { date: "July 08, Wed", desc: "Troubleshooting Local Area Network (LAN) Connectivity Issues", hours: 8 },
+                    { date: "July 10, Fri", desc: "Software Installation, Updates, and OS Patching on End-user PCs", hours: 8 },
+                    { date: "July 13, Mon", desc: "Database Encoding and Archiving Legacy Files", hours: 8 },
+                    { date: "July 15, Wed", desc: "Assisting Employees with Peripheral Devices (Printers, Scanners)", hours: 8 },
+                    { date: "July 17, Fri", desc: "Inventory of Network Switches and Router Maintenance", hours: 8 },
+                    { date: "July 20, Mon", desc: "Drafting IT Support Incident Reports", hours: 8 },
+                    { date: "July 22, Wed", desc: "Cabling, RJ45 Crimping, and Physical Infrastructure Audits", hours: 8 },
+                    { date: "July 24, Fri", desc: "Weekly Progress Reporting and Time Logging", hours: 4 }
                 ]
             },
             {
-                month: "April 2026",
+                month: "August 2026",
                 totalHours: 84,
                 days: [
-                    { date: "April 01, Wed", desc: "Advanced Technical Support and Ticketing System Management", hours: 8 },
-                    { date: "April 03, Fri", desc: "Server Room Inspection and Temperature Logging", hours: 8 },
-                    { date: "April 06, Mon", desc: "Cybersecurity Briefing and Firewall Log Analysis", hours: 8 },
-                    { date: "April 08, Wed", desc: "Creation of Employee ID Access Profiles via Active Directory", hours: 8 },
-                    { date: "April 13, Mon", desc: "Backup Drive Sorting and Cloud Storage Migration", hours: 8 },
-                    { date: "April 15, Wed", desc: "Testing IP Telephone Systems across Different Departments", hours: 8 },
-                    { date: "April 17, Fri", desc: "Hardware Repair: Replacing Faulty RAM and Storage Drives", hours: 8 },
-                    { date: "April 20, Mon", desc: "Network Vulnerability Scanning and Documentation", hours: 8 },
-                    { date: "April 22, Wed", desc: "Assisting the Web Development Team with Front-end Updates", hours: 8 },
-                    { date: "April 24, Fri", desc: "Database Query Optimization and Testing", hours: 8 },
-                    { date: "April 29, Wed", desc: "Month-End IT Performance Report Drafting", hours: 4 }
+                    { date: "August 03, Mon", desc: "Advanced Technical Support and Ticketing System Management", hours: 8 },
+                    { date: "August 05, Wed", desc: "Server Room Inspection and Temperature Logging", hours: 8 },
+                    { date: "August 07, Fri", desc: "Cybersecurity Briefing and Firewall Log Analysis", hours: 8 },
+                    { date: "August 10, Mon", desc: "Creation of Employee ID Access Profiles via Active Directory", hours: 8 },
+                    { date: "August 12, Wed", desc: "Backup Drive Sorting and Cloud Storage Migration", hours: 8 },
+                    { date: "August 14, Fri", desc: "Testing IP Telephone Systems across Different Departments", hours: 8 },
+                    { date: "August 17, Mon", desc: "Hardware Repair: Replacing Faulty RAM and Storage Drives", hours: 8 },
+                    { date: "August 19, Wed", desc: "Network Vulnerability Scanning and Documentation", hours: 8 },
+                    { date: "August 21, Fri", desc: "Assisting the Web Development Team with Front-end Updates", hours: 8 },
+                    { date: "August 24, Mon", desc: "Database Query Optimization and Testing", hours: 8 },
+                    { date: "August 26, Wed", desc: "Month-End IT Performance Report Drafting", hours: 4 }
                 ]
             },
             {
-                month: "May 2026",
+                month: "September 2026",
                 totalHours: 72,
                 days: [
-                    { date: "May 04, Mon", desc: "System Integration Testing and Quality Assurance", hours: 8 },
-                    { date: "May 06, Wed", desc: "Training End-Users on the New HR Portal", hours: 8 },
-                    { date: "May 08, Fri", desc: "Resolving Escalate IT Support Tickets", hours: 8 },
-                    { date: "May 11, Mon", desc: "Final Code Review and Repository Cleanup", hours: 8 },
-                    { date: "May 13, Wed", desc: "Preparing Final Internship Documentation and Clearance Forms", hours: 8 },
-                    { date: "May 15, Fri", desc: "Inventory Handover and Returning of Access Keys/Badges", hours: 8 },
-                    { date: "May 18, Mon", desc: "Exit Interview and Final Supervisor Evaluation", hours: 8 },
-                    { date: "May 20, Wed", desc: "Submission of Final OJT Requirements and Portfolios", hours: 8 },
-                    { date: "May 22, Fri", desc: "Final System Turnover and Farewell Activity", hours: 8 }
+                    { date: "September 02, Wed", desc: "System Integration Testing and Quality Assurance", hours: 8 },
+                    { date: "September 04, Fri", desc: "Training End-Users on the New HR Portal", hours: 8 },
+                    { date: "September 07, Mon", desc: "Resolving Escalate IT Support Tickets", hours: 8 },
+                    { date: "September 09, Wed", desc: "Final Code Review and Repository Cleanup", hours: 8 },
+                    { date: "September 11, Fri", desc: "Preparing Final Internship Documentation and Clearance Forms", hours: 8 },
+                    { date: "September 14, Mon", desc: "Inventory Handover and Returning of Access Keys/Badges", hours: 8 },
+                    { date: "September 16, Wed", desc: "Exit Interview and Final Supervisor Evaluation", hours: 8 },
+                    { date: "September 18, Fri", desc: "Submission of Final OJT Requirements and Portfolios", hours: 8 },
+                    { date: "September 21, Mon", desc: "Final System Turnover and Farewell Activity", hours: 8 }
                 ]
             }
         ];
@@ -580,35 +598,37 @@
         }
 
         function renderMonthlyTimeLogs() {
-            const container = document.getElementById('live-time-logs-container');
+            const container = document.getElementById('timelogs-vertical-feed');
             container.innerHTML = '';
             
-            MONTHLY_TIME_LOGS.forEach((monthData, index) => {
-                const isOpen = index === 0 ? 'open' : ''; 
-                
+            MONTHLY_TIME_LOGS.forEach((monthData) => {
                 let daysHtml = monthData.days.map(day => `
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between p-3 border-b border-pink-950/20 hover:bg-pink-950/10 transition-colors gap-2">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between p-4 border-b border-pink-950/20 hover:bg-pink-950/10 transition-colors gap-2">
                         <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 w-full">
-                            <span class="text-[10px] text-stone-500 font-mono w-24 shrink-0 uppercase tracking-wider">${day.date}</span>
-                            <span class="text-xs text-stone-300 font-sans flex-1">${day.desc}</span>
+                            <span class="text-[10px] text-sakuraPetal/80 font-mono w-24 shrink-0 uppercase tracking-wider">${day.date}</span>
+                            <span class="text-sm text-stone-300 font-sans flex-1 leading-snug">${day.desc}</span>
                         </div>
-                        <span class="text-xs font-semibold text-sakuraPetal shrink-0 self-end sm:self-auto">+${day.hours}h</span>
+                        <span class="text-sm font-bold text-sakuraPetal shrink-0 self-end sm:self-auto">+${day.hours}h</span>
                     </div>
                 `).join('');
 
                 container.innerHTML += `
-                    <details class="group lantern-card bg-sakuraCard/80 border border-pink-950/30 rounded-xl overflow-hidden transition-all duration-300" ${isOpen}>
-                        <summary class="p-4 cursor-pointer select-none flex items-center justify-between hover:bg-pink-950/20 transition-colors bg-gradient-to-r from-transparent to-pink-950/10">
-                            <div class="flex items-center gap-3">
-                                <span class="text-sm font-bold text-stone-200 tracking-wide uppercase">${monthData.month}</span>
-                                <span class="text-[9px] px-2 py-0.5 rounded-full bg-pink-950/40 text-sakuraPetal border border-pink-900/30 font-mono">${monthData.totalHours}h Logged</span>
+                    <div class="feed-item w-full h-full snap-center snap-always flex items-center justify-center p-4">
+                        <div class="snap-card-inner w-full max-w-2xl h-[95%] bg-sakuraCard/60 backdrop-blur-md border border-pink-950/30 rounded-[2rem] flex flex-col transition-all duration-700 ease-out transform scale-90 opacity-40 translate-y-8 overflow-hidden">
+                            
+                            <!-- Card Header -->
+                            <div class="p-6 md:p-8 flex flex-col items-center gap-3 text-center border-b border-pink-950/30 flex-shrink-0 bg-stone-950/40 relative">
+                                <div class="w-12 h-1 mb-1 rounded-full bg-pink-950/50"></div>
+                                <h3 class="text-3xl text-stone-100 font-bold tracking-tight">${monthData.month}</h3>
+                                <span class="text-[11px] px-4 py-1.5 rounded-full bg-registryTeal/10 text-registryTeal border border-registryTeal/30 uppercase tracking-widest font-bold shadow-[0_0_15px_rgba(79,209,197,0.1)]">${monthData.totalHours} Hours Logged</span>
                             </div>
-                            <span class="text-stone-500 text-[10px] group-open:rotate-180 transition-transform duration-300">▼</span>
-                        </summary>
-                        <div class="bg-stone-950/60 border-t border-pink-950/30 max-h-64 overflow-y-auto px-2 pb-2">
-                            ${daysHtml}
+
+                            <!-- Scrollable Logs List -->
+                            <div class="flex-1 overflow-y-auto no-scrollbar pb-6 bg-[#181015]/50">
+                                ${daysHtml}
+                            </div>
                         </div>
-                    </details>
+                    </div>
                 `;
             });
         }

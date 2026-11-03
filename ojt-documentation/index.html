@@ -125,7 +125,7 @@
                     </div>
                     
                     <div class="md:col-span-3 space-y-4 text-center md:text-left">
-                        <div><span class="inline-flex items-center gap-2 bg-pink-950/30 text-sakuraPetal/70 text-[10px] font-semibold tracking-widest uppercase px-3 py-1 rounded-full border border-pink-900/30">🌸 OJT Portfolio</span></div>
+                        <div><span class="inline-flex items-center gap-2 bg-pink-950/30 text-sakuraPetal/70 text-[10px] font-semibold tracking-widest uppercase px-3 py-1 rounded-full border border-pink-900/30">🌸 Static Portfolio Mode</span></div>
                         <h1 class="text-4xl font-bold text-stone-100 tracking-tight shimmer-floral">Joanna Ashley A. Escanilla</h1>
                         <div class="space-y-1 text-xs md:text-sm text-stone-400 font-light tracking-wide mx-auto md:mx-0 max-w-max text-left">
                             <p>🎓 Bachelor of Science in Computer Engineering</p>
@@ -147,7 +147,7 @@
                     
                     <button onclick="openRegistryModal()" class="lantern-card card-float-a bg-sakuraCard border border-registryTeal/40 p-6 rounded-2xl text-center sm:text-left focus:outline-none hover:border-registryTeal hover:bg-registryTeal/5 transition-all text-left w-full group relative overflow-hidden shadow-[0_0_20px_rgba(79,209,197,0.15)] cursor-pointer">
                         <div class="absolute top-0 right-0 bg-registryTeal text-sakuraDark text-[9px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-widest shadow-lg">Click to View</div>
-                        <span id="global-docs-count-display" class="text-2xl md:text-3xl font-semibold text-registryTeal tracking-tight block group-hover:text-emerald-300 transition-colors mt-2 drop-shadow-[0_0_8px_rgba(79,209,197,0.4)]">28 Units</span>
+                        <span id="global-docs-count-display" class="text-2xl md:text-3xl font-semibold text-registryTeal tracking-tight block group-hover:text-emerald-300 transition-colors mt-2 drop-shadow-[0_0_8px_rgba(79,209,197,0.4)]">29 Units</span>
                         <span class="text-[11px] uppercase font-medium tracking-wider text-stone-300 mt-1 block">Documents Submitted</span>
                         <div class="mt-3 flex items-center justify-center sm:justify-start gap-1.5 text-[10px] text-registryTeal font-medium group-hover:translate-x-1 transition-transform">
                             <span>Open Document Registry</span>
@@ -311,7 +311,7 @@
     </div>
 
     <footer class="text-center py-4 text-[10px] font-light text-stone-600 border-t border-pink-950/10 flex-shrink-0 bg-sakuraDark/30 z-40 relative select-none">
-        <p>&copy; 2026 Joanna Ashley A. Escanilla. CMPE 205 OJT 1 SUMMER.</p>
+        <p>&copy; 2026 Joanna Ashley A. Escanilla. Fully Integrated Showcase.</p>
     </footer>
 
     <!-- INTERSECTION OBSERVER FOR TIKTOK FEED -->
@@ -448,11 +448,12 @@
                 category: "After OJT",
                 folderTag: "EVALUATIONS & CLEARANCE",
                 items: [
-                    { id: "eval_supervisor", name: "Training Supervisor Evaluation", files: [] },
-                    { id: "eval_hte", name: "HTE Performance Evaluation", files: [] },
-                    { id: "eval_adviser", name: "OJT Adviser Performance Evaluation", files: [] },
-                    { id: "eval_intern", name: "Student Intern Evaluation / Trainee Performance", files: [] },
-                    { id: "eval_grading", name: "Performance Evaluation Grading System", files: [] }
+                    { id: "eval_supervisor", name: "Training Supervisor Evaluation", files: [{ label: "PDF", file: "eval_supervisor.pdf" }] },
+                    { id: "eval_hte", name: "HTE Performance Evaluation", files: [{ label: "PDF", file: "eval_hte.pdf" }] },
+                    { id: "eval_adviser", name: "OJT Adviser Performance Evaluation", files: [{ label: "PDF", file: "eval_adviser.pdf" }] },
+                    { id: "eval_intern", name: "Student Intern Evaluation / Trainee Performance", files: [{ label: "PDF", file: "eval_intern.pdf" }] },
+                    { id: "eval_grading", name: "Performance Evaluation Grading System", files: [{ label: "PDF", file: "eval_grading.pdf" }] },
+                    { id: "certificate_completion", name: "Certificate of Completion", files: [{ label: "PDF", file: "certificate_of_completion.pdf" }] }
                 ]
             }
         ];
